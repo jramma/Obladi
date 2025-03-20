@@ -1,28 +1,57 @@
-// app/components/Welcome.tsx
+import Map from "../Map";
+
 interface WelcomeProps {
   title: string;
   subtitle: string;
 }
 
+const cities = [
+  "Barcelona",
+  "Madrid",
+  "Valencia",
+  "Sevilla",
+  "Zaragoza",
+  "Málaga",
+  "Murcia",
+  "Palma",
+  "Bilbao",
+  "Alicante",
+];
+
 const Welcome: React.FC<WelcomeProps> = ({ title, subtitle }) => {
+  const firstHalf = cities.slice(0, 5);
+  const secondHalf = cities.slice(5);
+
   return (
-    <section className="container p-4 md:p-8">
+    <section className="container p-4 md:p-8 md:flex-row flex gap-10">
       <div className="flex flex-col md:w-1/2 w-full gap-36">
         <div className="flex flex-row justify-between items-start">
           <h1 className="text-3xl ">
             Lugar definitivo
             <br /> de objetos perdidos
           </h1>
-          <p className="text-3xl font-bold">02</p>
+          <p className="text-3xl  font-bold">02</p>
         </div>
-        <p className="text-7xl">Barcelona</p>
-        <div className="flex flex-row justify-between items-start">
-        <div>
-          
-        </div>
+        <p className="text-7xl pt-20">Barcelona</p>
+        <div className="grid grid-cols-3">
+          <div className="font-semibold pt-10 text-xl border-t-2 border-solid dark:border-white border-black">
+           <p>2025-2027</p> 
+          </div>
+          <ul className="pt-10">
+            {firstHalf.map((city, index) => (
+              <li key={index}>{city}</li>
+            ))}
+          </ul>
+          <ul className="pt-10">
+            {secondHalf.map((city, index) => (
+              <li key={index}>{city}</li>
+            ))}
+          </ul>
         </div>
       </div>
-      <div></div>
+      <div className="md:flex w-1/2 flex-shrink-0 flex flex-grow ">
+        <Map />
+      </div>
     </section>
   );
 };

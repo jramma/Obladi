@@ -1,38 +1,53 @@
 "use client";
-import { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
+import { GoogleMap, LoadScript } from "@react-google-maps/api";
 
-const MapComponent = () => {
-  const [LeafletComponents, setLeafletComponents] = useState<any>(null);
-  const [position, setPosition] = useState<[number, number] | null>(null);
+const containerStyle = {
+  width: "100%",
+  height: "100%",
+};
 
-  useEffect(() => {
-    // Solo importamos Leaflet cuando el componente se monta en el navegador
-    import("react-leaflet").then((L) => {
-      setLeafletComponents(L);
-    });
+const center = {
+  lat: 40.7128, // Nueva York
+  lng: -74.006,
+};
 
-    navigator.geolocation.getCurrentPosition(
-      (pos) => setPosition([pos.coords.latitude, pos.coords.longitude]),
-      (err) => console.error(err),
-      { enableHighAccuracy: true }
-    );
-  }, []);
+// Definimos los colores personalizados
+const snazzyMapStyle = [
+  {
+    featureType: "all",
+    elementType: "geometry",
+    stylers: [{ color: "#211111" }], // Color primario
+  },
+  {
+    featureType: "water",
+    elementType: "geometry.fill",
+    stylers: [{ color: "#212121" }], // Color secundario
+  },
+  {
+    featureType: "road",
+    elementType: "geometry",
+    stylers: [{ color: "#F0523C" }], // Color terciario
+  },
+];
 
-  if (!LeafletComponents || !position) return <p>Cargando mapa...</p>;
+const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
-  const { MapContainer, TileLayer, Marker, Popup } = LeafletComponents;
+const Map = () => {
+  if (!apiKey) {
+    console.error("⚠️ Falta la API key de Google Maps. Agrega NEXT_PUBLIC_GOOGLE_MAPS_API_KEY en .env.local");
+    return <p>Error: API Key no configurada</p>;
+  }
 
   return (
-    <div className="h-[500px] w-full rounded-lg overflow-hidden">
-      <MapContainer center={position} zoom={13} style={{ height: "100%", width: "100%" }}>
-        <TileLayer url="https://maps.openfreemap.org/m1/{z}/{x}/{y}.png" />
-        <Marker position={position}>
-          <Popup>¡Aquí estás!</Popup>
-        </Marker>
-      </MapContainer>
-    </div>
+    <LoadScript googleMapsApiKey={apiKey} >
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={center}
+        zoom={12}
+        options={{ styles: snazzyMapStyle }}
+      />
+    </LoadScript>
   );
 };
 
-export default dynamic(() => Promise.resolve(MapComponent), { ssr: false });
+export default Map;
