@@ -1,0 +1,63 @@
+@font-face {
+    font-family: 'Funnel Display';
+    src: url('FunnelDisplay-ExtraBold.woff2') format('woff2'),
+        url('FunnelDisplay-ExtraBold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Funnel Display';
+    src: url('FunnelDisplay-Bold.woff2') format('woff2'),
+        url('FunnelDisplay-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Funnel Display';
+    src: url('FunnelDisplay-SemiBold.woff2') format('woff2'),
+        url('FunnelDisplay-SemiBold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Funnel Display';
+    src: url('FunnelDisplay-Regular.woff2') format('woff2'),
+        url('FunnelDisplay-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Funnel Display';
+    src: url('FunnelDisplay-Medium.woff2') format('woff2'),
+        url('FunnelDisplay-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Funnel Display';
+    src: url('FunnelDisplay-Light.woff2') format('woff2'),
+        url('FunnelDisplay-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Funnel Display';
+    src: url('FunnelDisplay-Light.woff2') format('woff2'),
+        url('FunnelDisplay-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
