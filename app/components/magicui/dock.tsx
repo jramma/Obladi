@@ -70,7 +70,7 @@ export interface DockIconProps {
   children?: React.ReactNode;
   props?: PropsWithChildren;
 }
-
+const DEFAULT_MOUSEX = 0;
 const DockIcon = ({
   size,
   magnification = DEFAULT_MAGNIFICATION,
@@ -81,8 +81,11 @@ const DockIcon = ({
   ...props
 }: DockIconProps) => {
   const ref = useRef<HTMLDivElement>(null);
+  
+  const motionMousex = useMotionValue(mousex ?? DEFAULT_MOUSEX);
 
-  const distanceCalc = useTransform(mousex, (val: number) => {
+  // Aseguramos que ref.current no sea null antes de calcular distanceCalc
+  const distanceCalc = useTransform(motionMousex, (val: number) => {
     const bounds = ref.current?.getBoundingClientRect() ?? { x: 0, width: 0 };
     return val - bounds.x - bounds.width / 2;
   });
@@ -104,7 +107,7 @@ const DockIcon = ({
       ref={ref}
       style={{ width }}
       className={cn(
-        "flex aspect-square cursor-pointer items-center justify-center rounded-full",
+        "flex aspect-square hover:scale-150 transition cursor-pointer items-center justify-center rounded-full",
         className
       )}
       {...props}

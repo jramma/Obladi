@@ -15,10 +15,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className="container flex flex-col items-center bg-white dark:bg-black">
+      <body className="flex flex-col items-center w-full bg-white dark:bg-black md:pt-20">
         <ThemeProvider attribute="class">
-          {" "}
-          {/* Envolver la aplicación con ThemeProvider */}
           {children}
           <Navbar />
         </ThemeProvider>
