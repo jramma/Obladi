@@ -15,23 +15,25 @@ const cardsData = [
     bgColor: "bg-secondary",
     icon: <Icons.location className="w-20 h-20" />,
     title: "Encuentra <b>fácilmente</b> tus objetos",
-    description: "Utiliza nuestra plataforma para localizar tus pertenencias. Si un objeto coincide con tu descripción <b>te lo notificaremos!</b>",
+    description:
+      "Utiliza nuestra plataforma para localizar tus pertenencias. Si un objeto coincide con tu descripción <b>te lo notificaremos!</b>",
     imageSrc: "/22.svg",
   },
   {
     bgColor: "bg-tertiary",
     icon: <Icons.location className="w-20 h-20" />,
     title: "Conéctate con <b>otros</b> usuarios",
-    description: "Comparte información y ayuda a otros a encontrar sus objetos. ¡Juntos podemos hacer que el mundo sea un lugar mejor! Tenemos <b>un montón de premios</b> por ayuarnos ",
+    description:
+      "Comparte información y ayuda a otros a encontrar sus objetos. ¡Juntos podemos hacer que el mundo sea un lugar mejor! Tenemos <b>un montón de premios</b> por ayuarnos ",
     imageSrc: "/27.svg",
   },
 ];
 
 export default function How() {
   return (
-    <section className="py-10 md:py-20 flex flex-col container px-4 md:px-0 gap-6 md:gap-10">
+    <section className="py-10 md:py-20 flex flex-col container px-4 md:px-0 gap-6 md:gap-10 ">
       <h3 className="text-5xl font-light">Como funcionamos</h3>
-      <div className="grid md:grid-cols-3 grid-cols-1 gap-10 w-full h-auto px-6 md:px-0">
+      <div className="grid md:grid-cols-3 grid-cols-1 gap-10 w-full h-auto px-6 md:px-0 text-[#000000] ">
         {cardsData.map((card, index) => (
           <div
             key={index}
@@ -47,7 +49,13 @@ export default function How() {
             {card.description && (
               <p dangerouslySetInnerHTML={{ __html: card.description }} />
             )}
-            <Image className="mt-auto" src={card.imageSrc} alt={`Step ${index + 1}`} width={500} height={500} />
+            <Image
+              className="mt-auto"
+              src={card.imageSrc}
+              alt={`Step ${index + 1}`}
+              width={500}
+              height={500}
+            />
           </div>
         ))}
       </div>

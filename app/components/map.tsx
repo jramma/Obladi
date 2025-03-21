@@ -48,10 +48,14 @@ const Map = () => {
         (error) => {
           console.error("Error obteniendo geolocalización:", error);
           setErrorMsg("No se pudo obtener la ubicación.");
+          // Siempre usar defaultCenter si hay error
+          setCenter(defaultCenter);
         }
       );
     } else {
       setErrorMsg("Geolocalización no soportada en este navegador.");
+      // Si no hay soporte de geolocalización, usamos defaultCenter
+      setCenter(defaultCenter);
     }
   }, []);
 
@@ -71,6 +75,18 @@ const Map = () => {
     setMapStyle(theme === "dark" ? darkMode : snazzyMapStyle);
   }, [theme]);
 
+  // Controlar la desaparición del mensaje de error después de 4 segundos
+  useEffect(() => {
+    if (errorMsg) {
+      const timer = setTimeout(() => {
+        setErrorMsg(null); // Eliminar el mensaje de error después de 4 segundos
+      }, 4000);
+
+      // Limpiar el timer si el componente se desmonta antes de los 4 segundos
+      return () => clearTimeout(timer);
+    }
+  }, [errorMsg]);
+
   // Validar si la API key está presente
   if (!apiKey) {
     console.error(
@@ -87,10 +103,11 @@ const Map = () => {
         zoom={13}
         options={{ styles: mapStyle }}
       />
-      {errorMsg && <p className="text-red-500 absolute z-20 backdrop-blur-md p-4 top-6 left-6 font-bold">{errorMsg}</p>}
+      {errorMsg && <p className="text-red-500 transition-all duration-400 rounded-md ease-in-out absolute z-20 backdrop-blur-md p-4 top-[50%] left-6 font-bold">{errorMsg}</p>}
     </LoadScript>
   );
 };
+
 
 export default Map;
 const snazzyMapStyle = [

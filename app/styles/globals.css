@@ -33,4 +33,12 @@ body {
            hover:shadow-[16px_16px_0px_0px_rgb(0,0,0)] dark:hover:shadow-[16px_16px_0px_0px_rgb(255,255,255)] 
            transition;
   }
+  .card-style2{
+    @apply rounded-2xl border-2 border-black 
+    shadow-[8px_8px_0px_0px_rgb(0,0,0)] 
+    hover:shadow-[16px_16px_0px_0px_rgb(0,0,0)]
+    transition;
+
+
+  }
 }
