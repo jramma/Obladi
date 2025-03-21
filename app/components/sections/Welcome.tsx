@@ -23,8 +23,8 @@ const Welcome: React.FC<WelcomeProps> = ({ title, subtitle }) => {
   const secondHalf = cities.slice(5);
 
   return (
-    <section className="container p-4 md:p-8 md:flex-row flex flex-col gap-10 h-auto items-stretch ">
-      <div className="flex flex-col md:w-1/2 w-full gap-36">
+    <section className="w-full  md:flex-row flex flex-col gap-10 h-auto items-stretch !py-0 ">
+      <div className="flex flex-col md:w-1/2 w-full gap-36 md:p-8 p-4 md:ml-[6vw]">
         <div className="flex flex-row justify-between items-start">
           <h1 className="text-3xl ">
             Lugar definitivo
@@ -49,7 +49,7 @@ const Welcome: React.FC<WelcomeProps> = ({ title, subtitle }) => {
           </ul>
         </div>
       </div>
-      <div className="flex md:w-1/2 shrink-0 flex-grow w-full relative h-[500px] md:h-auto">
+      <div className="flex md:w-1/2 shrink-0 flex-grow w-full relative h-[500px] md:h-auto ">
         <Map />
       </div>
     </section>
