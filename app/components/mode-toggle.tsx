@@ -15,8 +15,8 @@ export function ModeToggle() {
       className="px-2 cursor-pointer"
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
     >
-      <LuSun className="h-[1.2rem] w-[1.2rem] text-neutral-800 dark:hidden dark:text-neutral-200" />
-      <LuMoonStar className="hidden h-[1.2rem] w-[1.2rem] text-neutral-800 dark:block dark:text-neutral-200" />
+      <LuSun className="h-6 w-6 text-neutral-800 dark:hidden dark:text-neutral-200" />
+      <LuMoonStar className="hidden h-6 w-6 text-neutral-800 dark:block dark:text-neutral-200" />
     </Button>
   );
 }

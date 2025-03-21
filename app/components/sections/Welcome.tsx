@@ -23,7 +23,7 @@ const Welcome: React.FC<WelcomeProps> = ({ title, subtitle }) => {
   const secondHalf = cities.slice(5);
 
   return (
-    <section className="container p-4 md:p-8 md:flex-row flex flex-col gap-10">
+    <section className="container p-4 md:p-8 md:flex-row flex flex-col gap-10 h-auto items-stretch ">
       <div className="flex flex-col md:w-1/2 w-full gap-36">
         <div className="flex flex-row justify-between items-start">
           <h1 className="text-3xl ">
@@ -35,7 +35,7 @@ const Welcome: React.FC<WelcomeProps> = ({ title, subtitle }) => {
         <p className="text-7xl pt-20">Barcelona</p>
         <div className="grid grid-cols-3">
           <div className="font-semibold pt-10 text-xl border-t-2 border-solid dark:border-white border-black">
-           <p>2025-2027</p> 
+            <p>2025-2027</p>
           </div>
           <ul className="pt-10">
             {firstHalf.map((city, index) => (
@@ -49,7 +49,7 @@ const Welcome: React.FC<WelcomeProps> = ({ title, subtitle }) => {
           </ul>
         </div>
       </div>
-      <div className="flex md:w-1/2 flex-shrink-0 flex-grow w-full h-auto aspect-square md:aspect-none">
+      <div className="flex md:w-1/2 shrink-0 flex-grow w-full relative h-[500px] md:h-auto">
         <Map />
       </div>
     </section>

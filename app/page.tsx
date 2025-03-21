@@ -28,13 +28,13 @@ export default function AboutPage() {
         />
       </div>
       {/* Seccion objetos recientemente encontrados */}
-
       <Recently />
+      <How />
+
       {/* Sección reportar objeto perdido  */}
       <Report />
       {/* Seccion user reviews */}
       <Reviews />
-      <How />
       {/* Sección buscador de artículos */}
       <Finder/>
       {/* Sección Reclamar artículo */}

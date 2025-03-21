@@ -2,13 +2,13 @@
 
 const Footer: React.FC = () => {
   return (
-    <footer className="dark:bg-[#000000] bg-[#ffffff]  flex justify-center w-full">
-      <div className="container py-20 flex flex-row justify-between">
+    <footer className="dark:bg-[#000000] bg-[#ffffff]  flex flex-col items-center w-full">
+    <div className="w-full h-20  rounded-b-[50%] dark:bg-black bg-white"></div>
+     
+      <div className="container py-20 p-8 flex flex-row justify-between ">
         <div>
-          Disegned by <span className="font-bold">DevChallenges.io</span>
+          Ayudamos a que encuentres tus cosas
         </div>
-
-
       </div>
     </footer>
   );

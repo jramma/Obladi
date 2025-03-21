@@ -11,7 +11,7 @@ const Card = () => {
 
   return (
     <div
-      className="border-2 group border-black dark:border-white border-solid m-6 p-6 max-w-72 transition"
+      className="border-2 rounded-lg group border-black dark:border-white border-solid m-6 p-6 max-w-72 transition"
       style={{
         boxShadow: `5px 5px 0px 0px ${shadowColor}`,
       }}

@@ -8,7 +8,7 @@ import {
   TooltipTrigger,
   TooltipProvider,
 } from "@/components/ui/tooltip";
-import { DATA } from "@/data/resume";
+import { DATA } from "@/data/text";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
@@ -30,7 +30,7 @@ export default function Navbar() {
                         "size-12"
                       )}
                     >
-                      <item.icon className="size-4" />
+                      <item.icon className="size-6" />
                     </Link>
                   </TooltipTrigger>
                   <TooltipContent>
@@ -54,7 +54,7 @@ export default function Navbar() {
                           "size-12"
                         )}
                       >
-                        <social.icon className="size-4" />
+                        <social.icon className="size-6" />
                       </Link>
                     </TooltipTrigger>
                     <TooltipContent>

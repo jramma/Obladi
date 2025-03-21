@@ -14,60 +14,64 @@ const defaultCenter = {
 };
 
 // Definimos los colores personalizados
-
 const Map = () => {
-  // Logica de ubicación
+  // Estado de ubicación
   const [center, setCenter] = useState(defaultCenter);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [mensen, setMensen] = useState<any[]>([]);
+  const [location, setLocation] = useState<{ latitude: number; longitude: number } | null>(null);
 
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
+  // Función para obtener datos de la API
+  const fetchApiData = async (latitude: number, longitude: number) => {
+    try {
+      const res = await fetch(
+        `https://openmensa.org/api/v2/canteens?near[lat]=${latitude}&near[lng]=${longitude}&near[dist]=50000`
+      );
+      if (!res.ok) throw new Error("Error al obtener los datos");
+      const data = await res.json();
+      setMensen(data);
+    } catch (error) {
+      console.error("Error en fetchApiData:", error);
+    }
+  };
+
+  // Obtener ubicación del usuario
   useEffect(() => {
-  
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setCenter({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          });
+        ({ coords }) => {
+          const { latitude, longitude } = coords;
+          setLocation({ latitude, longitude });
         },
         (error) => {
-          switch (error.code) {
-            case error.PERMISSION_DENIED:
-              console.error("⚠️ El usuario denegó el acceso a la ubicación.");
-              break;
-            case error.POSITION_UNAVAILABLE:
-              console.error("⚠️ No se pudo obtener la ubicación. Intenta activar el GPS o revisar la configuración.");
-              break;
-            case error.TIMEOUT:
-              console.error("⚠️ El tiempo de espera para obtener la ubicación expiró.");
-              break;
-            default:
-              console.error("⚠️ Error desconocido al obtener la ubicación:", error);
-              break;
-          }
-        },
-        {
-          enableHighAccuracy: true, // Fuerza GPS si está disponible
-          timeout: 10000, // Máximo 10s para obtener la ubicación
-          maximumAge: 0, // No usar caché
+          console.error("Error obteniendo geolocalización:", error);
+          setErrorMsg("No se pudo obtener la ubicación.");
         }
       );
     } else {
-      console.error("⚠️ Geolocalización no es compatible con este navegador.");
+      setErrorMsg("Geolocalización no soportada en este navegador.");
     }
   }, []);
-  
 
-  // Logica del tema del mapa
+  // Llamar a la API cuando se obtenga la ubicación
+  useEffect(() => {
+    if (location) {
+      fetchApiData(location.latitude, location.longitude);
+      setCenter({ lat: location.latitude, lng: location.longitude }); // Actualizar el centro del mapa
+    }
+  }, [location]);
+
+  // Gestión del tema (modo oscuro/claro)
   const { theme } = useTheme();
-  const [mapStyle, setMapStyle] = useState(snazzyMapStyle); // Estado para el estilo del mapa
+  const [mapStyle, setMapStyle] = useState(snazzyMapStyle);
 
   useEffect(() => {
     setMapStyle(theme === "dark" ? darkMode : snazzyMapStyle);
-  }, [theme]); // Se actualiza cuando cambia el tema
+  }, [theme]);
 
+  // Validar si la API key está presente
   if (!apiKey) {
     console.error(
       "⚠️ Falta la API key de Google Maps. Agrega NEXT_PUBLIC_GOOGLE_MAPS_API_KEY en .env.local"
@@ -76,13 +80,14 @@ const Map = () => {
   }
 
   return (
-    <LoadScript googleMapsApiKey={apiKey}>
+    <LoadScript googleMapsApiKey={apiKey} >
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
         zoom={13}
-        options={{ styles: mapStyle }} // Usa el estado mapStyle
+        options={{ styles: mapStyle }}
       />
+      {errorMsg && <p className="text-red-500 absolute z-20 backdrop-blur-md p-4 top-6 left-6 font-bold">{errorMsg}</p>}
     </LoadScript>
   );
 };
