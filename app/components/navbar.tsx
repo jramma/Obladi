@@ -16,55 +16,57 @@ export default function Navbar() {
   return (
     <TooltipProvider>
       {/* Header para pantallas grandes */}
-      <div className="hidden md:flex fixed inset-x-0 top-0 z-30 mx-auto py-2 px-6 bg-background backdrop-blur-lg dark:bg-background">
-        <div className="w-full flex items-center justify-between">
-          <div className="flex space-x-4">
-            {DATA.navbar.map((item) => (
-              <DockIcon key={item.href}>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Link
-                      href={item.href}
-                      className={cn(
-                        buttonVariants({ variant: "ghost", size: "icon" }),
-                        "size-12"
-                      )}
-                    >
-                      <item.icon className="size-6" />
-                    </Link>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>{item.label}</p>
-                  </TooltipContent>
-                </Tooltip>
-              </DockIcon>
-            ))}
-          </div>
-          <div className="flex space-x-4">
-            {Object.entries(DATA.contact.social)
-              .filter(([_, social]) => social.navbar)
-              .map(([name, social]) => (
-                <DockIcon key={name}>
+      <div className="hidden md:flex border-b-4 fixed inset-x-0 top-0 z-30 mx-auto py-2 px-6 bg-background backdrop-blur-lg dark:bg-background ">
+        <div className="container">
+          <div className="w-full flex items-center justify-between ">
+            <div className="flex space-x-4">
+              {DATA.navbar.map((item) => (
+                <DockIcon key={item.href}>
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <Link
-                        href={social.url}
+                        href={item.href}
                         className={cn(
                           buttonVariants({ variant: "ghost", size: "icon" }),
                           "size-12"
                         )}
                       >
-                        <social.icon className="size-6" />
+                        <item.icon className="size-6" />
                       </Link>
                     </TooltipTrigger>
                     <TooltipContent>
-                      <p>{name}</p>
+                      <p>{item.label}</p>
                     </TooltipContent>
                   </Tooltip>
                 </DockIcon>
               ))}
+            </div>
+            <div className="flex space-x-4">
+              {Object.entries(DATA.contact.social)
+                .filter(([_, social]) => social.navbar)
+                .map(([name, social]) => (
+                  <DockIcon key={name}>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Link
+                          href={social.url}
+                          className={cn(
+                            buttonVariants({ variant: "ghost", size: "icon" }),
+                            "size-12"
+                          )}
+                        >
+                          <social.icon className="size-6" />
+                        </Link>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>{name}</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </DockIcon>
+                ))}
+            </div>
+            <ModeToggle />
           </div>
-          <ModeToggle />
         </div>
       </div>
 
