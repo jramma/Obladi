@@ -1,7 +1,13 @@
 import Image from "next/image";
 
 import Welcome from "@/components/sections/Welcome";
-import Recently from "./components/marquee";
+import Recently from "@/components/marquee";
+import Report from "@/components/report";
+import Reviews from "./components/reviews";
+import How from "./components/how";
+import Reclaim from "./components/reclaim";
+import Finder from "./components/finder";
+
 
 export default function AboutPage() {
   return (
@@ -13,24 +19,26 @@ export default function AboutPage() {
       />
       {/* imagen ciudad */}
 
-      <div className="relative w-full h-[500px] container">
+      <div className="relative w-full h-[500px] overflow-hidden parallax-container">
         <Image
           src="/kaspars-upmanis-nD2WzCZrlLE-unsplash.jpg"
-          alt="Picture of the Barcelonma"
-          fill={true}
-          className="object-cover"
+          alt="Picture of Barcelona"
+          fill
+          className="object-cover parallax-image"
         />
       </div>
       {/* Seccion objetos recientemente encontrados */}
 
       <Recently />
       {/* Sección reportar objeto perdido  */}
-
+      <Report />
       {/* Seccion user reviews */}
-
+      <Reviews />
+      <How />
       {/* Sección buscador de artículos */}
-
+      <Finder/>
       {/* Sección Reclamar artículo */}
+      <Reclaim />
     </div>
   );
 }

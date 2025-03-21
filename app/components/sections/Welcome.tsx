@@ -1,4 +1,4 @@
-import Map from "../Map";
+import Map from "../map";
 
 interface WelcomeProps {
   title: string;
@@ -23,7 +23,7 @@ const Welcome: React.FC<WelcomeProps> = ({ title, subtitle }) => {
   const secondHalf = cities.slice(5);
 
   return (
-    <section className="container p-4 md:p-8 md:flex-row flex gap-10">
+    <section className="container p-4 md:p-8 md:flex-row flex flex-col gap-10">
       <div className="flex flex-col md:w-1/2 w-full gap-36">
         <div className="flex flex-row justify-between items-start">
           <h1 className="text-3xl ">
@@ -49,7 +49,7 @@ const Welcome: React.FC<WelcomeProps> = ({ title, subtitle }) => {
           </ul>
         </div>
       </div>
-      <div className="md:flex w-1/2 flex-shrink-0 flex flex-grow ">
+      <div className="flex md:w-1/2 flex-shrink-0 flex-grow w-full h-auto aspect-square md:aspect-none">
         <Map />
       </div>
     </section>
