@@ -31,7 +31,7 @@ export default function Reclaim() {
   return (
     <section className="py-20 flex flex-col  w-full items-center">
       <div className="container flex flex-col gap-10">
-        <h3 className="text-5xl font-semibold">Reclamar objeto perdido</h3>
+        <h3 className="text-5xl font-light">Reclamar objeto perdido</h3>
 
       <Form
           action="/reclaim"

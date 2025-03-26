@@ -5,9 +5,9 @@ import { Icons } from "@/components/icons";
 
 export default function Finder() {
   return (
-    <section className="py-20 flex flex-col w-full bg-secondary/30">
-      <div className="container flex flex-col gap-10">
-        <h2 className="w-full text-5xl font-bold">
+    <section className="py-20 md:py-72 flex flex-col w-full bg-secondary/30">
+      <div className="container flex flex-col gap-8 md:gap-20 items-center">
+        <h2 className="w-full text-5xl font-light text-center">
           Encuentra tu objeto perdido
         </h2>
         <Form action="/search" className="relative w-full max-w-[700px] ">

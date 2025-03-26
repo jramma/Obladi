@@ -14,14 +14,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
-      <body className="flex flex-col items-center w-full bg-white dark:bg-black md:pt-18">
-        <ThemeProvider attribute="class">
-          {children}
-          <Navbar />
-          <Footer />
-        </ThemeProvider>
-      </body>
-    </html>
+      <html lang="es">
+        <body className="flex flex-col items-center w-full bg-white dark:bg-black md:pt-18">
+          <ThemeProvider attribute="class">
+            {children}
+            <Navbar />
+            <Footer />
+          </ThemeProvider>
+        </body>
+      </html>
   );
 }

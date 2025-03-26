@@ -1,6 +1,6 @@
 export default function AboutPage() {
     return (
-      <div>
+      <div className="min-h-screen container">
         <h1>About Us</h1>
       </div>
     );
