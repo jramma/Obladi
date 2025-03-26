@@ -33,7 +33,7 @@ export default function Finder() {
 
               <button
                 type="button"
-                className="bg-secondary text-black border-black border-2 rounded-full py-1 px-3  flex items-center gap-1 group "
+                className="bg-secondary text-black hover:pr-20 ease-in-out transition-all duration-500 border-black border-2 rounded-full py-1 px-3  flex items-center gap-1 group "
                 onClick={() => {
                   // Implementar lógica para mostrar o agregar tags
                   console.log("Añadir etiquetas...");
