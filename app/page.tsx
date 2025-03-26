@@ -27,29 +27,44 @@ export default function AboutPage() {
           className="object-cover parallax-image"
         />
       </div>
-      <hr className="h-2 w-full "/>
+      <div className="container">
+        <hr className="h-2 w-full " />
+      </div>
 
       {/* Seccion objetos recientemente encontrados */}
       <Recently />
-      <hr className="h-2 w-full "/>
+      
+      <div className="container">
+        <hr className="h-2 w-full " />
+      </div>
       <How />
-      <hr className="h-2 w-full "/>
+      <div className="container">
+        <hr className="h-2 w-full " />
+      </div>
 
       {/* Sección reportar objeto perdido  */}
       <Report />
-      <hr className="h-2 w-full "/>
+      <div className="container">
+        <hr className="h-2 w-full " />
+      </div>
 
       {/* Seccion user reviews */}
       <Reviews />
-      <hr className="h-2 w-full "/>
+      <div className="container">
+        <hr className="h-2 w-full " />
+      </div>
 
       {/* Sección buscador de artículos */}
       <Finder/>
-      <hr className="h-2 w-full "/>
+      <div className="container">
+        <hr className="h-2 w-full " />
+      </div>
 
       {/* Sección Reclamar artículo */}
       <Reclaim />
-      <hr className="h-2 w-full "/>
+      <div className="container">
+        <hr className="h-2 w-full " />
+      </div>
 
     </div>
   );

@@ -1,50 +1,33 @@
-"use client"
+'use client'
 
-import * as React from "react"
-import * as AvatarPrimitive from "@radix-ui/react-avatar"
+import { createAvatar } from '@dicebear/core';
+import { lorelei } from '@dicebear/collection';
 
-import { cn } from "@/lib/utils"
+interface AvatarProps {
+  userImage?: string; // Imagen subida por el usuario, si existe
+  seed?: string;      // Semilla para generar el avatar con Dicebear
+}
 
-const Avatar = React.forwardRef<
-  React.ElementRef<typeof AvatarPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root>
->(({ className, ...props }, ref) => (
-  <AvatarPrimitive.Root
-    ref={ref}
-    className={cn(
-      "relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full",
-      className
-    )}
-    {...props}
-  />
-))
-Avatar.displayName = AvatarPrimitive.Root.displayName
+const Avatar: React.FC<AvatarProps> = ({ userImage, seed = 'default' }) => {
+  // Opciones posibles para el fondo
+  const bgOptions = ['bg-primary', 'bg-secondary', 'bg-tertiary'];
+  
+  // Elegir una clase de fondo aleatoria
+  const randomBg = bgOptions[Math.floor(Math.random() * bgOptions.length)];
 
-const AvatarImage = React.forwardRef<
-  React.ElementRef<typeof AvatarPrimitive.Image>,
-  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Image>
->(({ className, ...props }, ref) => (
-  <AvatarPrimitive.Image
-    ref={ref}
-    className={cn("aspect-square h-full w-full", className)}
-    {...props}
-  />
-))
-AvatarImage.displayName = AvatarPrimitive.Image.displayName
+  // Si el usuario tiene una imagen, la mostramos
+  if (userImage) {
+    return <img src={userImage} alt="User Avatar" className={`w-10 h-10 ${randomBg} rounded-full`} />;
+  }
 
-const AvatarFallback = React.forwardRef<
-  React.ElementRef<typeof AvatarPrimitive.Fallback>,
-  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Fallback>
->(({ className, ...props }, ref) => (
-  <AvatarPrimitive.Fallback
-    ref={ref}
-    className={cn(
-      "flex h-full w-full items-center justify-center rounded-full bg-muted",
-      className
-    )}
-    {...props}
-  />
-))
-AvatarFallback.displayName = AvatarPrimitive.Fallback.displayName
+  // Si no tiene imagen, generamos el avatar usando Dicebear
+  const avatar = createAvatar(lorelei, {
+    seed: seed, // Se puede personalizar con el nombre del usuario o cualquier otro identificador
+  });
 
-export { Avatar, AvatarImage, AvatarFallback }
+  const svg = avatar.toString();
+
+  return <div className={`w-10 h-10 ${randomBg} rounded-full aspect-square`} dangerouslySetInnerHTML={{ __html: svg }} />;
+};
+
+export default Avatar;

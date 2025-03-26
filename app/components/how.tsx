@@ -5,7 +5,7 @@ import { Icons } from "@/components/icons";
 const cardsData = [
   {
     bgColor: "bg-primary",
-    icon: <Icons.location className="w-20 h-20 -ml-4 -mt-4" />,
+    icon: <Icons.location className="w-20 h-20 -ml-4  -mt-4  absolute -right-4 -top-2" />,
     title: "Todos <b>perdemos</b> objetos",
     description:
       "Gracias a la localización y esta red social no ocurrirá más. También es una gran solución a <b>maletas</b> y objetos que puedas perder durante un viaje, mudanza, de camino al trabajo o en el <b>transporte público</b>.",
@@ -13,7 +13,7 @@ const cardsData = [
   },
   {
     bgColor: "bg-secondary",
-    icon: <Icons.location className="w-20 h-20" />,
+    icon: <Icons.location className="w-20 h-20 -ml-4  -mt-4  absolute -right-4 -top-2" />,
     title: "Encuentra <b>fácilmente</b> tus objetos",
     description:
       "Utiliza nuestra plataforma para localizar tus pertenencias. Si un objeto coincide con tu descripción <b>te lo notificaremos!</b>",
@@ -21,7 +21,7 @@ const cardsData = [
   },
   {
     bgColor: "bg-tertiary",
-    icon: <Icons.location className="w-20 h-20" />,
+    icon: <Icons.location className="w-20 h-20 -ml-4  -mt-4  absolute -right-4 -top-2" />,
     title: "Conéctate con <b>otros</b> usuarios",
     description:
       "Comparte información y ayuda a otros a encontrar sus objetos. ¡Juntos podemos hacer que el mundo sea un lugar mejor! Tenemos <b>un montón de premios</b> por ayuarnos ",
@@ -37,7 +37,7 @@ export default function How() {
         {cardsData.map((card, index) => (
           <div
             key={index}
-            className={`card-style ${card.bgColor} flex flex-col gap-6 p-6 max-w-72`}
+            className={`relative card-style ${card.bgColor} flex flex-col gap-6 p-6 md:max-w-72 `}
           >
             {card.icon}
             {card.title && (
@@ -47,10 +47,10 @@ export default function How() {
               />
             )}
             {card.description && (
-              <p dangerouslySetInnerHTML={{ __html: card.description }} />
+              <p className="pb-20 md:pb-0" dangerouslySetInnerHTML={{ __html: card.description }} />
             )}
             <Image
-              className="mt-auto"
+              className="md:mt-auto absolute md:relative  w-40 h-40 md:w-auto md:h-auto -right-6 bottom-0"
               src={card.imageSrc}
               alt={`Step ${index + 1}`}
               width={500}

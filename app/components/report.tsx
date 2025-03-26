@@ -32,7 +32,7 @@ export default function Report() {
   return (
     <section className="py-20 flex  w-full ">
       <div className="container flex flex-col gap-10">
-        <h3 className="text-5xl leading-2 font-light w-full mb-8">
+        <h3 className="text-5xl  font-light w-full md:mb-8 leading-11">
           Reportar objeto perdido
         </h3>
         <Form
@@ -87,7 +87,7 @@ export default function Report() {
           </div>
           <div className="flex flex-grow flex-col flex-1">
             <label className="block font-bold">Localización</label>
-            <div className="relative flex flex-grow rounded-xl overflow-hidden card-style2">
+            <div className="relative flex  aspect-square rounded-xl overflow-hidden card-style2">
               <LoadScript googleMapsApiKey={apiKey}>
                 <GoogleMap
                   mapContainerStyle={{ width: "100%", height: "100%" }}

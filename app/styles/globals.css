@@ -42,3 +42,28 @@ body {
 
   }
 }
+
+.mySwiper {
+  position: relative;
+  padding-left: 30px; /* Espacio en los lados para que las flechas no se solapen */
+  padding-right: 30px; /* Espacio en los lados para que las flechas no se solapen */
+}
+
+
+/* Asegúrate de que las flechas tengan color negro */
+.swiper-button-next,
+.swiper-button-prev {
+  color: black !important; /* Flechas negras */
+}
+
+
+
+/* Asegúrate de que las flechas no se solapen con las tarjetas */
+.mySwiper {
+  padding-left: 30px; /* Espacio a la izquierda para las flechas */
+  padding-right: 30px; /* Espacio a la derecha para las flechas */
+}
+
+.swiper-button-next, .swiper-button-prev {
+  z-index: 10; /* Asegúrate de que las flechas estén sobre las tarjetas */
+}

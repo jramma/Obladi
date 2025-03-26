@@ -27,19 +27,23 @@ const Recently = () => {
         <Card />
         <Card />
       </Marquee>
-      <Marquee
-        speed={30}
-        delay={0}
-        loop={0}
-        gradient={true}
-        gradientColor={gradientColor}
-        gradientWidth={200}
-        direction="right"
-      >
-        <Card />
-        <Card />
-        <Card />
-      </Marquee>
+      <div className="hidden md:block">
+        <Marquee
+          speed={30}
+          delay={0}
+          loop={0}
+          gradient={true}
+          gradientColor={gradientColor}
+          gradientWidth={200}
+          direction="right"
+        >
+          <Card />
+          <Card />
+          <Card />
+        </Marquee>
+      </div>
+      <div className="hidden md:block">
+
       <Marquee
         speed={30}
         delay={0}
@@ -48,11 +52,12 @@ const Recently = () => {
         gradientColor={gradientColor}
         gradientWidth={200}
         direction="left"
+        className="hidden md:block"
       >
         <Card />
         <Card />
         <Card />
-      </Marquee>
+      </Marquee></div>
     </section>
   );
 };
