@@ -168,11 +168,7 @@ export const Icons = {
     </svg>
   ),
   location: (props: IconProps) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-      viewBox="0 0 24 24"
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" {...props} viewBox="0 0 24 24">
       <circle cx="12" cy="12" r="0" fill="currentColor">
         <animate
           fill="freeze"
@@ -231,6 +227,35 @@ export const Icons = {
           />
         </path>
       </g>
+    </svg>
+  ),
+  search: (props: IconProps) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+    >
+      <path
+        fill="currentColor"
+        d="M15.5 10.23v-.038zV7.005zM5.042 19.355q-.384.142-.713-.084T4 18.634V6.404q0-.268.13-.489t.378-.307L9 4.077l6 2.1l3.958-1.53q.384-.143.713.054t.329.588v6.713q-.221-.248-.464-.463T19 11.146V5.7l-3.5 1.304v3.227q-.275.019-.516.049q-.24.03-.484.109V7.004l-5-1.746V17.64zM5 18.3l3.5-1.342v-11.7L5 6.45zm10.885-.089q.984 0 1.643-.644t.664-1.663q.006-.985-.658-1.646q-.665-.662-1.65-.662t-1.645.662t-.662 1.646t.662 1.646t1.645.662m0 1q-1.361 0-2.334-.973t-.973-2.335t.973-2.335t2.335-.973t2.334.973t.973 2.335q0 .556-.166 1.049t-.48.905L21 20.292l-.688.708l-2.454-2.454q-.412.333-.905.5q-.493.165-1.068.165M8.5 5.259v11.7z"
+      />
+    </svg>
+  ),
+  plus: (props: IconProps) => (
+    <svg xmlns="http://www.w3.org/2000/svg" {...props} viewBox="0 0 24 24">
+      <path
+        fill="currentColor"
+        d="M18 10h-4V6a2 2 0 0 0-4 0l.071 4H6a2 2 0 0 0 0 4l4.071-.071L10 18a2 2 0 0 0 4 0v-4.071L18 14a2 2 0 0 0 0-4"
+      />
+    </svg>
+  ),
+  arrow: (props: IconProps) => (
+    <svg xmlns="http://www.w3.org/2000/svg" {...props} viewBox="0 0 15 15">
+      <path
+        fill="currentColor"
+        d="M8.293 2.293a1 1 0 0 1 1.414 0l4.5 4.5a1 1 0 0 1 0 1.414l-4.5 4.5a1 1 0 0 1-1.414-1.414L11 8.5H1.5a1 1 0 0 1 0-2H11L8.293 3.707a1 1 0 0 1 0-1.414"
+      />
     </svg>
   ),
 };

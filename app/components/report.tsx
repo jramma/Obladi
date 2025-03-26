@@ -39,20 +39,20 @@ export default function Report() {
           action="/report"
           className="space-y-6 text-[#000000] md:flex-row gap-6 items-stretch flex-col-reverse flex bg-primary text-xl w-full rounded-2xl p-6  card-style "
         >
-          <div className="flex-col flex w-1/2 gap-6">
+          <div className="flex-col flex md:w-1/2 gap-6">
             <div className="flex-col flex gap-3">
-              <label className="block font-bold">Título</label>
+              <label className="block font-bold ">Título</label>
               <input
                 type="text"
                 {...register("title", { required: true })}
-                className="card-style2 mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary"
+                className="bg-white card-style2 mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary"
               />
             </div>
             <div className="flex-col flex gap-3">
               <label className="block font-bold">Descripción</label>
               <textarea
                 {...register("description", { required: true })}
-                className="card-style2 mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary"
+                className="card-style2 mt-1 block w-full p-2 bg-white border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary"
               />
             </div>
             <div className="flex-col flex gap-3">
@@ -60,7 +60,7 @@ export default function Report() {
               <input
                 type="text"
                 {...register("tags")}
-                className="card-style2 mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary"
+                className="card-style2 mt-1 block bg-white w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary"
                 placeholder="Ejemplo: teléfono, negro, Samsung"
               />
             </div>
@@ -68,7 +68,7 @@ export default function Report() {
               <label className="block font-bold">Categoría</label>
               <select
                 {...register("category", { required: true })}
-                className="card-style2 mt-1 block w-full p-2 "
+                className="card-style2 mt-1 block w-full p-2 bg-white"
               >
                 {categories.map((category, index) => (
                   <option key={index} value={category}>
@@ -80,7 +80,7 @@ export default function Report() {
 
             <button
               type="submit"
-              className="card-style2 py-2 self-start px-6 cursor-pointer"
+              className="card-style2 py-2 self-start px-6 cursor-pointer bg-tertiary"
             >
               Reportar
             </button>
