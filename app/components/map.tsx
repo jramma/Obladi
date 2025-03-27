@@ -72,7 +72,7 @@ const Map = () => {
   const [mapStyle, setMapStyle] = useState(snazzyMapStyle);
 
   useEffect(() => {
-    setMapStyle(theme === "dark" ? darkMode : snazzyMapStyle);
+    setMapStyle(theme === "dark" ? darkMode : snazzyMapStyle as any);
   }, [theme]);
 
   // Controlar la desaparición del mensaje de error después de 4 segundos

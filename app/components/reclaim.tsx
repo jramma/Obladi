@@ -33,7 +33,7 @@ export default function Reclaim() {
       <div className="container flex flex-col gap-10">
         <h3 className="text-5xl font-light">Reclamar objeto perdido</h3>
 
-      <Form
+        <Form
           action="/reclaim"
           className="space-y-6 text-[#000000] md:flex-row gap-6 items-stretch flex-col-reverse flex bg-tertiary text-xl w-full rounded-2xl p-6  card-style "
         >
@@ -91,9 +91,16 @@ export default function Reclaim() {
                   mapContainerStyle={{ width: "100%", height: "100%" }}
                   center={location}
                   zoom={15}
-                  onClick={(e) =>
-                    setLocation({ lat: e.latLng.lat(), lng: e.latLng.lng() })
-                  }
+                  onClick={(e) => {
+                    if (e.latLng) {
+                      setLocation({
+                        lat: e.latLng.lat(),
+                        lng: e.latLng.lng(),
+                      });
+                    } else {
+                      console.warn("e.latLng es null");
+                    }
+                  }}
                 >
                   <Marker position={location} />
                 </GoogleMap>
@@ -107,9 +114,8 @@ export default function Reclaim() {
               </button>
             </div>
           </div>
-      </Form>
+        </Form>
       </div>
-
     </section>
   );
 }

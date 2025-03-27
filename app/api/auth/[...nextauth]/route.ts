@@ -11,8 +11,11 @@ const handler = NextAuth({
       },
       async authorize(credentials) {
         // Aquí deberías verificar las credenciales en la base de datos
-        if (credentials?.username === "user" && credentials?.password === "password") {
-          return { id: 1, name: "John Doe", email: "johndoe@example.com" };
+        if (
+          credentials?.username === "user" &&
+          credentials?.password === "password"
+        ) {
+          return { id: "1", name: "John Doe", email: "john@example.com" };
         }
         return null;
       },
@@ -23,7 +26,7 @@ const handler = NextAuth({
   },
   pages: {
     signIn: "/auth/signin", // Página de login
-    error: "/auth/error",   // Página de error
+    error: "/auth/error", // Página de error
   },
 });
 

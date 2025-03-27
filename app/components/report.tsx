@@ -1,11 +1,11 @@
-'use client'
+"use client";
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
-import { useSession } from "next-auth/react";  // Verificamos la sesión
+import { useSession } from "next-auth/react"; // Verificamos la sesión
 import { useTheme } from "next-themes";
-import ProtectedForm from "./ProtectedForm";  // Importamos el nuevo componente
+import ProtectedForm from "./ProtectedForm"; // Importamos el nuevo componente
 import Form from "next/form";
 
 const categories = ["Electrónica", "Ropa", "Documentos", "Accesorios", "Otros"];
@@ -14,8 +14,8 @@ export default function Report() {
   const { register, handleSubmit } = useForm();
   const [location, setLocation] = useState({ lat: 40.7128, lng: -74.006 });
   const { theme } = useTheme();
-  const { data: session } = useSession();  // Comprobamos la sesión del usuario
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);  // Estado para mostrar el popup de login
+  const { data: session } = useSession(); // Comprobamos la sesión del usuario
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false); // Estado para mostrar el popup de login
 
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
   if (!apiKey) {
@@ -53,15 +53,15 @@ export default function Report() {
         </h3>
 
         {/* Usamos ProtectedForm para manejar el estado del modal */}
-        <ProtectedForm 
-          isOpen={isLoginModalOpen} 
-          closeLoginModal={() => setIsLoginModalOpen(false)} 
+        <ProtectedForm
+          isOpen={isLoginModalOpen}
+          closeLoginModal={() => setIsLoginModalOpen(false)}
         />
 
         {/* Formulario de Reporte */}
         <Form
           action="/report"
-          onSubmit={handleSubmit(handleReportSubmit)}  // Envío del formulario
+          onSubmit={handleSubmit(handleReportSubmit)} // Envío del formulario
           className="space-y-6 text-[#000000] md:flex-row gap-6 items-stretch flex-col-reverse flex bg-primary text-xl w-full rounded-2xl p-6 card-style"
         >
           <div className="flex-col flex md:w-1/2 gap-6">
@@ -119,9 +119,13 @@ export default function Report() {
                   mapContainerStyle={{ width: "100%", height: "100%" }}
                   center={location}
                   zoom={15}
-                  onClick={(e) =>
-                    setLocation({ lat: e.latLng.lat(), lng: e.latLng.lng() })
-                  }
+                  onClick={(e) => {
+                    if (e.latLng) {
+                      setLocation({ lat: e.latLng.lat(), lng: e.latLng.lng() });
+                    } else {
+                      console.warn("e.latLng es null");
+                    }
+                  }}
                 >
                   <Marker position={location} />
                 </GoogleMap>

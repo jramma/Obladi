@@ -1,11 +1,18 @@
-import { getSearchResults } from '@/lib/search';
+// import { getSearchResults } from '@/lib/search';
  
-export default async function SearchPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
-}) {
-  const results = await getSearchResults((await searchParams).query)
+// export default async function SearchPage({
+//   searchParams,
+// }: {
+//   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+// }) {
+//   const results = await getSearchResults((await searchParams).query)
  
-  return <div>...</div>
+//   return <div>...</div>
+// }
+export default function SearchPage() {
+  return (
+    <div>
+     
+    </div>
+  );
 }
