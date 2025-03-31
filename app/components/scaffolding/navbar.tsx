@@ -19,29 +19,31 @@ export default function Navbar() {
       <div className="hidden md:flex border-b-4 fixed inset-x-0 top-0 z-30 mx-auto py-2 px-6 bg-[#ffffff] dark:bg-[#000000]">
         <div className="container">
           <div className="w-full flex items-center justify-between ">
-            <div className="flex space-x-4">
-              {DATA.navbar.map((item) => (
-                <DockIcon key={item.href}>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Link
-                        href={item.href}
-                        className={cn(
-                          buttonVariants({ variant: "ghost", size: "icon" }),
-                          "size-12"
-                        )}
-                      >
-                        <item.icon className="size-6" />
-                      </Link>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>{item.label}</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </DockIcon>
-              ))}
+            <div className="flex gap-8 items-center">
+              <Link href={"/"} className="font-extrabold text-3xl text-tertiary">Ob-La-Di</Link>  
+              {DATA.navbar.map((item, index) => {
+                if (index === 0) return null;
+                return (
+                  <Link
+                    href={item.href}
+                    className="flex cursor-pointer group hover:font-bold transition  items-center gap-2"
+                  >
+                    <DockIcon key={item.href}>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <item.icon className="size-6" />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>{item.label}</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </DockIcon>
+                    <p>{item.label}</p>
+                  </Link>
+                );
+              })}
             </div>
-            <div className="flex space-x-4">
+            <div className="flex items-center gap-6">
               {Object.entries(DATA.contact.social)
                 .filter(([_, social]) => social.navbar)
                 .map(([name, social]) => (
@@ -65,8 +67,8 @@ export default function Navbar() {
                     </Tooltip>
                   </DockIcon>
                 ))}
+              <ModeToggle />
             </div>
-            <ModeToggle />
           </div>
         </div>
       </div>

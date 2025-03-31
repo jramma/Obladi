@@ -36,6 +36,7 @@ const MapboxMap = () => {
       pitch: 60,
       bearing: 0,
       antialias: true,
+      
     });
 
     mapRef.current = map;

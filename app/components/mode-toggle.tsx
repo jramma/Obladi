@@ -12,7 +12,7 @@ export function ModeToggle() {
       variant="ghost"
       type="button"
       size="icon"
-      className="px-2 cursor-pointer"
+      className="cursor-pointer hover:scale-150 transition"
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
     >
       <LuSun className="h-6 w-6 text-neutral-800 dark:hidden dark:text-neutral-200" />

@@ -3,12 +3,22 @@ import React from "react";
 import { Card } from "./card";
 import Marquee from "react-fast-marquee";
 import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 const Recently = () => {
-  const { theme } = useTheme();
+  const { theme, resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null; // o un loading state, si prefieres
+
+  const currentTheme = theme === "system" ? resolvedTheme : theme;
 
   const gradientColor =
-    theme === "dark" ? "rgba(33, 33, 33)" : "rgba(239, 239, 239)"; // Ajusta los colores según el tema
+    currentTheme === "dark" ? "#121212" : "#efefef";
 
   return (
     <section className=" container flex flex-col gap-6 py-10 md:py-20 px-4 md:px-0">
@@ -43,21 +53,21 @@ const Recently = () => {
         </Marquee>
       </div>
       <div className="hidden md:block">
-
-      <Marquee
-        speed={30}
-        delay={0}
-        gradient={true}
-        loop={0}
-        gradientColor={gradientColor}
-        gradientWidth={200}
-        direction="left"
-        className="hidden md:block"
-      >
-        <Card />
-        <Card />
-        <Card />
-      </Marquee></div>
+        <Marquee
+          speed={30}
+          delay={0}
+          gradient={true}
+          loop={0}
+          gradientColor={gradientColor}
+          gradientWidth={200}
+          direction="left"
+          className="hidden md:block"
+        >
+          <Card />
+          <Card />
+          <Card />
+        </Marquee>
+      </div>
     </section>
   );
 };
