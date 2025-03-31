@@ -1,49 +1,82 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
-import { useSession } from "next-auth/react"; // Verificamos la sesión
+import { useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
-import ProtectedForm from "./ProtectedForm"; // Importamos el nuevo componente
+import mapboxgl from "mapbox-gl";
+import "mapbox-gl/dist/mapbox-gl.css";
+import ProtectedForm from "./ProtectedForm";
 import Form from "next/form";
 
 const categories = ["Electrónica", "Ropa", "Documentos", "Accesorios", "Otros"];
+const DEFAULT_LOCATION = { lat: 41.3874, lng: 2.1686 }; // Barcelona
 
 export default function Report() {
   const { register, handleSubmit } = useForm();
-  const [location, setLocation] = useState({ lat: 40.7128, lng: -74.006 });
-  const { theme } = useTheme();
-  const { data: session } = useSession(); // Comprobamos la sesión del usuario
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false); // Estado para mostrar el popup de login
+  const [location, setLocation] = useState(DEFAULT_LOCATION);
+  const mapContainerRef = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<mapboxgl.Map | null>(null);
+  const markerRef = useRef<mapboxgl.Marker | null>(null);
+  const { data: session } = useSession();
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 
-  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
-  if (!apiKey) {
-    console.error(
-      "⚠️ Falta la API key de Google Maps. Agrega NEXT_PUBLIC_GOOGLE_MAPS_API_KEY en .env.local"
-    );
-    return <p>Error: API Key no configurada</p>;
-  }
+  useEffect(() => {
+    if (!mapboxToken || !mapContainerRef.current) return;
+    mapboxgl.accessToken = mapboxToken;
+
+    const map = new mapboxgl.Map({
+      container: mapContainerRef.current,
+      style: "mapbox://styles/mapbox/light-v11",
+      center: [location.lng, location.lat],
+      zoom: 15,
+    });
+
+    mapRef.current = map;
+
+    const marker = new mapboxgl.Marker({ color: "#1E3A8A" })
+      .setLngLat([location.lng, location.lat])
+      .addTo(map);
+    markerRef.current = marker;
+
+    map.on("click", (e) => {
+      const newLocation = { lat: e.lngLat.lat, lng: e.lngLat.lng };
+      setLocation(newLocation);
+      marker.setLngLat([newLocation.lng, newLocation.lat]);
+    });
+
+    return () => map.remove();
+  }, []);
 
   const handleLocationClick = () => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        setLocation({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        });
+      navigator.geolocation.getCurrentPosition(({ coords }) => {
+        const newLoc = { lat: coords.latitude, lng: coords.longitude };
+        setLocation(newLoc);
+        if (mapRef.current && markerRef.current) {
+          mapRef.current.flyTo({ center: [newLoc.lng, newLoc.lat], zoom: 15 });
+          markerRef.current.setLngLat([newLoc.lng, newLoc.lat]);
+        }
       });
     }
   };
 
   const handleReportSubmit = (data: any) => {
     if (!session) {
-      setIsLoginModalOpen(true); // Mostrar el popup si no está logueado
+      setIsLoginModalOpen(true);
     } else {
-      // Aquí iría el código para enviar el reporte
-      console.log("Reporte enviado:", data);
+      console.log("Reporte enviado:", {
+        ...data,
+        location,
+      });
+      // Aquí iría la lógica para guardar el reporte
     }
   };
+
+  if (!mapboxToken) {
+    return <p className="text-red-600">❌ Falta el Mapbox Access Token.</p>;
+  }
 
   return (
     <section className="py-20 flex w-full">
@@ -52,16 +85,14 @@ export default function Report() {
           Reportar objeto perdido
         </h3>
 
-        {/* Usamos ProtectedForm para manejar el estado del modal */}
         <ProtectedForm
           isOpen={isLoginModalOpen}
           closeLoginModal={() => setIsLoginModalOpen(false)}
         />
 
-        {/* Formulario de Reporte */}
         <Form
           action="/report"
-          onSubmit={handleSubmit(handleReportSubmit)} // Envío del formulario
+          onSubmit={handleSubmit(handleReportSubmit)}
           className="space-y-6 text-[#000000] md:flex-row gap-6 items-stretch flex-col-reverse flex bg-primary text-xl w-full rounded-2xl p-6 card-style"
         >
           <div className="flex-col flex md:w-1/2 gap-6">
@@ -70,14 +101,14 @@ export default function Report() {
               <input
                 type="text"
                 {...register("title", { required: true })}
-                className="bg-white card-style2 mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary"
+                className="bg-white card-style2 mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
               />
             </div>
             <div className="flex-col flex gap-3">
               <label className="block font-bold">Descripción</label>
               <textarea
                 {...register("description", { required: true })}
-                className="card-style2 mt-1 block w-full p-2 bg-white border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary"
+                className="card-style2 mt-1 block w-full p-2 bg-white border border-gray-300 rounded-md shadow-sm"
               />
             </div>
             <div className="flex-col flex gap-3">
@@ -85,7 +116,7 @@ export default function Report() {
               <input
                 type="text"
                 {...register("tags")}
-                className="card-style2 mt-1 block bg-white w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary"
+                className="card-style2 mt-1 block bg-white w-full p-2 border border-gray-300 rounded-md shadow-sm"
                 placeholder="Ejemplo: teléfono, negro, Samsung"
               />
             </div>
@@ -103,6 +134,18 @@ export default function Report() {
               </select>
             </div>
 
+            {/* Coordenadas ocultas */}
+            <input
+              type="hidden"
+              {...register("latitude")}
+              value={location.lat}
+            />
+            <input
+              type="hidden"
+              {...register("longitude")}
+              value={location.lng}
+            />
+
             <button
               type="submit"
               className="card-style2 py-2 self-start px-6 cursor-pointer bg-tertiary"
@@ -114,26 +157,11 @@ export default function Report() {
           <div className="flex flex-grow flex-col flex-1">
             <label className="block font-bold">Localización</label>
             <div className="relative flex aspect-square rounded-xl overflow-hidden card-style2">
-              <LoadScript googleMapsApiKey={apiKey}>
-                <GoogleMap
-                  mapContainerStyle={{ width: "100%", height: "100%" }}
-                  center={location}
-                  zoom={15}
-                  onClick={(e) => {
-                    if (e.latLng) {
-                      setLocation({ lat: e.latLng.lat(), lng: e.latLng.lng() });
-                    } else {
-                      console.warn("e.latLng es null");
-                    }
-                  }}
-                >
-                  <Marker position={location} />
-                </GoogleMap>
-              </LoadScript>
+              <div ref={mapContainerRef} className="w-full h-full" />
               <button
                 type="button"
                 onClick={handleLocationClick}
-                className="absolute top-2 right-2 bg-primary text-white p-2 rounded-md shadow-md"
+                className="absolute font-bold top-2 right-2 bg-tertiary text-black p-2 rounded-md shadow-md"
               >
                 Usar ubicación actual
               </button>

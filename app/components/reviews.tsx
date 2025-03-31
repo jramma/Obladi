@@ -1,4 +1,4 @@
-import Avatar from "@/components/ui/avatar";
+import Avatar from "@/components/ui/client-avatar";
 import SwiperReviews from "@/components/swipers";
 
 export default function Reviews() {
@@ -25,7 +25,7 @@ export default function Reviews() {
           <div className="flex flex-col text-center items-center p-6 col-span-1 gap-10">
             <p className="text-4xl">Contact us,<br/>Let's get in touch</p>
 
-            <a href="#" className="card-style font-bold px-6 py-3 bg-tertiary ">
+            <a href="#" className="card-style text-2xl font-bold px-6 py-3 bg-tertiary text-black">
               Contact
             </a>
           </div>

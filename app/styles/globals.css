@@ -5,26 +5,33 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --font-display: 'Funnel Display', sans-serif;
+  --font-display: "Funnel Display", sans-serif;
   --breakpoint-3xl: 120rem;
-  --color-primary: #F0523C;
-  --color-secondary: #FEB0E1;
-  --color-tertiary: #F6D465;
-  --color-white: #EFEFEF;
-  --color-black: #212121;
+  --color-primary: #ff8a65;
+  --color-secondary: #feb0e1;
+  --color-tertiary: #ffe082;
+  --color-white: #efefef;
+  --color-black: #121212;
 }
+@theme dark {
+  --font-display: "Funnel Display", sans-serif;
+  --breakpoint-3xl: 120rem;
+  --color-primary: #f0523c;
+  --color-secondary: #ffb3d9; 
+  --color-tertiary: #f6d465; 
+  --color-white: #efefef;
+  --color-black: #121212; 
+}
+
 @layer components {
   .container {
     @apply flex flex-col items-center justify-center mx-auto px-4 md:px-6 lg:px-8;
   }
 }
 
-
 body {
-  font-family: 'Funnel Display', sans-serif;
+  font-family: "Funnel Display", sans-serif;
 }
-
-
 
 @layer utilities {
   .card-style {
@@ -33,13 +40,11 @@ body {
            hover:shadow-[16px_16px_0px_0px_rgb(0,0,0)] dark:hover:shadow-[16px_16px_0px_0px_rgb(255,255,255)] 
            transition;
   }
-  .card-style2{
+  .card-style2 {
     @apply rounded-2xl border-2 border-black 
     shadow-[8px_8px_0px_0px_rgb(0,0,0)] 
     hover:shadow-[16px_16px_0px_0px_rgb(0,0,0)]
     transition;
-
-
   }
 }
 
@@ -49,14 +54,11 @@ body {
   padding-right: 30px; /* Espacio en los lados para que las flechas no se solapen */
 }
 
-
 /* Asegúrate de que las flechas tengan color negro */
 .swiper-button-next,
 .swiper-button-prev {
-  color: black !important; /* Flechas negras */
+  color: currentColor !important; /* Flechas negras */
 }
-
-
 
 /* Asegúrate de que las flechas no se solapen con las tarjetas */
 .mySwiper {
@@ -64,9 +66,10 @@ body {
   padding-right: 30px; /* Espacio a la derecha para las flechas */
 }
 
-.swiper-button-next, .swiper-button-prev {
+.swiper-button-next,
+.swiper-button-prev {
   z-index: 10; /* Asegúrate de que las flechas estén sobre las tarjetas */
 }
-button{
+button {
   @apply cursor-pointer;
 }

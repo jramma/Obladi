@@ -7,7 +7,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation"; // Asegúrate de que el CSS de navegación esté cargado
 
 import { Navigation,Autoplay } from "swiper/modules";
-import Avatar from "@/components/ui/avatar";
+import Avatar from "@/components/ui/client-avatar";
 
 export default function SwiperReviews() {
   // Opciones posibles para el fondo
