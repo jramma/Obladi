@@ -69,12 +69,11 @@ button {
   @apply cursor-pointer;
 }
 
-
 a {
   text-decoration: none;
   position: relative;
 }
-a:after {    
+a:after {
   background: none repeat scroll 0 0 transparent;
   bottom: 0;
   content: "";
@@ -86,7 +85,19 @@ a:after {
   transition: width 0.3s ease 0s, left 0.3s ease 0s;
   width: 0;
 }
-a:hover:after { 
-  width: 100%; 
-  left: 0; 
+a:hover:after {
+  width: 100%;
+  left: 0;
+}
+
+
+
+
+.text-shadow {
+  text-shadow: 5px 5px 0 currentColor, 2px 2px 2px currentColor;
+  -webkit-text-stroke: 2px #ffffff;
+}
+
+.dark .text-shadow {
+  -webkit-text-stroke: 2px #000000;
 }

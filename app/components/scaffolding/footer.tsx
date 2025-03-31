@@ -4,8 +4,8 @@ import Link from "next/link";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="p-6 w-full flex justify-center text-xl pb-20 md:pb-10">
-      <div className=" bg-red-100 flex flex-col gap-16 items-start w-full m-6 card-style !border-primary-400 !border-4 t-6">
+    <footer className="md:p-6 w-full flex justify-center text-xl pb-20 md:pb-10 z-30">
+      <div className=" bg-red-100 flex flex-col gap-16 items-start w-full md:m-6 card-style !border-primary-400 !border-4 ">
         <div className="container grid grid-cols-1 p-6 md:grid-cols-12 gap-6 md:gap-10 items-start">
           <div className="flex flex-col gap-4 text-primary-400 col-span-3">
             <h4 className="font-bold text-3xl">Sobre la web</h4>

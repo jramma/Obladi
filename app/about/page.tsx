@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { IconCloudDemo } from "@/components/magicui/cloud";
+import { IconCloudDemo } from "@/components/animation/cloud";
 import Image from "next/image";
-
+import LightBulb from "@/components/animation/light";
 export default function AboutPage() {
   const imageRef = useRef<HTMLImageElement>(null);
   const [hasScrolled, setHasScrolled] = useState(false);
@@ -31,7 +31,7 @@ export default function AboutPage() {
 
   return (
     <div className="container flex flex-col self-center max-w-[1000px]">
-      <section className="flex flex-row md:py-20 py-10 md:gap-10 gap-6 w-full">
+      <section className="flex md:flex-row flex-col md:py-20 py-10 md:gap-10 gap-6 w-full">
         <div className="flex flex-col md:gap-10 gap-6">
           <h2 className="text-5xl font-light">¿Cómo funciona?</h2>
           <p className="text-xl max-w-72">
@@ -46,11 +46,11 @@ export default function AboutPage() {
             ¡Si en <span className="bg-tertiary text-black">dos años</span> no se reclama el objeto puedes quedartelo!
           </p>
         </div>
-        <div className="flex w-1/2 flex-grow justify-center items-center relative">
+        <div className="flex md:w-1/2 flex-grow justify-center items-center relative">
           <IconCloudDemo />
         </div>
       </section>
-      <section className="flex flex-row-reverse md:py-20 py-10 md:gap-10 gap-6 w-full">
+      <section className="flex flex-col md:flex-row-reverse md:py-20 py-10 md:gap-10 gap-6 w-full">
         <div className="flex flex-col md:gap-10 gap-6 text-right items-end">
           <h2 className="text-5xl font-light">Sobre el proyecto</h2>
           <p className="text-xl max-w-72">
@@ -62,7 +62,7 @@ export default function AboutPage() {
             tecnologías son MongoDB y NextJS.
           </p>
         </div>
-        <div className="pt-42">
+        <div className="md:pt-42">
           <Image
             ref={imageRef}
             src="/uoc.jpg"
@@ -89,13 +89,8 @@ export default function AboutPage() {
             hay gestión online.
           </p>
         </div>
-        <div className="pt-42 relative flex-1">
-          <Image
-            src="/strategy.svg"
-            alt="Estrategia"
-            fill
-            className="text-primary"
-          />
+        <div className="pt-42 relative flex-1 hidden md:block">
+          <LightBulb />
         </div>
       </section>
     </div>
