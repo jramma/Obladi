@@ -6,7 +6,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 
 const DEFAULT_CENTER: [number, number] = [2.1686, 41.3874]; // Barcelona
 
-const MapboxMap = () => {
+const MapboxMap2 = () => {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const [center, setCenter] = useState<[number, number]>(DEFAULT_CENTER);
@@ -22,7 +22,10 @@ const MapboxMap = () => {
           setCenter([coords.longitude, coords.latitude]);
         },
         (error) => {
-          console.warn("No se pudo obtener la ubicación, usando Barcelona", error);
+          console.warn(
+            "No se pudo obtener la ubicación, usando Barcelona",
+            error
+          );
         }
       );
     }
@@ -36,7 +39,6 @@ const MapboxMap = () => {
       pitch: 60,
       bearing: 0,
       antialias: true,
-      
     });
 
     mapRef.current = map;
@@ -88,7 +90,13 @@ const MapboxMap = () => {
     };
   }, [center]);
 
-  return <div ref={mapContainerRef} style={{ height: "100%", width: "100%" }} />;
+  return (
+    <div ref={mapContainerRef} style={{ height: "100%", width: "100%" }} />
+  );
 };
-
+const MapboxMap = () => {
+  return <div className="w-full h-full bg-black dark:bg-white"></div>;
+};
 export default MapboxMap;
+
+

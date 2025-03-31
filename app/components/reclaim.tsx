@@ -125,7 +125,8 @@ export default function Reclaim() {
               Reclamar
             </button>
           </div>
-
+          <div className="flex flex-grow flex-col flex-1 bg-black dark:bg-white"></div>
+{/* 
           <div className="flex flex-grow flex-col flex-1">
             <label className="block font-bold">Localización</label>
             <div className="relative flex aspect-square rounded-xl overflow-hidden card-style2">
@@ -138,7 +139,7 @@ export default function Reclaim() {
                 Usar ubicación actual
               </button>
             </div>
-          </div>
+          </div> */}
         </Form>
       </div>
     </section>

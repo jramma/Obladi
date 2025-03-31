@@ -153,8 +153,8 @@ export default function Report() {
               Reportar
             </button>
           </div>
-
-          <div className="flex flex-grow flex-col flex-1">
+          <div className="flex flex-grow flex-col flex-1 bg-black dark:bg-white"></div>
+          {/* <div className="flex flex-grow flex-col flex-1">
             <label className="block font-bold">Localización</label>
             <div className="relative flex aspect-square rounded-xl overflow-hidden card-style2">
               <div ref={mapContainerRef} className="w-full h-full" />
@@ -166,7 +166,7 @@ export default function Report() {
                 Usar ubicación actual
               </button>
             </div>
-          </div>
+          </div> */}
         </Form>
       </div>
     </section>

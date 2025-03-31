@@ -20,7 +20,7 @@ export default function Navbar() {
         <div className="container">
           <div className="w-full flex items-center justify-between ">
             <div className="flex gap-8 items-center">
-              <Link href={"/"} className="font-extrabold text-3xl text-tertiary">Ob-La-Di</Link>  
+              <Link href={"/"} className="font-extrabold text-3xl text-primary ">Ob-La-Di</Link>  
               {DATA.navbar.map((item, index) => {
                 if (index === 0) return null;
                 return (
