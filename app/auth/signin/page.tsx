@@ -8,7 +8,7 @@ import Link from "next/link";
 
 export default function SignIn() {
   const [credentials, setCredentials] = useState({
-    username: "",
+    email: "",
     password: "",
   });
   const router = useRouter();
@@ -17,14 +17,14 @@ export default function SignIn() {
     e.preventDefault();
     const res = await signIn("credentials", {
       redirect: false,
-      username: credentials.username,
+      email: credentials.email,
       password: credentials.password,
     });
 
     if (res?.error) {
       alert("Credenciales inválidas");
     } else {
-      router.push("/dashboard");
+      router.push("/profile");
     }
   };
 
@@ -39,16 +39,16 @@ export default function SignIn() {
       >
         <h2 className="text-4xl font-bold">Iniciar sesión</h2>
         <div>
-          <label htmlFor="username" className="block">
-            Usuario o correo
+          <label htmlFor="email" className="block">
+            Correo
           </label>
           <input
             type="text"
-            id="username"
-            name="username"
-            value={credentials.username}
+            id="email"
+            name="email"
+            value={credentials.email}
             onChange={(e) =>
-              setCredentials({ ...credentials, username: e.target.value })
+              setCredentials({ ...credentials, email: e.target.value })
             }
             className="w-full p-2  card-style2"
             required

@@ -19,30 +19,37 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Contraseña", type: "password" },
       },
       async authorize(credentials) {
-        const client = await clientPromise;
-        const users = client.db().collection("users");
+        try {
+          const client = await clientPromise;
+          const users = client.db().collection("users");
 
-        const user = await users.findOne({ email: credentials?.email });
+          const user = await users.findOne({ email: credentials?.email });
 
-        if (!user) {
-          throw new Error("Usuario no encontrado");
+          if (!user) {
+            console.warn("❌ Usuario no encontrado");
+            return null;
+          }
+
+          const passwordValid = await bcrypt.compare(
+            credentials!.password,
+            user.password
+          );
+
+          if (!passwordValid) {
+            console.warn("❌ Contraseña incorrecta");
+            return null;
+          }
+
+          return {
+            id: user._id.toString(),
+            email: user.email,
+            name: user.name,
+            role: user.role,
+          };
+        } catch (err) {
+          console.error("❌ Error en authorize:", err);
+          return null;
         }
-
-        const passwordValid = await bcrypt.compare(
-          credentials!.password,
-          user.password
-        );
-
-        if (!passwordValid) {
-          throw new Error("Contraseña incorrecta");
-        }
-
-        return {
-          id: user._id.toString(),
-          email: user.email,
-          name: user.name,
-          role: user.role,
-        };
       },
     }),
   ],
@@ -88,10 +95,10 @@ export const authOptions: NextAuthOptions = {
           description: "",
           time: new Date(),
           pines: [],
-          contributor: 0,
+          contributor: 0.0,
           lost: false,
           location: null,
-          rewardPins: 0,
+          rewardPins: 0.0,
           foundObjects: {},
         });
       }
