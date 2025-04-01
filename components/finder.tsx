@@ -1,7 +1,7 @@
 "use client";
 
 import Form from "next/form";
-import { Icons } from "@/components/icons";
+import { Icons } from "./icons";
 
 export default function Finder() {
   return (

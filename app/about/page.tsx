@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { IconCloudDemo } from "@/components/animation/cloud";
+import { IconCloudDemo } from "../../components/animation/cloud";
 import Image from "next/image";
-import LightBulb from "@/components/animation/light";
+import LightBulb from "../../components/animation/light";
 export default function AboutPage() {
   const imageRef = useRef<HTMLImageElement>(null);
   const [hasScrolled, setHasScrolled] = useState(false);
@@ -54,7 +54,7 @@ export default function AboutPage() {
         <div className="flex flex-col md:gap-10 gap-6 text-right items-end">
           <h2 className="text-5xl font-light">Sobre el proyecto</h2>
           <p className="text-xl max-w-72">
-            El proyecto es el trabajo del Máster en Desarrollos web y apps de la
+            El proyecto es el trabajo del Máster en Desarrollo web y APPs de la
             UOC.
           </p>
           <p className="text-xl max-w-72">

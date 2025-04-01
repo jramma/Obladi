@@ -1,17 +1,17 @@
-import { Dock, DockIcon } from "@/components/animation/dock";
-import { ModeToggle } from "@/components/mode-toggle";
-import { buttonVariants } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
+import { Dock, DockIcon } from "../animation/dock";
+import { ModeToggle } from "../mode-toggle";
+import { buttonVariants } from "../ui/button";
+import { Separator } from "../ui/separator";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
   TooltipProvider,
-} from "@/components/ui/tooltip";
-import { DATA } from "@/lib/text";
-import { cn } from "@/lib/utils";
+} from "../ui/tooltip";
+import { DATA } from "../../lib/text";
+import { cn } from "../../lib/utils";
 import Link from "next/link";
-import { authOptions } from "@/lib/auth";
+import { authOptions } from "../../lib/auth";
 import { getServerSession } from "next-auth";
 
 export default async function Navbar() {

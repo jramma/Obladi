@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "./ui/button";
 import { LuMoonStar, LuSun } from "react-icons/lu";
 import { useTheme } from "next-themes";
 

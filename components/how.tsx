@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { Icons } from "@/components/icons";
+import { Icons } from "./icons";
 
 const cardsData = [
   {
@@ -24,7 +24,7 @@ const cardsData = [
     icon: <Icons.location className="w-20 h-20 -ml-4  -mt-4  absolute -right-4 -top-2 dark:text-green-200" />,
     title: "Conéctate con <b>otros</b> usuarios",
     description:
-      "Comparte información y ayuda a otros a encontrar sus objetos. ¡Juntos podemos hacer que el mundo sea un lugar mejor! Tenemos <b>un montón de premios</b> por ayuarnos ",
+      "Comparte información y ayuda a otros a encontrar sus objetos. <b>Consigue así pines</b> que podrás conajear por regalos!",
     imageSrc: "/27.svg",
   },
 ];

@@ -1,13 +1,13 @@
 'use client';
 import Image from "next/image";
 
-import Welcome from "@/components/sections/Welcome";
-import Recently from "@/components/marquee";
-import Report from "@/components/report";
-import Reviews from "./components/reviews";
-import How from "./components/how";
-import Reclaim from "./components/reclaim";
-import Finder from "./components/finder";
+import Welcome from "../components/sections/Welcome";
+import Recently from "../components/marquee";
+import Report from "../components/report";
+import Reviews from "../components/reviews";
+import How from "../components/how";
+import Reclaim from "../components/reclaim";
+import Finder from "../components/finder";
 import { SessionProvider } from "next-auth/react";
 
 export default function AboutPage() {
