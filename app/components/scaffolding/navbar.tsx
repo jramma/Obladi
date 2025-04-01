@@ -8,11 +8,19 @@ import {
   TooltipTrigger,
   TooltipProvider,
 } from "@/components/ui/tooltip";
-import { DATA } from "@/data/text";
+import { DATA } from "@/lib/text";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { authOptions } from "@/lib/auth";
+import { getServerSession } from "next-auth";
 
-export default function Navbar() {
+export default async function Navbar() {
+  var isloggedin = false;
+  const session = await getServerSession(authOptions);
+  if (session) {
+    isloggedin = true;
+  }
+
   return (
     <TooltipProvider>
       {/* Header para pantallas grandes */}
@@ -20,28 +28,24 @@ export default function Navbar() {
         <div className="container">
           <div className="w-full flex items-center justify-between ">
             <div className="flex gap-8 items-center">
-              <Link href={"/"} className="font-extrabold text-3xl text-primary ">Ob-La-Di</Link>  
-              {DATA.navbar.map((item, index) => {
-                if (index === 0) return null;
-                return (
-                  <Link
-                    href={item.href}
-                    className="flex cursor-pointer group hover:font-bold transition  items-center gap-2"
-                  >
-                    <DockIcon key={item.href}>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <item.icon className="size-6" />
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>{item.label}</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </DockIcon>
-                    <p>{item.label}</p>
-                  </Link>
-                );
-              })}
+              <Link
+                href={"/"}
+                className="font-extrabold text-3xl text-primary "
+              >
+                Ob-La-Di
+              </Link>
+              <Link
+                href={"/about"}
+                className="flex cursor-pointer group hover:font-bold transition  items-center gap-2"
+              >
+                <p>About</p>
+              </Link>
+              <Link
+                href={isloggedin ? "/profile" : "/auth/signin"}
+                className="flex cursor-pointer group hover:font-bold transition  items-center gap-2"
+              >
+                <p>Profile</p>
+              </Link>
             </div>
             <div className="flex items-center gap-6">
               {Object.entries(DATA.contact.social)

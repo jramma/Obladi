@@ -2,7 +2,7 @@
 import Map from "@/components/map";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-
+import Link from "next/link";
 export default function SignUp() {
   const [credentials, setCredentials] = useState({
     username: "",
@@ -67,12 +67,12 @@ export default function SignUp() {
         </button>
         {/* Botón para redirigir a la página de Sign Up */}
         <div className="flex justify-center mt-4">
-          <button
-            onClick={() => router.push("/auth/signin")}
-            className="text-blue-500 hover:underline"
+        <Link
+            href={"/auth/signin"}
+            className="text-blue-500 "
           >
             ¿Ya tienes una cuenta? Inicia sesión
-          </button>
+          </Link>
         </div>
       </form>
     </div>

@@ -4,6 +4,7 @@ import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Map from "@/components/map";
+import Link from "next/link";
 export default function SignIn() {
   const [credentials, setCredentials] = useState({
     username: "",
@@ -77,12 +78,12 @@ export default function SignIn() {
 
         {/* Botón para redirigir a la página de Sign Up */}
         <div className="flex justify-center mt-4">
-          <button
-            onClick={() => router.push("/auth/signup")}
-            className="text-blue-500 hover:underline"
+          <Link
+            href={"/auth/signup"}
+            className="text-blue-500 "
           >
-            Don't have an account? Sign Up
-          </button>
+            ¿No tienes una cuenta? Regístrate
+          </Link>
         </div>
       </form>
     </div>
