@@ -39,7 +39,7 @@ const Footer: React.FC = () => {
               Buscar
             </button>
           </div>
-          <a href="https://jramma.com" target="_blank" className="flex relative aspect-square flex-grow md:h-full md:w-auto w-full">
+          <a href="https://jramma.com" target="_blank" className="flex no-underline-effect relative aspect-square flex-grow md:h-full md:w-auto w-full">
             <Image
               src="/hero.png"
               fill

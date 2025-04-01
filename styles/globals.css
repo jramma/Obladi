@@ -90,6 +90,15 @@ a:hover:after {
   left: 0;
 }
 
+a.no-underline-effect {
+  text-decoration: none;
+  position: relative; /* o relative si la necesitas */
+}
+
+a.no-underline-effect::after {
+  display: none !important;
+  content: none;
+}
 
 
 

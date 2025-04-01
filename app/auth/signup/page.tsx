@@ -3,18 +3,44 @@ import Map from "../../../components/map";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+
 export default function SignUp() {
-  const [credentials, setCredentials] = useState({
-    username: "",
+  const [formData, setFormData] = useState({
+    name: "",
+    surname: "",
+    email: "",
     password: "",
   });
   const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Aquí podrías hacer una solicitud a tu backend para registrar al usuario
-    console.log("Registering:", credentials);
-    router.push("/auth/signin"); // Redirige al login después del registro
+
+    const res = await fetch("/api/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (res.ok) {
+      router.push("/auth/signin");
+    } else {
+      const error = await res.json();
+      alert(error.error || "Ocurrió un error");
+    }
+  };
+
+  const labels: Record<string, string> = {
+    name: "Nombre",
+    surname: "Apellidos",
+    email: "Correo electrónico",
+    password: "Contraseña",
   };
 
   return (
@@ -24,53 +50,44 @@ export default function SignUp() {
       </div>
       <form
         onSubmit={handleSubmit}
-        className="space-y-6 p-10 rounded-lg shadow-lg aspect-square w-auto h-auto bg-[#ffffff] dark:bg-[#000000] card-style"
+        className="space-y-6 p-10 rounded-lg shadow-lg w-auto h-auto bg-white dark:bg-black card-style"
       >
-        <h2 className="text-2xl font-bold">Sign Up</h2>
-        <div>
-          <label htmlFor="username" className="block">
-            Username
-          </label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            value={credentials.username}
-            onChange={(e) =>
-              setCredentials({ ...credentials, username: e.target.value })
-            }
-            className="w-full p-2 border border-gray-300 rounded"
-            required
-          />
+        <h2 className="text-2xl font-bold">Registrarse</h2>
+        <div className="grid grid-cols-2 gap-6">
+          {Object.keys(labels).map((field) => (
+            <div key={field}>
+              <label htmlFor={field} className="block">
+                {labels[field]}
+              </label>
+              <input
+                type={field === "password" ? "password" : "text"}
+                id={field}
+                name={field}
+                value={formData[field as keyof typeof formData]}
+                onChange={handleChange}
+                className="w-full p-2 card-style2 border min-w-72 border-gray-300 bg-[#ffffff] rounded"
+                required
+              />
+            </div>
+          ))}
         </div>
-        <div>
-          <label htmlFor="password" className="block">
-            Password
-          </label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={credentials.password}
-            onChange={(e) =>
-              setCredentials({ ...credentials, password: e.target.value })
-            }
-            className="w-full p-2 border border-gray-300 rounded"
-            required
-          />
-        </div>
-        <button
-          type="submit"
-          className="w-full py-2 bg-blue-500 text-white rounded"
-        >
-          Sign Up
-        </button>
-        {/* Botón para redirigir a la página de Sign Up */}
-        <div className="flex justify-center mt-4">
-        <Link
-            href={"/auth/signin"}
-            className="text-blue-500 "
+        <div className="flex flex-row gap-6 items-center">
+          <button
+            type="submit"
+            className="px-8 py-2 bg-primary text-black font-bold card-style2 rounded self-start"
           >
+            Crear cuenta
+          </button>
+          <Link
+            href="/api/auth/signin/google"
+            className="flex items-center gap-2 px-8 py-2  card-style2 border  rounded no-underline-effect bg-[#ffffff] "
+          >
+            <img src="/google.svg" alt="Google" className="w-5 h-5" />
+            <span className=" font-medium text-gray-700">Google</span>
+          </Link>
+        </div>
+        <div className="flex justify-center mt-4">
+          <Link href={"/auth/signin"} className="font-bold text-primary">
             ¿Ya tienes una cuenta? Inicia sesión
           </Link>
         </div>

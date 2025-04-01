@@ -30,7 +30,7 @@ export default async function Navbar() {
             <div className="flex gap-8 items-center">
               <Link
                 href={"/"}
-                className="font-extrabold text-3xl text-primary "
+                className="font-extrabold no-underline-effect text-3xl text-primary "
               >
                 Ob-La-Di
               </Link>
