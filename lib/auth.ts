@@ -41,7 +41,7 @@ export const authOptions: NextAuthOptions = {
           id: user._id.toString(),
           email: user.email,
           name: user.name,
-          role: user.rol,
+          role: user.role,
         };
       },
     }),
@@ -57,14 +57,14 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.id = user.id;
         token.email = user.email;
-        token.rol = user.rol ?? "usuario";
+        token.role = user.role ?? "usuario";
       }
       return token;
     },
     async session({ session, token }) {
       if (token) {
         session.user.id = token.id as string;
-        session.user.rol = token.rol as string;
+        session.user.role = token.role as string;
       }
       return session;
     },
@@ -81,7 +81,7 @@ export const authOptions: NextAuthOptions = {
           name: user.name || "",
           surname: "",
           authProvider: "google",
-          rol: "user",
+          role: "user",
           phone: "",
           mail: user.email,
           picture: user.image || "",
