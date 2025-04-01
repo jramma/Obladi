@@ -19,12 +19,15 @@ function getDeterministicIndex(seed: string, length: number) {
 
 const Avatar: React.FC<AvatarProps> = ({ userImage, seed = 'default' }) => {
   const bgOptions = ['bg-primary', 'bg-secondary', 'bg-tertiary'];
-  const index = getDeterministicIndex(seed, bgOptions.length);
-  const bgClass = bgOptions[index];
 
+  const [bgClass, setBgClass] = useState<string>(''); // Estado inicial vacío
   const [svg, setSvg] = useState<string | null>(null);
 
   useEffect(() => {
+    // Solo se ejecuta en el cliente
+    const index = getDeterministicIndex(seed, bgOptions.length);
+    setBgClass(bgOptions[index]);
+
     if (!userImage) {
       const avatar = createAvatar(lorelei, { seed });
       setSvg(avatar.toString());
