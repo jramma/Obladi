@@ -27,7 +27,6 @@ export async function POST(req: Request) {
     name,
     surname,
     authProvider: "credentials",
-    authId: "",
     rol: "user",
     phone: "",
     mail: email,

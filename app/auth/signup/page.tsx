@@ -3,6 +3,7 @@ import Map from "../../../components/map";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
@@ -50,10 +51,10 @@ export default function SignUp() {
       </div>
       <form
         onSubmit={handleSubmit}
-        className="space-y-6 p-10 rounded-lg shadow-lg w-auto h-auto bg-white dark:bg-black card-style"
+        className="flex my-6 flex-col space-y-6 p-10 rounded-lg shadow-lg w-auto h-auto bg-white dark:bg-black card-style"
       >
-        <h2 className="text-2xl font-bold">Registrarse</h2>
-        <div className="grid grid-cols-2 gap-6">
+        <h2 className="text-4xl font-bold">Registro</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {Object.keys(labels).map((field) => (
             <div key={field}>
               <label htmlFor={field} className="block">
@@ -78,15 +79,17 @@ export default function SignUp() {
           >
             Crear cuenta
           </button>
-          <Link
-            href="/api/auth/signin/google"
-            className="flex items-center gap-2 px-8 py-2  card-style2 border  rounded no-underline-effect bg-[#ffffff] "
+
+          <button
+            type="button"
+            onClick={() => signIn("google", { callbackUrl: "/" })}
+            className="flex items-center gap-2 px-8 py-[1.3rem] md:py-2 card-style2 border rounded no-underline-effect bg-[#ffffff]"
           >
             <img src="/google.svg" alt="Google" className="w-5 h-5" />
-            <span className=" font-medium text-gray-700">Google</span>
-          </Link>
+            <span className="font-medium text-gray-700"> Google</span>
+          </button>
         </div>
-        <div className="flex justify-center mt-4">
+        <div className="flex justify-center mt-16 text-xl">
           <Link href={"/auth/signin"} className="font-bold text-primary">
             ¿Ya tienes una cuenta? Inicia sesión
           </Link>

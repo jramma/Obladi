@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Map from "../../../components/map";
 import Link from "next/link";
+
 export default function SignIn() {
   const [credentials, setCredentials] = useState({
     username: "",
@@ -21,9 +22,9 @@ export default function SignIn() {
     });
 
     if (res?.error) {
-      alert("Invalid credentials");
+      alert("Credenciales inválidas");
     } else {
-      router.push("/dashboard"); // Redirige al dashboard o página principal
+      router.push("/dashboard");
     }
   };
 
@@ -34,12 +35,12 @@ export default function SignIn() {
       </div>
       <form
         onSubmit={handleSubmit}
-        className="space-y-6 p-10 rounded-lg shadow-lg aspect-square w-auto h-auto bg-[#ffffff] dark:bg-[#000000] card-style"
+        className="space-y-6 flex flex-col font-bold p-10 rounded-lg shadow-lg aspect-square w-auto h-auto bg-[#ffffff] dark:bg-[#000000] card-style my-6"
       >
-        <h2 className="text-2xl font-bold">Login</h2>
+        <h2 className="text-4xl font-bold">Iniciar sesión</h2>
         <div>
           <label htmlFor="username" className="block">
-            Username
+            Usuario o correo
           </label>
           <input
             type="text"
@@ -49,13 +50,13 @@ export default function SignIn() {
             onChange={(e) =>
               setCredentials({ ...credentials, username: e.target.value })
             }
-            className="w-full p-2 border border-gray-300 rounded"
+            className="w-full p-2  card-style2"
             required
           />
         </div>
         <div>
           <label htmlFor="password" className="block">
-            Password
+            Contraseña
           </label>
           <input
             type="password"
@@ -65,23 +66,29 @@ export default function SignIn() {
             onChange={(e) =>
               setCredentials({ ...credentials, password: e.target.value })
             }
-            className="w-full p-2 border border-gray-300 rounded"
+            className="w-full p-2  card-style2"
             required
           />
         </div>
+
+        {/* 👉 Botón para iniciar sesión con Google */}
+        <button
+          type="button"
+          onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+          className="w-full mt-2 flex items-center justify-center gap-2 py-2 border card-style2  bg-[#ffffff] text-gray-700"
+        >
+          <img src="/google.svg" alt="Google" className="w-5 h-5" />
+          <span>Continuar con Google</span>
+        </button>
         <button
           type="submit"
-          className="w-full py-2 bg-blue-500 text-white rounded"
+          className="bg-primary font-bold text-black card-style2 self-start px-8 py-2"
         >
-          Sign In
+          Iniciar sesión
         </button>
-
-        {/* Botón para redirigir a la página de Sign Up */}
-        <div className="flex justify-center mt-4">
-          <Link
-            href={"/auth/signup"}
-            className="text-blue-500 "
-          >
+        {/* Enlace al registro */}
+        <div className="flex justify-center mt-16">
+          <Link href={"/auth/signup"} className="font-bold text-primary">
             ¿No tienes una cuenta? Regístrate
           </Link>
         </div>
