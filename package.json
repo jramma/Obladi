@@ -20,7 +20,7 @@
     "clsx": "^2.1.1",
     "lucide-react": "^0.483.0",
     "mapbox-gl": "^3.11.0",
-    "mongodb": "6.0.0",
+    "mongodb": "^5",
     "motion": "^12.6.3",
     "next": "15.2.3",
     "next-auth": "^4.24.11",
