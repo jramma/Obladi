@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { Menu } from "@/components/menu";
 import { useUser } from "@/context/UserContext";
 
-export default function NotPages() {
+export default function ObjPage() {
   const user = useUser();
 
   if (!user) {

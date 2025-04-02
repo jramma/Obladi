@@ -36,11 +36,11 @@ export default function Shop({ user }: any) {
 
       {/* Contenedor deslizable en móviles */}
       <div className="overflow-visible -mx-10">
-        <div className="w-full flex gap-6 overflow-scroll py-4 p-8" >
+        <div className="w-full flex gap-6 overflow-scroll py-4 p-8 lg:px-20" >
           {products.map((product) => (
             <div
               key={product.id}
-              className={`card-style flex-shrink-0 flex flex-col ${product.bg} overflow-hidden relative w-[90%] sm:w-[80%] md:w-1/3 max-w-[300px] mx-auto rounded-xl`}
+              className={`card-style flex-shrink-0 flex flex-col ${product.bg} overflow-hidden relative w-72 mx-auto rounded-xl`}
             >
               <div className="w-full pt-6 px-6 pb-2 overflow-hidden">
                 <div className="border-3 border-black overflow-hidden relative rounded-2xl aspect-square">

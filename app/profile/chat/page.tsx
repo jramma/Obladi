@@ -1,69 +1,92 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { redirect } from "next/navigation";
 import clientPromise from "@/lib/mongodb";
 import { Menu } from "@/components/menu";
-export default async function ProfilePage() {
-  const session = await getServerSession(authOptions);
+import { ObjectId } from "mongodb";
+import Link from "next/link";
 
-  if (!session) {
-    redirect("/auth/signin");
-  }
+export default async function ChatPage() {
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.id) return <p>No estás autenticado</p>;
 
   const client = await clientPromise;
   const db = client.db();
-  const user = await db.collection("users").findOne({
-    email: session.user?.email,
-  });
+  const userId = new ObjectId(session.user.id);
 
-  if (!user) {
-    redirect("/auth/signin");
+  // Reclamaciones del usuario
+  const reclaimObjects = await db
+    .collection("reclaimObject")
+    .find({ claimedBy: userId })
+    .toArray();
+
+  // Posibles chats (con usuarios que han perdido objetos)
+  const chatCandidates = await Promise.all(
+    reclaimObjects.map(async (reclaim) => {
+      const lost = await db
+        .collection("lostObjects")
+        .findOne({ _id: reclaim.objectId });
+
+      if (!lost) return null;
+      const otherUserId = lost.findBy.toString();
+      if (otherUserId === userId.toString()) return null;
+
+      return {
+        objectId: reclaim.objectId,
+        participants: [userId.toString(), otherUserId],
+      };
+    })
+  );
+
+  // Crear chats si no existen (opcional, puedes mover esto a otro lado)
+  const validChats = chatCandidates.filter(Boolean);
+  for (const chat of validChats) {
+    const exists = await db.collection("chats").findOne({
+      objectId: chat!.objectId,
+      participants: { $all: chat!.participants },
+    });
+
+    if (!exists) {
+      await db.collection("chats").insertOne({
+        participants: chat!.participants,
+        objectId: chat!.objectId,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+    }
   }
 
-  return (
-    <main className="container self-center flex flex-row justify-end py-20">
-      <Menu />
+  // Cargar todos los chats del usuario
+  const userChats = await db
+    .collection("chats")
+    .find({
+      participants: userId,
+    })
+    .toArray();
 
-      <section className="w-3/4">
-        <h1 className="text-2xl font-bold mb-4">Perfil de {user.name}</h1>
-        <ul className="space-y-2">
-          <li>
-            <strong>Nombre:</strong> {user.name}
-          </li>
-          <li>
-            <strong>Apellidos:</strong> {user.surname}
-          </li>
-          <li>
-            <strong>Email:</strong> {user.email}
-          </li>
-          <li>
-            <strong>Rol:</strong> {user.role}
-          </li>
-          <li>
-            <strong>Teléfono:</strong> {user.phone || "No asignado"}
-          </li>
-          <li>
-            <strong>Pines:</strong> {user.pines?.length || 0}
-          </li>
-          <li>
-            <strong>Descripción:</strong>{" "}
-            {user.description || "Sin descripción"}
-          </li>
-          <li>
-            <strong>Contribuciones:</strong> {user.contributor}
-          </li>
-          <li>
-            <strong>Ubicación:</strong>{" "}
-            {user.location ? user.location.toString() : "No asignada"}
-          </li>
-          <li>
-            {new Date(user.time).toLocaleDateString("es-ES", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-          </li>
-        </ul>
+  return (
+    <main className="container flex-grow flex flex-row justify-end py-20">
+      <Menu />
+      <section className="max-w-3/4 px-8 flex flex-grow flex-col gap-6">
+        <h2 className="text-4xl font-light mb-6">Tus chats</h2>
+        {userChats.length === 0 ? (
+          <>
+            <p className="text-gray-500">No hay chats disponibles</p>
+            <p className="max-w-96">Se crearán salas de chat si hay coincidencias entre objetos que hayas perdido y objetos que se hayan encontrado y viceversa.</p>
+          </>
+        ) : (
+          <ul className="space-y-4">
+            {userChats.map((chat) => (
+              <li key={chat._id.toString()} className="border-b py-2">
+                <Link
+                  href={`/profile/chat/${chat._id}`}
+                  className="text-blue-500 hover:underline"
+                >
+                  Ver conversación sobre objeto {chat.objectId.toString()}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
       </section>
     </main>
   );

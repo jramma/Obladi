@@ -1,0 +1,33 @@
+"use client";
+
+import { createContext, useContext, useState, useEffect } from "react";
+
+export type PlainUser = {
+  email: string;
+  name: string;
+  surname: string;
+  authProvider: string;
+  role: string;
+  phone: string;
+  mail: string;
+  picture: string;
+  description: string;
+  time: string;
+  pines: string[];
+  contributor: number;
+  lost: boolean;
+  location: string | null;
+  rewardPins: number;
+  foundObjects: Record<string, unknown>;
+  gender: string;
+};
+
+const UserContext = createContext<PlainUser | null>(null);
+
+export function useUser() {
+  return useContext(UserContext);
+}
+
+export function UserProvider({ user, children }: { user: PlainUser; children: React.ReactNode }) {
+  return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
+}

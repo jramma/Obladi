@@ -3,26 +3,65 @@ import "@/styles/globals.css";
 import Navbar from "../components/scaffolding/navbar";
 import { ThemeProvider } from "next-themes";
 import Footer from "../components/scaffolding/footer";
+import { UserProvider } from "@/context/UserContext";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { redirect } from "next/navigation";
+
+import clientPromise from "@/lib/mongodb";
 
 export const metadata: Metadata = {
   title: "Ob-la-di, Ob-la-da",
   description: "Encuentra objetos perdidos",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getServerSession(authOptions);
 
+  const client = await clientPromise;
+  const db = client.db();
+  const user = await db.collection("users").findOne({
+    email: session?.user?.email,
+  });
+
+  if (!user) redirect("/auth/signin");
+
+  const safeUser = {
+    email: user.email,
+    name: user.name || "",
+    surname: user.surname || "",
+    authProvider: user.authProvider || "credentials",
+    role: user.role || "user",
+    phone: user.phone || "",
+    mail: user.mail || user.email,
+    picture: user.picture || "",
+    description: user.description || "",
+    time:
+      user.time instanceof Date
+        ? user.time.toISOString()
+        : new Date().toISOString(),
+    pines: (user.pines || []).map((id: any) => id.toString()),
+    contributor: typeof user.contributor === "number" ? user.contributor : 0.0,
+    lost: user.lost ?? false,
+    location: user.location ? user.location.toString() : null,
+    rewardPins: typeof user.rewardPins === "number" ? user.rewardPins : 0.0,
+    foundObjects: user.foundObjects || {},
+    gender: user.gender || "",
+  };
   return (
     <html lang="es" suppressHydrationWarning>
       <body className="min-h-screen flex flex-col items-center w-full bg-white dark:bg-black md:pt-18">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Navbar />
-          {children}
-          <Footer />
-        </ThemeProvider>
+        <UserProvider user={safeUser}>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <Navbar />
+            {children}
+            <Footer />
+          </ThemeProvider>
+        </UserProvider>
       </body>
     </html>
   );
