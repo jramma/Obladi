@@ -3,11 +3,12 @@ import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import clientPromise from "@/lib/mongodb";
 import Hero from "@/components/hero";
+import Pines  from "@/components/pines";
+import  Shop  from "@/components/shop";
 import { Menu } from "@/components/menu";
 export default async function ProfilePage() {
   const session = await getServerSession(authOptions);
- 
-  
+
   if (!session) {
     redirect("/auth/signin");
   }
@@ -27,9 +28,13 @@ export default async function ProfilePage() {
     mail: user?.mail || user?.email,
     picture: user?.picture || "",
     description: user?.description || "",
-    time: user?.time instanceof Date ? user?.time.toISOString() : new Date().toISOString(),
+    time:
+      user?.time instanceof Date
+        ? user?.time.toISOString()
+        : new Date().toISOString(),
     pines: (user?.pines || []).map((id: any) => id.toString()),
-    contributor: typeof user?.contributor === "number" ? user?.contributor : 0.0,
+    contributor:
+      typeof user?.contributor === "number" ? user?.contributor : 0.0,
     lost: user?.lost ?? false,
     location: user?.location ? user?.location.toString() : null,
     rewardPins: typeof user?.rewardPins === "number" ? user?.rewardPins : 0.0,
@@ -40,57 +45,13 @@ export default async function ProfilePage() {
   }
 
   return (
-    <main className="container self-center flex flex-row justify-end py-20">
+    <main className="container self-center flex flex-row justify-end py-10 md:py-20 !overflow-visible">
       <Menu />
 
-      <section className="w-3/4 flex flex-col items-start">
-      <Hero user={safeUser} />
-
-        
-
-
-
-        <div>
-          <h1 className="text-2xl font-bold mb-4">Perfil de {user.name}</h1>
-          <ul className="space-y-2">
-            <li>
-              <strong>Nombre:</strong> {user.name}
-            </li>
-            <li>
-              <strong>Apellidos:</strong> {user.surname}
-            </li>
-            <li>
-              <strong>Email:</strong> {user.email}
-            </li>
-            <li>
-              <strong>Rol:</strong> {user.role}
-            </li>
-            <li>
-              <strong>Teléfono:</strong> {user.phone || "No asignado"}
-            </li>
-            <li>
-              <strong>Pines:</strong> {user.pines?.length || 0}
-            </li>
-            <li>
-              <strong>Descripción:</strong>{" "}
-              {user.description || "Sin descripción"}
-            </li>
-            <li>
-              <strong>Contribuciones:</strong> {user.contributor}
-            </li>
-            <li>
-              <strong>Ubicación:</strong>{" "}
-              {user.location ? user.location.toString() : "No asignada"}
-            </li>
-            <li>
-              {new Date(user.time).toLocaleDateString("es-ES", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
-            </li>
-          </ul>
-        </div>
+      <section className="w-full md:w-3/4 flex flex-col items-start">
+        <Hero user={safeUser} />
+        <Pines user={safeUser} />
+        <Shop user={safeUser} />
       </section>
     </main>
   );

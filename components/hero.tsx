@@ -3,32 +3,18 @@
 import Image from "next/image";
 import { notionistsNeutral } from "@dicebear/collection";
 import { createAvatar } from "@dicebear/core";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function Hero({ user }: any) {
   const [description, setDescription] = useState(user.description || "");
+  const [originalDescription, setOriginalDescription] = useState(user.description || "");
   const [picture, setPicture] = useState(user.picture || "");
+  const [isEditing, setIsEditing] = useState(false);
 
   const avatarSvg = createAvatar(notionistsNeutral, {
     seed: user.name || "avatar",
   }).toDataUri();
   const imageSrc = picture || avatarSvg;
-
-  // 👉 Debounce: espera 1s después de teclear antes de guardar
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      fetch("/api/profile", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: user.email,
-          description,
-        }),
-      });
-    }, 1000); // espera 1s sin cambios
-
-    return () => clearTimeout(timeout); // limpia si vuelve a teclear
-  }, [description]);
 
   const handleChangePicture = async () => {
     const newUrl = prompt("Introduce la URL de la nueva imagen:");
@@ -57,13 +43,36 @@ export default function Hero({ user }: any) {
     });
   };
 
+  const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setDescription(e.target.value);
+    if (!isEditing) setIsEditing(true);
+  };
+
+  const handleCancel = () => {
+    setDescription(originalDescription);
+    setIsEditing(false);
+  };
+
+  const handleSave = async () => {
+    await fetch("/api/profile", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: user.email,
+        description,
+      }),
+    });
+    setOriginalDescription(description);
+    setIsEditing(false);
+  };
+
   return (
     <div className="flex flex-col items-start gap-6 p-6">
       <p className="text-4xl font-light">
         {user.name} {user.surname}
       </p>
 
-      <div className="flex flex-row items-center gap-20 w-full px-6">
+      <div className="flex flex-row items-center gap-6 md:gap-20 w-full md:px-6">
         <Image
           src={imageSrc}
           alt={user.name}
@@ -71,20 +80,20 @@ export default function Hero({ user }: any) {
           height={150}
           className="rounded-full border-3 border-black dark:border-white"
         />
-        <div className="flex gap-4 mt-2">
+        <div className="flex flex-wrap gap-4 mt-2">
           <button
             onClick={handleChangePicture}
-            className="card-style2 px-6 py-2 bg-secondary hover:shadow-secondary hover:bg-black hover:text-white transition font-bold"
+            className="card-style px-6 py-2 bg-secondary hover:shadow-secondary hover:bg-black hover:text-white transition font-bold"
           >
             Cambiar foto
           </button>
           <button
             onClick={handleRemovePicture}
             disabled={!picture}
-            className={`card-style2 px-4 py-2 font-bold transition ${
+            className={`px-4 py-2 font-bold transition ${
               picture
-                ? "bg-primary hover:shadow-primary hover:bg-black hover:text-white"
-                : "bg-gray-300 text-gray-600 cursor-not-allowed"
+                ? "bg-primary hover:shadow-primary card-style hover:bg-black hover:text-white"
+                : "bg-gray-300 text-gray-600 !cursor-not-allowed card-style1"
             }`}
           >
             Eliminar foto
@@ -95,13 +104,34 @@ export default function Hero({ user }: any) {
       <label htmlFor="bio" className="font-semibold">
         Biografía
       </label>
-      <textarea
-        id="bio"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        className="card-style w-full min-h-40 p-4 rounded resize-none"
-        placeholder="Cuéntanos algo sobre ti..."
-      />
+      <div className="w-full relative">
+        <textarea
+          id="bio"
+          value={description}
+          onChange={handleDescriptionChange}
+          className="card-style w-full min-h-40 p-4 rounded resize-none"
+          placeholder="Cuéntanos algo sobre ti..."
+        />
+        {isEditing && (
+          <div className="flex gap-4 mt-2 absolute right-6 bottom-6">
+            <button
+              type="button"
+              onClick={handleSave}
+              className="px-6 py-2 bg-tertiary card-style2 rounded font-bold  transition"
+            >
+              Guardar
+            </button>
+            <button
+              type="button"
+              onClick={handleCancel}
+              className="px-6 py-2 bg-primary card-style2 rounded font-bold  transition"
+            >
+              Cancelar
+            </button>
+          </div>
+        )}
+      </div>
+      
     </div>
   );
 }

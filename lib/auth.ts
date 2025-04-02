@@ -3,8 +3,9 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { MongoClient } from "mongodb";
 import bcrypt from "bcryptjs";
+import clientPromise from "@/lib/mongodb"; 
 
-const clientPromise = new MongoClient(process.env.MONGODB_URI!).connect();
+
 
 export const authOptions: NextAuthOptions = {
   providers: [
