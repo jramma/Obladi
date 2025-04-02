@@ -11,7 +11,7 @@ import {
 import { DATA } from "../../lib/text";
 import { cn } from "../../lib/utils";
 import Link from "next/link";
-import { authOptions } from "../../lib/auth";
+import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 
 export default async function Navbar() {

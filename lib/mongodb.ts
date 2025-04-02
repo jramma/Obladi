@@ -1,14 +1,18 @@
 import { MongoClient } from "mongodb";
 
-const uri = process.env.MONGODB_URI!;
+const uri =
+  process.env.NODE_ENV === "development"
+    ? process.env.MONGODB_URI_LOCAL
+    : process.env.MONGODB_URI;
+
+if (!uri) {
+  throw new Error("No Mongo URI provided");
+}
+
 const options = {};
 
 let client;
 let clientPromise: Promise<MongoClient>;
-
-if (!process.env.MONGODB_URI) {
-  throw new Error("Please add your Mongo URI to .env");
-}
 
 if (process.env.NODE_ENV === "development") {
   if (!(global as any)._mongoClientPromise) {
