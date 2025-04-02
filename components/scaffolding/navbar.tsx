@@ -2,6 +2,7 @@ import { Dock, DockIcon } from "../animation/dock";
 import { ModeToggle } from "../mode-toggle";
 import { buttonVariants } from "../ui/button";
 import { Separator } from "../ui/separator";
+import { Logout } from "@/components/logout";
 import {
   Tooltip,
   TooltipContent,
@@ -36,41 +37,20 @@ export default async function Navbar() {
               </Link>
               <Link
                 href={"/about"}
-                className="flex cursor-pointer group hover:font-bold transition  items-center gap-2"
+                className="flex cursor-pointer group font-bold transition  items-center gap-2"
               >
                 <p>About</p>
               </Link>
               <Link
                 href={isloggedin ? "/profile" : "/auth/signin"}
-                className="flex cursor-pointer group hover:font-bold transition  items-center gap-2"
+                className="flex cursor-pointer group font-bold transition  items-center gap-2"
               >
                 <p>Profile</p>
               </Link>
             </div>
             <div className="flex items-center gap-6">
-              {Object.entries(DATA.contact.social)
-                .filter(([_, social]) => social.navbar)
-                .map(([name, social]) => (
-                  <DockIcon key={name}>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Link
-                          href={social.url}
-                          target="_blank"
-                          className={cn(
-                            buttonVariants({ variant: "ghost", size: "icon" }),
-                            "size-12 no-underline-effect"
-                          )}
-                        >
-                          <social.icon className="size-6" />
-                        </Link>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>{name}</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </DockIcon>
-                ))}
+              {isloggedin && <Logout />}
+
               <ModeToggle />
             </div>
           </div>

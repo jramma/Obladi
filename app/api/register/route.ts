@@ -45,7 +45,9 @@ export async function POST(req: Request) {
     pines: [],
     contributor: new Double(0),
     lost: false,
-    location: null,
+    location: "", // o null si tu schema lo permite
+    lostObjects: [], // ✅ Añadir esto
+    reclaimedObjects: [], // ✅ Y esto también
   };
 
   try {

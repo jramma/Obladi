@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
+import { ObjectId } from "mongodb";
 
 export async function PUT(req: Request) {
   try {
@@ -8,9 +9,7 @@ export async function PUT(req: Request) {
     const body = await req.json();
     console.log("Cuerpo de la solicitud recibido:", body);
 
-    const { email, ...updates } = body;
-    console.log("Email extraído:", email);
-    console.log("Actualizaciones extraídas:", updates);
+    const { email, reclaimedObjects, lostObjects, ...otherUpdates } = body;
 
     if (!email) {
       console.log("Error: Falta el email en la solicitud.");
@@ -18,27 +17,41 @@ export async function PUT(req: Request) {
     }
 
     const client = await clientPromise;
-    console.log("Conexión a MongoDB establecida.");
-
     const db = client.db();
-    console.log("Base de datos seleccionada.");
 
-    const result = await db
-      .collection("users")
-      .updateOne({ email }, { $set: updates });
+    const updateOps: any = {};
+
+    if (Object.keys(otherUpdates).length > 0) {
+      updateOps.$set = otherUpdates;
+    }
+
+    if (reclaimedObjects) {
+      updateOps.$push = updateOps.$push || {};
+      updateOps.$push.reclaimedObjects = {
+        $each: reclaimedObjects.map((id: string) => new ObjectId(id)),
+      };
+    }
+
+    if (lostObjects) {
+      updateOps.$push = updateOps.$push || {};
+      updateOps.$push.lostObjects = {
+        $each: lostObjects.map((id: string) => new ObjectId(id)),
+      };
+    }
+
+   const result = await db.collection("users").updateOne({ email }, updateOps);
+
     console.log("Resultado de la operación updateOne:", result);
 
     if (result.matchedCount === 0) {
-      console.log("Error: Usuario no encontrado.");
       return NextResponse.json(
         { error: "Usuario no encontrado." },
         { status: 404 }
       );
     }
 
-    console.log("Perfil actualizado correctamente.");
-    return NextResponse.json({ message: "Perfil actualizado." });
-  } catch (error:any) {
+    return NextResponse.json({ message: "Perfil actualizado correctamente" });
+  } catch (error: any) {
     console.error("❌ Error en PUT /api/user/update:", error);
 
     if (error.code === 121 && error.errInfo) {

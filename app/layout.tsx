@@ -28,30 +28,30 @@ export default async function RootLayout({
     email: session?.user?.email,
   });
 
-  if (!user) redirect("/auth/signin");
 
   const safeUser = {
-    email: user.email,
-    name: user.name || "",
-    surname: user.surname || "",
-    authProvider: user.authProvider || "credentials",
-    role: user.role || "user",
-    phone: user.phone || "",
-    mail: user.mail || user.email,
-    picture: user.picture || "",
-    description: user.description || "",
+    email: user?.email,
+    name: user?.name || "",
+    surname: user?.surname || "",
+    authProvider: user?.authProvider || "credentials",
+    role: user?.role || "user?",
+    phone: user?.phone || "",
+    mail: user?.mail || user?.email,
+    picture: user?.picture || "",
+    description: user?.description || "",
     time:
-      user.time instanceof Date
-        ? user.time.toISOString()
+      user?.time instanceof Date
+        ? user?.time.toISOString()
         : new Date().toISOString(),
-    pines: (user.pines || []).map((id: any) => id.toString()),
-    contributor: typeof user.contributor === "number" ? user.contributor : 0.0,
-    lost: user.lost ?? false,
-    location: user.location ? user.location.toString() : null,
-    rewardPins: typeof user.rewardPins === "number" ? user.rewardPins : 0.0,
-    foundObjects: user.foundObjects || {},
-    gender: user.gender || "",
+    pines: (user?.pines || []).map((id: any) => id.toString()),
+    contributor: typeof user?.contributor === "number" ? user?.contributor : 0.0,
+    lost: user?.lost ?? false,
+    location: user?.location ? user?.location.toString() : null,
+    rewardPins: typeof user?.rewardPins === "number" ? user?.rewardPins : 0.0,
+    foundObjects: user?.foundObjects || {},
+    gender: user?.gender || "",
   };
+
   return (
     <html lang="es" suppressHydrationWarning>
       <body className="min-h-screen flex flex-col items-center w-full bg-white dark:bg-black md:pt-18">
