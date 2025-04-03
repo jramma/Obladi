@@ -36,7 +36,7 @@ export default function ImageList({ imgs, title }: Props) {
           key={i}
           src={url}
           alt={`Imagen ${i + 1} de ${title}`}
-          className="mt-2 rounded-lg"
+          className="rounded-lg"
           width={200}
           height={200}
         />

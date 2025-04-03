@@ -1,58 +1,62 @@
 "use client";
 
+import { useState } from "react";
 import { redirect } from "next/navigation";
 import { Menu } from "@/components/menu";
 import { useUser } from "@/context/UserContext";
+import Toggle from "@/components/form/toggle";
 
 export default function NotPages() {
   const user = useUser();
+
+  const [notifications, setNotifications] = useState({
+    mailing: true,
+    chat: true,
+    reclaimed: true,
+    found: true,
+    lostNearby: true,
+  });
 
   if (!user) {
     redirect("/auth/signin");
   }
 
+  const handleToggle = (key: keyof typeof notifications, value: boolean) => {
+    setNotifications((prev) => ({ ...prev, [key]: value }));
+    // 👉 Aquí podés hacer un fetch a la API para guardar preferencia
+  };
+
   return (
     <main className="container self-center flex flex-row flex-grow justify-end py-20">
       <Menu />
-      <section className="w-3/4">
-        <h1 className="text-2xl font-bold mb-4">Perfil de {user.name}</h1>
-        <ul className="space-y-2">
-          <li>
-            <strong>Nombre:</strong> {user.name}
-          </li>
-          <li>
-            <strong>Apellidos:</strong> {user.surname}
-          </li>
-          <li>
-            <strong>Email:</strong> {user.email}
-          </li>
-          <li>
-            <strong>Rol:</strong> {user.role}
-          </li>
-          <li>
-            <strong>Teléfono:</strong> {user.phone || "No asignado"}
-          </li>
-          <li>
-            <strong>Pines:</strong> {user.pines?.length || 0}
-          </li>
-          <li>
-            <strong>Descripción:</strong>{" "}
-            {user.description || "Sin descripción"}
-          </li>
-          <li>
-            <strong>Contribuciones:</strong> {user.contributor}
-          </li>
-          <li>
-            <strong>Ubicación:</strong>{" "}
-            {user.location ? user.location.toString() : "No asignada"}
-          </li>
-          <li>
-            {new Date(user.time).toLocaleDateString("es-ES", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-          </li>
+      <section className="md:w-3/4">
+        <h1 className="text-2xl font-bold mb-4">Desactivar notificaciones</h1>
+        <ul className="space-y-4">
+          <Toggle
+            label="Notificaciones por correo"
+            initial={notifications.mailing}
+            onToggle={(value) => handleToggle("mailing", value)}
+          />
+          <Toggle
+            label="Notificaciones de chat"
+            initial={notifications.chat}
+            onToggle={(value) => handleToggle("chat", value)}
+          />
+          <Toggle
+            label="Cuando alguien reclama un objeto tuyo"
+            initial={notifications.reclaimed}
+            onToggle={(value) => handleToggle("reclaimed", value)}
+          />
+          <Toggle
+            label="Cuando alguien encuentra un objeto perdido tuyo"
+            initial={notifications.found}
+            onToggle={(value) => handleToggle("found", value)}
+          />
+          <Toggle
+            label="Cuando hay objetos perdidos en tu zona"
+            initial={notifications.lostNearby}
+            onToggle={(value) => handleToggle("lostNearby", value)}
+          />
         </ul>
       </section>
     </main>

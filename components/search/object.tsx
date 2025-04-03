@@ -1,13 +1,18 @@
 "use client";
 import ImageList from "@/components/search/imageList";
+import { useUser } from "@/context/UserContext";
+export default function Object({ obj, objectKey }: any) {
+  const user = useUser();
 
-export default function Object({ obj, key }: any) {
   return (
-    <div key={key} className="card-style w-full flex flex-col gap-4 p-6">
-      <div className="flex gap-4 w-full justify-between">
+    <div key={objectKey} className="card-style w-full flex flex-col gap-4 p-6">
+      <div className="flex flex-col md:flex-wrap gap-4 w-full justify-between">
         <div className="flex flex-col gap-2">
+          <p className="font-bold">Objeto:</p>
           <h3 className="text-xl font-bold mb-2">{obj.title}</h3>
-          <p className="">{obj.description}</p>
+          <p className="font-bold">Descripción:</p>
+          <p className="border-2 rounded-md p-2 min-h-20">{obj.description}</p>
+          <p className="font-bold">Ubicación:</p>
           <p className="">{obj.location}</p>
           <div className="flex gap-2 mt-2 flex-wrap">
             {obj.tags.length > 1 &&
@@ -21,17 +26,21 @@ export default function Object({ obj, key }: any) {
               ))}
           </div>
         </div>
+        <div className="md:hidden max-w-1/2 h-[3px] bg-black dark:bg-white"></div>
         <div className="flex flex-col gap-2">
+          <p className="font-bold">Contacto:</p>
           <h3 className="text-xl font-bold mb-2">{obj.email}</h3>
-          <button className="bg-tertiary font-bold  text-xl self-end px-8  py-3 card-style hover:shadow-tertiary">
-            Reclamar
-          </button>
+          {user?.email !== obj.email && (
+            <button className="bg-tertiary font-bold  text-xl self-end px-8  py-3 card-style hover:shadow-tertiary">
+              Reclamar
+            </button>
+          )}
         </div>
       </div>
 
       {obj.imgs && (
         <>
-          <hr />
+          <div className="md:hidden  h-[3px] bg-black dark:bg-white"></div>
           <ImageList imgs={obj.imgs} title={obj.title} />
         </>
       )}

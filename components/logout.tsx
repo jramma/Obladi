@@ -7,7 +7,7 @@ const Logout = () => {
     <>
       <button
         onClick={() => signOut({ callbackUrl: "/" })}
-        className="text-primary font-bold px-4 py-2 hover:underline"
+        className=" bg-primary card-style my-3 font-bold px-4 py-2 hover:shadow-primary  "
       >
         Cerrar sesión
       </button>

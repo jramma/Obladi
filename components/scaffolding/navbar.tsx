@@ -41,12 +41,29 @@ export default async function Navbar() {
               >
                 <p>About</p>
               </Link>
-              <Link
-                href={isloggedin ? "/profile" : "/auth/signin"}
-                className="flex cursor-pointer group font-bold transition  items-center gap-2"
-              >
-                <p>Profile</p>
-              </Link>
+              {isloggedin ? (
+                <Link
+                  href="/profile"
+                  className="flex cursor-pointer group font-bold transition items-center gap-2"
+                >
+                  <p>Profile</p>
+                </Link>
+              ) : (
+                <>
+                  <Link
+                    href="/auth/signin"
+                    className="no-underline-effect flex cursor-pointer card-style py-2 px-5 my-3"
+                  >
+                    <p>Login</p>
+                  </Link>
+                  <Link
+                    href="/auth/signup"
+                    className="no-underline-effect flex cursor-pointer card-style py-2 px-5 my-3"
+                  >
+                    <p>Registrarse</p>
+                  </Link>
+                </>
+              )}
             </div>
             <div className="flex items-center gap-6">
               {isloggedin && <Logout />}

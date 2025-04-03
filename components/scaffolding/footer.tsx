@@ -70,9 +70,13 @@ const Footer: React.FC = () => {
           <div className="container flex flex-col gap-4 md:gap-0 md:flex-row justify-between items-center">
             <div className="p-3">
               <div className="flex gap-4">
-                <Icons.github className="h-8 w-8" />
-                <Icons.linkedin className="h-8 w-8" />
-                <Icons.x className="h-8 w-8" />
+                <a href="https://github.com/jramma" target="_blank" className="no-underline-effect">
+                  {" "}
+                  <Icons.github className="h-8 w-8" />
+                </a>
+                <a href="https://www.linkedin.com/in/jramma/" className="no-underline-effect" target="_blank">
+                  <Icons.linkedin className="h-8 w-8" />
+                </a>
               </div>
             </div>
             <p className="flex gap-2 flex-wrap items-baseline ">

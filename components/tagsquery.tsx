@@ -74,7 +74,7 @@ export default function TagsQuery({
             key={i}
             type="button"
             onClick={() => handleAddTag(tag)}
-            className="bg-tertiary text-black text-sm px-3 py-1 rounded-full hover:bg-black hover:text-white transition"
+            className="bg-tertiary border-2 border-solid text-black text-sm px-3 py-1 rounded-full hover:bg-black hover:text-white transition"
           >
             {tag}
           </button>

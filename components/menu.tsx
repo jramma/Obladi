@@ -97,7 +97,7 @@ const Menu = () => {
 
       <nav
         id="menu"
-        className={`fixed top-0 md:top-16 flex flex-col items-start left-0 h-screen z-20 bg-white dark:bg-black border-r-4 shadow-lg w-72 transform transition-transform duration-300 ${
+        className={`fixed top-0 md:top-20 flex flex-col items-start left-0 h-screen z-20 bg-white dark:bg-black border-r-4 shadow-lg w-72 transform transition-transform duration-300 ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >

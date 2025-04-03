@@ -73,7 +73,7 @@ export default function SearchPage() {
       ) : (
         <div className="flex flex-col min-w-[700px] gap-12">
           {results.map((obj) => (
-            <Object obj={obj} />
+            <Object obj={obj} objectKey={obj._id} />
           ))}
         </div>
       )}
