@@ -1,6 +1,7 @@
 import { Icons } from "../icons";
 import Image from "next/image";
 import Link from "next/link";
+import SubscribeForm from "./subscribeform";
 
 const Footer: React.FC = () => {
   const links = [
@@ -11,7 +12,11 @@ const Footer: React.FC = () => {
       external: true,
     },
     { label: "Autor", href: "https://jramma.com/info", external: true },
-    { label: "Máster - UOC", href: "https://www.uoc.edu/es/estudios/masters/master-universitario-desarrollo-sitios-aplicaciones-web?esl-k=google-ads|nx|c123456|m|k|p|t|dc|a15234411733|g15234411733&gad_source=1", external: true },
+    {
+      label: "Máster - UOC",
+      href: "https://www.uoc.edu/es/estudios/masters/master-universitario-desarrollo-sitios-aplicaciones-web?esl-k=google-ads|nx|c123456|m|k|p|t|dc|a15234411733|g15234411733&gad_source=1",
+      external: true,
+    },
     {
       label: "Contribuir",
       href: "https://github.com/jramma/Ob-la-di",
@@ -41,21 +46,7 @@ const Footer: React.FC = () => {
               )}
             </ul>
           </div>
-          <div className="flex flex-col gap-4 text-primary-400 col-span-5">
-            <h4 className="font-bold text-3xl">
-              Subscríbete al mailing de Obladi
-            </h4>
-            <div className="flex flex-col gap-3 text-primary-300">
-              <input
-                type="text"
-                placeholder="Escribe tu email..."
-                className="bg-[#ffffff] card-style2 mt-1 block w-full p-2 border border-primary-400 rounded-md shadow-sm"
-              />
-            </div>
-            <button className="bg-primary-400 text-white p-2 justify-center !rounded-full self-start px-8 card-style2 flex items-center gap-2">
-              Subcribirse
-            </button>
-          </div>
+          <SubscribeForm />
           <div className="flex flex-col gap-4 flex-grow w-full h-full col-span-4">
             <div className="flex  relative aspect-square flex-grow md:h-full md:w-auto w-full">
               <Image
