@@ -5,6 +5,8 @@ import { useForm } from "react-hook-form";
 import { useUser } from "@/context/UserContext";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
+import { useRouter } from "next/navigation";
+import TagsInput from "./tagsinput";
 
 const categories = ["Electrónica", "Ropa", "Documentos", "Accesorios", "Otros"];
 const DEFAULT_LOCATION = { lat: 41.3874, lng: 2.1686 };
@@ -17,13 +19,14 @@ export default function ReportLost() {
   const markerRef = useRef<mapboxgl.Marker | null>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
- 
+
+  const router = useRouter();
   const handleSectionClick = () => {
     if (!user?.email) {
       router.push("/auth/signup");
     }
   };
-  
+
   useEffect(() => {
     if (!mapboxToken || !mapContainerRef.current) return;
     mapboxgl.accessToken = mapboxToken;
@@ -108,7 +111,10 @@ export default function ReportLost() {
   }
 
   return (
-    <section onClick={handleSectionClick} className="py-20 flex flex-col w-full items-center">
+    <section
+      onClick={handleSectionClick}
+      className="py-20 flex flex-col w-full items-center"
+    >
       <div className="container flex flex-col gap-10">
         <h3 className="text-5xl font-light">Reportar objeto perdido</h3>
 
@@ -130,13 +136,7 @@ export default function ReportLost() {
               className="bg-white card-style2 p-2 border rounded-md"
             />
 
-            <label className="block font-bold">Tags</label>
-            <input
-              type="text"
-              {...register("tags")}
-              placeholder="Ej: gafas, Rayban, negra"
-              className="bg-white card-style2 p-2 border rounded-md"
-            />
+            <TagsInput register={register} setValue={setValue} />
 
             <label className="block font-bold">Categoría</label>
             <select
@@ -181,8 +181,16 @@ export default function ReportLost() {
             />
 
             {/* Coordenadas ocultas */}
-            <input type="hidden" {...register("latitude")} value={location.lat} />
-            <input type="hidden" {...register("longitude")} value={location.lng} />
+            <input
+              type="hidden"
+              {...register("latitude")}
+              value={location.lat}
+            />
+            <input
+              type="hidden"
+              {...register("longitude")}
+              value={location.lng}
+            />
 
             <button
               type="submit"

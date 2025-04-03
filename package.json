@@ -22,7 +22,7 @@
     "clsx": "^2.1.1",
     "lucide-react": "^0.483.0",
     "mapbox-gl": "^3.11.0",
-    "mongodb": "^5",
+    "mongodb": "^5.9.2",
     "motion": "^12.6.3",
     "next": "15.2.3",
     "next-auth": "^4.24.11",
@@ -40,9 +40,9 @@
   "devDependencies": {
     "typescript": "^5.8.2",
     "@types/node": "^20.17.30",
-    "@types/react": "^19.0.12",
-    "@types/react-dom": "^19.0.4",
-    "@tailwindcss/postcss": "^4.1.0",
-    "tailwindcss": "^4.1.0"
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.1",
+    "@tailwindcss/postcss": "^4.1.1",
+    "tailwindcss": "^4.1.1"
   }
 }

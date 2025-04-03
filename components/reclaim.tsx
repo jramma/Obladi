@@ -6,7 +6,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { mapboxgl, MAPBOX_TOKEN } from "@/lib/mapbox";
 import { useUser } from "@/context/UserContext";
 import { useRouter } from "next/navigation";
-
+import TagsInput from "./tagsinput";
 const categories = ["Electrónica", "Ropa", "Documentos", "Accesorios", "Otros"];
 const DEFAULT_LOCATION = { lat: 41.3874, lng: 2.1686 }; // Barcelona
 
@@ -167,15 +167,8 @@ export default function Reclaim() {
                 className="card-style2 mt-1 block w-full p-2 bg-white border border-gray-300 rounded-md shadow-sm"
               />
             </div>
-            <div className="flex-col flex gap-3">
-              <label className="block font-bold">Tags</label>
-              <input
-                type="text"
-                {...register("tags")}
-                className="card-style2 mt-1 block bg-white w-full p-2 border border-gray-300 rounded-md shadow-sm"
-                placeholder="Ejemplo: teléfono, negro, Samsung"
-              />
-            </div>
+            <TagsInput register={register} setValue={setValue} />
+
             <div className="flex-col flex gap-3">
               <label className="block font-bold">Categoría</label>
               <select

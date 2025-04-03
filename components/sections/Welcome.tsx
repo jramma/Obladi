@@ -26,7 +26,7 @@ const Welcome: React.FC<WelcomeProps> = ({ title, subtitle }) => {
     <section className="w-full  md:flex-row flex flex-col gap-10 h-auto items-stretch !py-0 ">
       <div className="flex flex-col md:w-1/2 w-full gap-36 md:p-8 p-4 md:ml-[6vw]">
         <div className="flex flex-row justify-between items-start">
-          <h1 className="text-3xl ">
+          <h1 className="text-3xl">
             Lugar definitivo
             <br /> de objetos perdidos
           </h1>

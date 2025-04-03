@@ -1,18 +1,117 @@
-// import { getSearchResults } from '@/lib/search';
- 
-// export default async function SearchPage({
-//   searchParams,
-// }: {
-//   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
-// }) {
-//   const results = await getSearchResults((await searchParams).query)
- 
-//   return <div>...</div>
-// }
+"use client";
+
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { LostObject } from "@/types/types";
+import ImageList from "@/components/search/imageList";
+import Image from "next/image";
+import Waves from "@/components/animation/waves";
 export default function SearchPage() {
+  const searchParams = useSearchParams();
+  const query = searchParams.get("query")?.toLowerCase() || "";
+  const tags = searchParams.getAll("tags").flatMap((t) => t.split(","));
+  const location = searchParams.get("location")?.toLowerCase() || "";
+
+  const [results, setResults] = useState<LostObject[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchResults = async () => {
+      setLoading(true);
+
+      try {
+        const res = await fetch("/api/search", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ query, tags, location }),
+        });
+
+        const data = await res.json();
+        setResults(data.results);
+      } catch (err) {
+        console.error("Error buscando objetos perdidos:", err);
+        setResults([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchResults();
+  }, [query, tags.join(","), location]);
+
   return (
-    <div>
-     
-    </div>
+    <section className="container py-20 flex flex-col gap-10">
+      <h2 className="text-4xl font-light z-20 bg-white rounded-full card-style dark:bg-black p-3">Resultados de búsqueda</h2>
+      {loading ? (
+        <p>Cargando resultados...</p>
+      ) : results.length === 0 ? (
+        <>
+          <p className=" z-20 bg-white dark:bg-black p-3 card-style">
+            No se han encontrado objetos perdidos.
+          </p>
+          <Image
+            src={"/noObjects.svg"}
+            alt="No hay objetos perdidos"
+            width={300}
+            height={300}
+            className="mx-auto bg-white rounded-full z-20"
+          />
+          <Waves
+            lineColor="currentColor"
+            backgroundColor="rgba(255, 255, 255, 0.2)"
+            waveSpeedX={0.02}
+            waveSpeedY={0.01}
+            waveAmpX={40}
+            waveAmpY={20}
+            friction={0.9}
+            tension={0.01}
+            maxCursorMove={120}
+            xGap={12}
+            yGap={36}
+          />
+        </>
+      ) : (
+        <div className="flex flex-col min-w-[700px] gap-12">
+          {results.map((obj) => (
+            <div
+              key={obj._id}
+              className="card-style w-full flex flex-col gap-4 p-6"
+            >
+              <div className="flex gap-4 w-full justify-between">
+                <div className="flex flex-col gap-2">
+                  <h3 className="text-xl font-bold mb-2">{obj.title}</h3>
+                  <p className="">{obj.description}</p>
+                  <p className="">{obj.location}</p>
+                  <div className="flex gap-2 mt-2 flex-wrap">
+                    {obj.tags.length > 1 &&
+                      obj.tags.map((tag: string, i: number) => (
+                        <span
+                          key={i}
+                          className="bg-tertiary text-sm px-2 py-1 rounded-full"
+                        >
+                          #{tag}
+                        </span>
+                      ))}
+                  </div>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <h3 className="text-xl font-bold mb-2">{obj.email}</h3>
+                  <button className="bg-tertiary font-bold  text-xl self-end px-8  py-3 card-style hover:shadow-tertiary">
+                    Reclamar
+                  </button>
+                </div>
+              </div>
+
+              {obj.imgs && (
+                <>
+                  <hr />
+                  <ImageList imgs={obj.imgs} title={obj.title} />
+                </>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+    </section>
   );
 }
