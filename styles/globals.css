@@ -76,6 +76,7 @@ button {
 a {
   text-decoration: none;
   position: relative;
+  cursor: pointer;
 }
 a:after {
   background: none repeat scroll 0 0 transparent;
@@ -83,6 +84,7 @@ a:after {
   content: "";
   display: block;
   height: 2px;
+  
   left: 50%;
   position: absolute;
   background: currentColor;

@@ -25,6 +25,7 @@ export default function SignIn() {
       alert("Credenciales inválidas");
     } else {
       router.push("/profile");
+      router.refresh();
     }
   };
 

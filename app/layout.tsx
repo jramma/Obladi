@@ -6,7 +6,6 @@ import Footer from "../components/scaffolding/footer";
 import { UserProvider } from "@/context/UserContext";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { redirect } from "next/navigation";
 
 import clientPromise from "@/lib/mongodb";
 
@@ -49,6 +48,8 @@ export default async function RootLayout({
     location: user?.location ? user?.location.toString() : null,
     rewardPins: typeof user?.rewardPins === "number" ? user?.rewardPins : 0.0,
     foundObjects: user?.foundObjects || {},
+    lostObjects: (user?.lostObjects || []).map((id: any) => id.toString()),
+    reclaimedObjects: (user?.reclaimedObjects || []).map((id: any) => id.toString()),
     gender: user?.gender || "",
   };
 
