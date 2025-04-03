@@ -49,3 +49,9 @@ bun build
 - **@react-google-maps/api**: Integración con Google Maps.
 - **Bun**: Gestor de paquetes.
 
+## Servers
+
+Netlify - web
+AWS - imagenes
+Mongo - base de datos
+Resend - mailing
