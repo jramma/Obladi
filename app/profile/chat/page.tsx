@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import clientPromise from "@/lib/mongodb";
-import { Menu } from "@/components/menu";
+import { Menu } from "@/components/profile/menu";
 import { ObjectId } from "mongodb";
 import Link from "next/link";
 

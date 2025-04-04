@@ -1,5 +1,5 @@
-import Avatar from "./ui/client-avatar";
-import SwiperReviews from "./swipers";
+import Avatar from "../ui/client-avatar";
+import SwiperReviews from "../swipers";
 
 export default function Reviews() {
   // Generamos 27 avatares con semillas aleatorias

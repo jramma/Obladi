@@ -1,5 +1,5 @@
 "use client";
-import Map from "../../../components/map";
+import Map from "@/components/map";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";

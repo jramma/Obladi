@@ -1,8 +1,8 @@
 import { Dock, DockIcon } from "../animation/dock";
-import { ModeToggle } from "../mode-toggle";
+import { ModeToggle } from "../profile/mode-toggle";
 import { buttonVariants } from "../ui/button";
 import { Separator } from "../ui/separator";
-import { Logout } from "@/components/logout";
+import { Logout } from "@/components/scaffolding/logout";
 import {
   Tooltip,
   TooltipContent,

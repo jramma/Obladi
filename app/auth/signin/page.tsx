@@ -3,7 +3,7 @@
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Map from "../../../components/map";
+import Map from "@/components/map";
 import Link from "next/link";
 
 export default function SignIn() {

@@ -1,6 +1,6 @@
 "use client";
 import { useEffect } from "react";
-import Waves from "../components/animation/waves";
+import Waves from "@/components/animation/waves";
 export default function NotFoundPage() {
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {

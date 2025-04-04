@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { redirect } from "next/navigation";
-import { Menu } from "@/components/menu";
+import { Menu } from "@/components/profile/menu";
 import { useUser } from "@/context/UserContext";
 import Object from "@/components/search/object";
 

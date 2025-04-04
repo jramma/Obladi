@@ -1,13 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import Welcome from "../components/sections/Welcome";
-import Recently from "../components/marquee";
-import Report from "../components/report";
-import Reviews from "../components/reviews";
-import How from "../components/how";
-import Reclaim from "../components/reclaim";
-import Finder from "../components/finder";
+import Welcome from "@/components/sections/welcome";
+import Recently from "@/components/marquee";
+import Report from "@/components/sections/report";
+import Reviews from "@/components/sections/reviews";
+import How from "@/components/how";
+import Reclaim from "@/components/sections/reclaim";
+import Finder from "@/components/sections/finder";
 import { SessionProvider } from "next-auth/react";
 import { useUser } from "@/context/UserContext";
 
@@ -18,6 +18,15 @@ export default function AboutPage() {
     <SessionProvider>
       <div className="flex flex-col items-center w-full">
         {/* Renderizar solo si el usuario está logueado */}
+        {!user?.email && (
+          <>
+            <div className="pt-40">
+              Hacer: cabecera
+              <br /> Hacer: video demostrativo
+            </div>
+          </>
+        )}
+
         {user?.email && (
           <>
             <Welcome

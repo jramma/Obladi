@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { redirect } from "next/navigation";
-import { Menu } from "@/components/menu";
+import { Menu } from "@/components/profile/menu";
 import { useUser } from "@/context/UserContext";
 import Toggle from "@/components/form/toggle";
 

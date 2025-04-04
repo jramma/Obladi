@@ -6,7 +6,7 @@ import { useUser } from "@/context/UserContext";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useRouter } from "next/navigation";
-import TagsInput from "./tagsinput";
+import TagsInput from "@/components/tagsinput";
 
 const categories = ["Electrónica", "Ropa", "Documentos", "Accesorios", "Otros"];
 const DEFAULT_LOCATION = { lat: 41.3874, lng: 2.1686 };

@@ -2,7 +2,7 @@
 
 import Form from "next/form";
 import { useState } from "react";
-import { Icons } from "./icons";
+import { Icons } from "../icons";
 import TagsQuery from "@/components/tagsquery";
 
 export default function Finder() {
