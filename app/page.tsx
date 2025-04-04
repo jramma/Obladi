@@ -10,6 +10,7 @@ import Reclaim from "@/components/sections/reclaim";
 import Finder from "@/components/sections/finder";
 import { SessionProvider } from "next-auth/react";
 import { useUser } from "@/context/UserContext";
+import Cabecera from "@/components/sections/cabecera";
 
 export default function AboutPage() {
   const user = useUser();
@@ -20,6 +21,7 @@ export default function AboutPage() {
         {/* Renderizar solo si el usuario está logueado */}
         {!user?.email && (
           <>
+          <Cabecera />
             <div className="pt-40">
               Hacer: cabecera
               <br /> Hacer: video demostrativo

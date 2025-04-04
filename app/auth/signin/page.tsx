@@ -3,9 +3,8 @@
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Map from "@/components/map";
 import Link from "next/link";
-
+import { Boxes } from "@/components/ui/background-boxes";
 export default function SignIn() {
   const [credentials, setCredentials] = useState({
     email: "",
@@ -31,12 +30,12 @@ export default function SignIn() {
 
   return (
     <div className="flex justify-center items-center flex-grow">
-      <div className="absolute w-full h-full -z-10 transform scale-120 opacity-80">
-        <Map />
+      <div className="absolute w-full h-full   transform scale-120 opacity-80">
+        <Boxes />
       </div>
       <form
         onSubmit={handleSubmit}
-        className="space-y-6 flex flex-col font-bold p-10 rounded-lg shadow-lg aspect-square w-auto h-auto bg-[#ffffff] dark:bg-[#000000] card-style my-6"
+        className="space-y-6 flex flex-col font-bold z-10 p-10 rounded-lg shadow-lg aspect-square w-auto h-auto bg-[#ffffff] dark:bg-[#000000] card-style my-6"
       >
         <h2 className="text-4xl font-bold">Iniciar sesión</h2>
         <div>

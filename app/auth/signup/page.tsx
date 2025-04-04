@@ -1,9 +1,9 @@
 "use client";
-import Map from "@/components/map";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
+import { Boxes } from "@/components/ui/background-boxes";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
@@ -46,12 +46,12 @@ export default function SignUp() {
 
   return (
     <div className="flex justify-center items-center flex-grow">
-      <div className="absolute w-full h-full -z-10 transform scale-120 opacity-80">
-        <Map />
+      <div className="absolute w-full h-full  transform scale-120 opacity-80">
+        <Boxes />
       </div>
       <form
         onSubmit={handleSubmit}
-        className="flex my-6 flex-col space-y-6 p-10 rounded-lg shadow-lg w-auto h-auto bg-white dark:bg-black card-style"
+        className="flex my-6 z-10 flex-col space-y-6 p-10 rounded-lg shadow-lg w-auto h-auto bg-white dark:bg-black card-style"
       >
         <h2 className="text-4xl font-bold">Registro</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
