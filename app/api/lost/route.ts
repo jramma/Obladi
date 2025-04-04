@@ -3,6 +3,7 @@ import clientPromise from "@/lib/mongodb";
 import { uploadImageToS3 } from "@/lib/s3";
 import { reverseGeocode } from "@/lib/mapbox";
 import { ObjectId } from "mongodb";
+import { MongoUser } from "@/lib/utils";
 
 export async function POST(req: Request) {
   const formData = await req.formData();
@@ -10,7 +11,8 @@ export async function POST(req: Request) {
   const title = formData.get("title")?.toString();
   const description = formData.get("description")?.toString();
   const tags = formData
-    .get("tags")?.toString()
+    .get("tags")
+    ?.toString()
     .split(",")
     .map((tag) => tag.trim());
   const category = formData.get("category")?.toString();
@@ -47,11 +49,49 @@ export async function POST(req: Request) {
   const result = await db.collection("lostObjects").insertOne(newLost);
   const newLostId = result.insertedId;
 
-  // Ahora actualizamos el usuario con el nuevo objeto perdido
-  await db.collection("users").updateOne(
+  // 🔄 Actualizar el usuario con el nuevo objeto perdido
+  const usersCollection = db.collection<MongoUser>("users");
+
+  const user = await usersCollection.findOneAndUpdate(
     { email },
-    { $push: { lostObjects: new ObjectId(newLostId) } }
+    {
+      $push: {
+        lostObjects: new ObjectId(newLostId),
+      },
+    },
+    { returnDocument: "after" }
   );
+
+  const lostUserId = user.value?._id?.toString();
+
+  // 🔍 Buscar coincidencias en reclaimObject
+  const possibleMatches = await db
+    .collection("reclaimObject")
+    .find({
+      category,
+      tags: { $in: tags },
+    })
+    .toArray();
+
+  // ✅ Crear chats si no existen
+  for (const match of possibleMatches) {
+    const otherUserId = match.claimedBy?.toString();
+    if (!otherUserId || otherUserId === lostUserId) continue;
+
+    const existingChat = await db.collection("chats").findOne({
+      objectId: newLostId,
+      participants: { $all: [lostUserId, otherUserId] },
+    });
+
+    if (!existingChat) {
+      await db.collection("chats").insertOne({
+        participants: [lostUserId, otherUserId],
+        objectId: newLostId,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+    }
+  }
 
   return NextResponse.json({ _id: newLostId });
 }

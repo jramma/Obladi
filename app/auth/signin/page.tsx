@@ -29,8 +29,8 @@ export default function SignIn() {
   };
 
   return (
-    <div className="flex justify-center items-center flex-grow overflow-hidden">
-      <div className="absolute w-full h-full   transform scale-120 opacity-80">
+    <div className="flex justify-center items-center flex-grow">
+      <div className="absolute w-full h-full max-h-screen">
         <Boxes />
       </div>
       <form

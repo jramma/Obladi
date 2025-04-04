@@ -60,7 +60,7 @@ const Footer: React.FC = () => {
               href="https://buymeacoffee.com/jramma"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-yellow-400 hover:bg-yellow-300 text-black font-bold py-2 px-6 rounded-xl shadow-md flex items-center gap-2 transition duration-200"
+              className="bg-yellow-400 hover:bg-yellow-300 text-black font-bold py-2 px-6 rounded-xl shadow-md flex items-center gap-2 transition duration-200 no-underline-effect"
             >
               ☕ Invítame a un café
             </a>

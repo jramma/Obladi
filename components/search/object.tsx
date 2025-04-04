@@ -1,8 +1,30 @@
-"use client";
-import ImageList from "@/components/search/imageList";
 import { useUser } from "@/context/UserContext";
+import ImageList from "@/components/search/imageList";
+import { useRouter } from "next/navigation";
+
 export default function Object({ obj, objectKey }: any) {
   const user = useUser();
+  const router = useRouter();
+
+  const handleReclaim = async () => {
+    const res = await fetch("/api/chats/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        objectId: obj._id,
+        ownerEmail: obj.email,
+      }),
+    });
+
+    if (res.ok) {
+      alert("✅ Chat creado o ya existente. Redirigiendo...");
+      router.push("/profile/chat");
+    } else {
+      alert("❌ No se pudo crear el chat.");
+    }
+  };
 
   return (
     <div key={objectKey} className="card-style w-full flex flex-col gap-4 p-6">
@@ -31,7 +53,10 @@ export default function Object({ obj, objectKey }: any) {
           <p className="font-bold">Contacto:</p>
           <h3 className="text-xl font-bold mb-2">{obj.email}</h3>
           {user?.email !== obj.email && (
-            <button className="bg-tertiary font-bold  text-xl self-end px-8  py-3 card-style hover:shadow-tertiary">
+            <button
+              onClick={handleReclaim}
+              className="bg-tertiary font-bold text-xl self-end px-8 py-3 card-style hover:shadow-tertiary"
+            >
               Reclamar
             </button>
           )}
