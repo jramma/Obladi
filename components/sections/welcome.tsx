@@ -1,3 +1,4 @@
+import Btns from "../btns";
 import Map from "../map";
 
 interface WelcomeProps {
@@ -33,6 +34,7 @@ const Welcome: React.FC<WelcomeProps> = ({ title, subtitle }) => {
           <p className="text-3xl  font-bold">02</p>
         </div>
         <p className="text-7xl pt-20">Barcelona</p>
+        <Btns />
         <div className="grid grid-cols-3">
           <div className="font-semibold pt-10 text-xl border-t-2 border-solid dark:border-white border-black">
             <p>2025-2027</p>

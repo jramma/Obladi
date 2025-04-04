@@ -140,6 +140,7 @@ export default function Reclaim() {
 
   return (
     <section
+      id="reclaim"
       className="py-20 flex flex-col w-full items-center"
       onClick={handleSectionClick}
     >

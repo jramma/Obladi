@@ -25,9 +25,8 @@ const Recently = () => {
       <h3 className=" text-5xl font-light">Casos de éxito</h3>
 
       <Marquee
-        speed={30}
+        speed={40}
         delay={0}
-        loop={1}
         gradient={true}
         gradientColor={gradientColor}
         gradientWidth={200}
@@ -40,9 +39,8 @@ const Recently = () => {
       </Marquee>
       <div className="hidden md:block">
         <Marquee
-          speed={30}
+          speed={40}
           delay={0}
-          loop={1}
           pauseOnHover={true}
           gradient={true}
           gradientColor={gradientColor}

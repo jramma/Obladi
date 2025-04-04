@@ -4,6 +4,8 @@ import clientPromise from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
 import { notFound } from "next/navigation";
 import { Menu } from "@/components/profile/menu";
+import MessageInput from "@/components/profile/MessageInput";
+import MessageList from "@/components/profile/MessageList";
 
 export default async function ChatViewPage({
   params,
@@ -33,25 +35,9 @@ export default async function ChatViewPage({
     <main className="container flex-grow flex flex-row justify-end py-20">
       <Menu />
       <section className="max-w-3/4 px-8 flex flex-col gap-6 flex-grow">
-        <h2 className="text-4xl font-light mb-6">Conversación</h2>
-
-        <div className="flex flex-col gap-4 max-h-[60vh] overflow-y-auto p-4 border rounded-md">
-          {messages.map((msg: any, idx: number) => (
-            <div
-              key={idx}
-              className={`p-2 rounded-md max-w-[75%] ${
-                msg.sender === session.user.id
-                  ? "bg-primary-100 self-end"
-                  : "bg-secondary-100 self-start"
-              }`}
-            >
-              <p className="text-sm">{msg.text}</p>
-              <p className="text-xs text-gray-400 text-right mt-1">
-                {new Date(msg.createdAt).toLocaleString()}
-              </p>
-            </div>
-          ))}
-        </div>
+        <p className="max-w-96">Esta conversación esta guardada en una base de datos no relacional y la seguridad es toda la que pueda garantizar un cluster gratuito</p>        
+        <MessageList chatId={params.chatId} currentUserId={session.user.id} />
+        <MessageInput chatId={params.chatId} />
       </section>
     </main>
   );

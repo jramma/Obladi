@@ -112,6 +112,7 @@ export default function ReportLost() {
 
   return (
     <section
+    id="report"
       onClick={handleSectionClick}
       className="py-20 flex flex-col w-full items-center"
     >

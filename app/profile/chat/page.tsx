@@ -4,6 +4,7 @@ import clientPromise from "@/lib/mongodb";
 import { Menu } from "@/components/profile/menu";
 import { ObjectId } from "mongodb";
 import Link from "next/link";
+import { IoChatboxSharp } from "react-icons/io5";
 
 export default async function ChatPage() {
   const session = await getServerSession(authOptions);
@@ -59,9 +60,29 @@ export default async function ChatPage() {
   const userChats = await db
     .collection("chats")
     .find({
-      participants: userId,
+      participants: { $in: [userId.toString()] },
     })
     .toArray();
+
+  // Cargar títulos de los objetos, vengan de lostObjects o reclaimObject
+  const chatListWithTitles = await Promise.all(
+    userChats.map(async (chat) => {
+      const lost = await db
+        .collection("lostObjects")
+        .findOne({ _id: chat.objectId });
+      const reclaim = await db
+        .collection("reclaimObject")
+        .findOne({ _id: chat.objectId });
+
+      const objectData = lost || reclaim;
+      return {
+        _id: chat._id,
+        objectId: chat.objectId,
+        title: objectData?.title || "Objeto sin título",
+        type: lost ? "Perdido" : "Reclamado",
+      };
+    })
+  );
 
   return (
     <main className="container flex-grow flex flex-row justify-end py-20">
@@ -71,18 +92,23 @@ export default async function ChatPage() {
         {userChats.length === 0 ? (
           <>
             <p className="text-gray-500">No hay chats disponibles</p>
-            <p className="max-w-96">Se crearán salas de chat si hay coincidencias entre objetos que hayas perdido y objetos que se hayan encontrado y viceversa.</p>
+            <p className="max-w-96">
+              Se crearán salas de chat si hay coincidencias entre objetos que
+              hayas perdido y objetos que se hayan encontrado y viceversa.
+            </p>
           </>
         ) : (
-          <ul className="space-y-4">
-            {userChats.map((chat) => (
-              <li key={chat._id.toString()} className="border-b py-2">
+          <ul className="flex flex-col gap-4 items-start">
+            {chatListWithTitles.map((chat) => (
+              <li key={chat._id.toString()} className="card-style px-6 py-2 flex gap-2 items-center">
+                
                 <Link
                   href={`/profile/chat/${chat._id}`}
-                  className="text-blue-500 hover:underline"
+                  className=" no-underline-effect"
                 >
-                  Ver conversación sobre objeto {chat.objectId.toString()}
-                </Link>
+                  Ver conversación sobre "{chat.title}"{" "}
+                  {chat.type.toLowerCase()}
+                </Link><IoChatboxSharp />
               </li>
             ))}
           </ul>

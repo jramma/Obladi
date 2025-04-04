@@ -26,6 +26,17 @@ export default function AboutPage() {
             <Hr />
             <Videos />
             <Hr />
+            <Recently />
+
+            <Hr />
+
+            <How />
+
+            <Hr />
+
+            {/* Sección user reviews (visible siempre) */}
+
+            <Reviews />
           </>
         )}
 
@@ -51,14 +62,6 @@ export default function AboutPage() {
           </>
         )}
 
-        <Recently />
-
-        <Hr />
-
-        <How />
-
-        <Hr />
-
         {/* Solo si el usuario está logueado */}
         {user?.email && (
           <>
@@ -69,13 +72,8 @@ export default function AboutPage() {
             <Hr />
 
             <Reclaim />
-            <Hr />
           </>
         )}
-
-        {/* Sección user reviews (visible siempre) */}
-
-        <Reviews />
       </div>
     </SessionProvider>
   );

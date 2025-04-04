@@ -23,6 +23,9 @@
     @apply flex flex-col items-center justify-center mx-auto px-4 md:px-6 lg:px-8;
   }
 }
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   font-family: "Funnel Display", sans-serif;
@@ -84,11 +87,13 @@ a:after {
   content: "";
   display: block;
   height: 2px;
-  
+
   left: 50%;
   position: absolute;
   background: currentColor;
-  transition: width 0.3s ease 0s, left 0.3s ease 0s;
+  transition:
+    width 0.3s ease 0s,
+    left 0.3s ease 0s;
   width: 0;
 }
 a:hover:after {
@@ -107,7 +112,9 @@ a.no-underline-effect::after {
 }
 
 .text-shadow {
-  text-shadow: 5px 5px 0 currentColor, 2px 2px 2px currentColor;
+  text-shadow:
+    5px 5px 0 currentColor,
+    2px 2px 2px currentColor;
   -webkit-text-stroke: 2px #ffffff;
 }
 

@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 
 type Props = {
   imgs: string[];
@@ -32,13 +31,11 @@ export default function ImageList({ imgs, title }: Props) {
   return (
     <div className="flex flex-wrap gap-4">
       {signedUrls.map((url, i) => (
-        <Image
+        <img
           key={i}
           src={url}
           alt={`Imagen ${i + 1} de ${title}`}
-          className="rounded-lg"
-          width={200}
-          height={200}
+          className="rounded-lg max-w-60 max-h-60"
         />
       ))}
     </div>
