@@ -6,6 +6,8 @@ import { LostObject } from "@/types/types";
 import Object from "@/components/search/object";
 import Image from "next/image";
 import Waves from "@/components/animation/waves";
+
+
 export default function SearchPage() {
   const searchParams = useSearchParams();
   const query = searchParams.get("query")?.toLowerCase() || "";

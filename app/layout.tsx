@@ -6,7 +6,11 @@ import Footer from "@/components/scaffolding/footer";
 import { UserProvider } from "@/context/UserContext";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import type { ReactNode } from "react";
 
+type LayoutProps = {
+  children: ReactNode;
+};
 import clientPromise from "@/lib/mongodb";
 
 export const metadata: Metadata = {
@@ -14,19 +18,14 @@ export const metadata: Metadata = {
   description: "Encuentra objetos perdidos",
 };
 
-export default async function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default async function RootLayout({ children }: LayoutProps) {
   const session = await getServerSession(authOptions);
-
   const client = await clientPromise;
   const db = client.db();
+
   const user = await db.collection("users").findOne({
     email: session?.user?.email,
   });
-
 
   const safeUser = {
     email: user?.email,
@@ -43,13 +42,16 @@ export default async function RootLayout({
         ? user?.time.toISOString()
         : new Date().toISOString(),
     pines: (user?.pines || []).map((id: any) => id.toString()),
-    contributor: typeof user?.contributor === "number" ? user?.contributor : 0.0,
+    contributor:
+      typeof user?.contributor === "number" ? user?.contributor : 0.0,
     lost: user?.lost ?? false,
     location: user?.location ? user?.location.toString() : null,
     rewardPins: typeof user?.rewardPins === "number" ? user?.rewardPins : 0.0,
     foundObjects: user?.foundObjects || {},
     lostObjects: (user?.lostObjects || []).map((id: any) => id.toString()),
-    reclaimedObjects: (user?.reclaimedObjects || []).map((id: any) => id.toString()),
+    reclaimedObjects: (user?.reclaimedObjects || []).map((id: any) =>
+      id.toString()
+    ),
     gender: user?.gender || "",
   };
 

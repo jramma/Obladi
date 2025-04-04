@@ -37,6 +37,8 @@ export default async function ProfilePage() {
     rewardPins: typeof user?.rewardPins === "number" ? user?.rewardPins : 0.0,
     foundObjects: user?.foundObjects || {},
     gender: user?.gender || "",
+    lostObjects: user?.lostObjects || {},
+    reclaimedObjects: user?.reclaimedObjects || {},
   };
 
   return (

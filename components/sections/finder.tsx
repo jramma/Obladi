@@ -1,6 +1,5 @@
 "use client";
 
-import Form from "next/form";
 import { useState } from "react";
 import { Icons } from "../icons";
 import TagsQuery from "@/components/tagsquery";
@@ -37,8 +36,7 @@ export default function Finder() {
         <h2 className="w-full text-5xl font-light text-center">
           Encuentra tu objeto perdido
         </h2>
-        <Form
-          action="/search"
+       <form action="/search" method="GET"
           className="relative w-full flex flex-col gap-6 max-w-[700px] "
         >
           <input
@@ -90,7 +88,7 @@ export default function Finder() {
           <div id="tags" className="hidden transition left-2 -bottom-40  w-full max-w-[600px]">
             <TagsQuery value={tags} onChange={setTags} />
           </div>
-        </Form>
+        </form>
       </div>
     </section>
   );
