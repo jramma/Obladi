@@ -16,6 +16,12 @@
   --color-tertiary: #ffe082;
   --color-white: #efefef;
   --color-black: #121212;
+  --color-crimson: #c33013;
+  --color-seagreen: #b3c071;
+  --color-violet: #777AD1;
+  --color-yellow: #FDED9F;
+  --color-goldfish: #ff8446;
+  --color-aqua: #8ce0bf;
 }
 
 @layer components {

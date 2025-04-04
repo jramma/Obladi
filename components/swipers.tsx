@@ -34,6 +34,7 @@ export default function SwiperReviews() {
       navigation={true}
       modules={[Navigation, Autoplay]}
       className="mySwiper !px-12"
+      
       breakpoints={{
         640: {
           slidesPerView: 2,
@@ -49,8 +50,8 @@ export default function SwiperReviews() {
               className={`p-6 h-56 my-8 rounded-lg ${bgClass} text-black font-semibold card-style`}
             >
               <div className="flex items-start flex-grow">
-
-                <Avatar seed={review.name} />
+                <div className="h-20 w-20">
+                <Avatar seed={review.name} /></div>
                 <div className="ml-4">
                   <p className="font-semibold text-xl">{review.name}</p>
                   <p className="">{review.comment}</p>

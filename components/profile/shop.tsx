@@ -1,31 +1,31 @@
 "use client";
 
 import Image from "next/image";
-
+import { GiBottleCap } from "react-icons/gi";
 const products = [
   {
     id: 1,
-    title: "Pin del valor",
-    price: 10,
-    description: "Este pin representa la valentía.",
-    bg: "bg-primary",
-    image: "/hero.png",
+    title: "Taza ObLaDi",
+    price: 5,
+    description: "Si te ven con esta taza sabrán que ayudas.",
+    bg: "bg-secondary",
+    image: "/taza.png",
   },
   {
     id: 2,
-    title: "Pin de la sabiduría",
+    title: "Gorra ObLaDa",
     price: 12,
-    description: "Sabiduría y estrategia en uno.",
-    bg: "bg-secondary",
-    image: "/hero.png",
+    description: "Los reyes lleban corona, las buenas personas gorra.",
+    bg: "bg-tertiary",
+    image: "/gorra.png",
   },
   {
     id: 3,
-    title: "Pin del honor",
-    price: 8,
-    description: "Un símbolo de respeto y dignidad.",
-    bg: "bg-tertiary",
-    image: "/hero.png",
+    title: "Camiseta ObLaDi",
+    price: 30,
+    description: "Lleva tu barrio cerca de tu corazón, mejor que cualquier bandera.",
+    bg: "bg-primary",
+    image: "/camiseta.png",
   },
 ];
 
@@ -36,7 +36,7 @@ export default function Shop({ user }: any) {
 
       {/* Contenedor deslizable en móviles */}
       <div className="overflow-visible -mx-10">
-        <div className="w-full flex gap-6 overflow-scroll py-4 p-8 lg:px-20" >
+        <div className="w-full flex gap-6 overflow-scroll py-4 p-8 lg:px-20">
           {products.map((product) => (
             <div
               key={product.id}
@@ -58,8 +58,8 @@ export default function Shop({ user }: any) {
                 <p className="text-sm text-gray-700 dark:text-gray-300">
                   {product.description}
                 </p>
-                <p className="font-semibold text-primary">
-                  💎 {product.price} pines
+                <p className="font-semibold flex gap-2 items-center text-primary">
+                  <GiBottleCap /> {product.price} pines
                 </p>
                 <button className="mt-2 px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition">
                   Canjear pines
