@@ -11,7 +11,8 @@ import Finder from "@/components/sections/finder";
 import { SessionProvider } from "next-auth/react";
 import { useUser } from "@/context/UserContext";
 import Cabecera from "@/components/sections/cabecera";
-
+import Videos from "@/components/sections/videos";
+import { Hr } from "@/components/ui/hr";
 export default function AboutPage() {
   const user = useUser();
 
@@ -21,11 +22,10 @@ export default function AboutPage() {
         {/* Renderizar solo si el usuario está logueado */}
         {!user?.email && (
           <>
-          <Cabecera />
-            <div className="pt-40">
-              Hacer: cabecera
-              <br /> Hacer: video demostrativo
-            </div>
+            <Cabecera />
+            <Hr />
+            <Videos />
+            <Hr />
           </>
         )}
 
@@ -51,36 +51,25 @@ export default function AboutPage() {
           </>
         )}
 
-        {/* Seccion objetos recientemente encontrados (siempre visible) */}
         <Recently />
 
-        <div className="container">
-          <hr className="h-2 w-full " />
-        </div>
+        <Hr />
 
         <How />
 
-        <div className="container">
-          <hr className="h-2 w-full " />
-        </div>
+        <Hr />
 
         {/* Solo si el usuario está logueado */}
         {user?.email && (
           <>
             <Report />
-            <div className="container">
-              <hr className="h-2 w-full " />
-            </div>
+            <Hr />
 
             <Finder />
-            <div className="container">
-              <hr className="h-2 w-full " />
-            </div>
+            <Hr />
 
             <Reclaim />
-            <div className="container">
-              <hr className="h-2 w-full " />
-            </div>
+            <Hr />
           </>
         )}
 

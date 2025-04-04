@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { IconCloudDemo } from "@/components/animation/cloud";
 import Image from "next/image";
 import LightBulb from "@/components/animation/light";
+import { Hr } from "@/components/ui/hr";
 export default function AboutPage() {
   const imageRef = useRef<HTMLImageElement>(null);
   const [hasScrolled, setHasScrolled] = useState(false);
@@ -50,6 +51,8 @@ export default function AboutPage() {
           <IconCloudDemo />
         </div>
       </section>
+      <Hr />
+
       <section className="flex flex-col md:flex-row-reverse md:py-20 py-10 md:gap-10 gap-6 w-full">
         <div className="flex flex-col md:gap-10 gap-6 text-right items-end">
           <h2 className="text-5xl font-light">Sobre el proyecto</h2>
@@ -76,6 +79,8 @@ export default function AboutPage() {
           />
         </div>
       </section>
+      <Hr />
+
       <section className="flex flex-row md:py-20 py-10 md:gap-10 gap-6 w-full">
         <div className="flex flex-col md:gap-10 gap-6">
           <h2 className="text-5xl font-light">La idea</h2>

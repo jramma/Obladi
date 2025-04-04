@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { createAvatar } from "@dicebear/core";
-import { lorelei } from "@dicebear/collection";
+import { loreleiNeutral } from "@dicebear/collection";
 
 interface AvatarProps {
   userImage?: string;
@@ -20,16 +20,15 @@ function getDeterministicIndex(seed: string, length: number) {
 const Avatar: React.FC<AvatarProps> = ({ userImage, seed = "default" }) => {
   const bgOptions = ["bg-primary", "bg-secondary", "bg-tertiary"];
 
-  const [bgClass, setBgClass] = useState<string>(""); // Estado inicial vacío
+  const [bgClass, setBgClass] = useState<string>("");
   const [svg, setSvg] = useState<string | null>(null);
 
   useEffect(() => {
-    // Solo se ejecuta en el cliente
     const index = getDeterministicIndex(seed, bgOptions.length);
     setBgClass(bgOptions[index]);
 
     if (!userImage) {
-      const avatar = createAvatar(lorelei, { seed });
+      const avatar = createAvatar(loreleiNeutral, { seed });
       setSvg(avatar.toString());
     }
   }, [userImage, seed]);
@@ -39,20 +38,26 @@ const Avatar: React.FC<AvatarProps> = ({ userImage, seed = "default" }) => {
       <img
         src={userImage}
         alt="User Avatar"
-        className={`w-12 h-12 ${bgClass} rounded-full`}
+        className={`w-12 h-12 ${bgClass} rounded-full object-cover`}
       />
     );
   }
 
   if (!svg) {
-    return <div className={`w-12 h-12 ${bgClass} rounded-full `} />;
+    return (
+      <div className={`w-12 h-12 ${bgClass} rounded-full`} />
+    );
   }
 
   return (
     <div
-      className={`w-12 h-12  ${bgClass} rounded-full aspect-square`}
-      dangerouslySetInnerHTML={{ __html: svg }}
-    />
+      className={`w-12 h-auto aspect-square ${bgClass} rounded-full overflow-hidden flex items-center border-2 justify-center`}
+    >
+      <div
+        className="w-full h-full scale-[1.25]"
+        dangerouslySetInnerHTML={{ __html: svg }}
+      />
+    </div>
   );
 };
 

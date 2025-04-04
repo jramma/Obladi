@@ -4,6 +4,7 @@ import { Card } from "./card";
 import Marquee from "react-fast-marquee";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import { successStories } from "@/lib/home";
 
 const Recently = () => {
   const { theme, resolvedTheme } = useTheme();
@@ -17,8 +18,7 @@ const Recently = () => {
 
   const currentTheme = theme === "system" ? resolvedTheme : theme;
 
-  const gradientColor =
-    currentTheme === "dark" ? "#121212" : "#efefef";
+  const gradientColor = currentTheme === "dark" ? "#121212" : "#efefef";
 
   return (
     <section className=" container flex flex-col gap-6 py-10 md:py-20 px-4 md:px-0">
@@ -27,45 +27,35 @@ const Recently = () => {
       <Marquee
         speed={30}
         delay={0}
-        loop={0}
+        loop={1}
         gradient={true}
         gradientColor={gradientColor}
         gradientWidth={200}
         direction="left"
+        pauseOnHover={true}
       >
-        <Card />
-        <Card />
-        <Card />
+        {successStories.slice(0, 4).map((story, idx) => (
+          <Card key={idx} title={story.title} description={story.description} />
+        ))}
       </Marquee>
       <div className="hidden md:block">
         <Marquee
           speed={30}
           delay={0}
-          loop={0}
+          loop={1}
+          pauseOnHover={true}
           gradient={true}
           gradientColor={gradientColor}
           gradientWidth={200}
           direction="right"
         >
-          <Card />
-          <Card />
-          <Card />
-        </Marquee>
-      </div>
-      <div className="hidden md:block">
-        <Marquee
-          speed={30}
-          delay={0}
-          gradient={true}
-          loop={0}
-          gradientColor={gradientColor}
-          gradientWidth={200}
-          direction="left"
-          className="hidden md:block"
-        >
-          <Card />
-          <Card />
-          <Card />
+          {successStories.slice(3, 8).map((story, idx) => (
+            <Card
+              key={idx}
+              title={story.title}
+              description={story.description}
+            />
+          ))}
         </Marquee>
       </div>
     </section>

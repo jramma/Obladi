@@ -8,22 +8,14 @@ import "swiper/css/navigation";
 
 import { Navigation, Autoplay } from "swiper/modules";
 import Avatar from "./ui/client-avatar";
+import { userReviews } from "@/lib/home"; 
 
 export default function SwiperReviews() {
   const bgOptions = ["bg-primary", "bg-secondary", "bg-tertiary"];
-
-  const reviews = Array.from({ length: 9 }, (_, index) => ({
-    id: index + 1,
-    name: `User ${index + 1}`,
-    comment: `This is a sample comment from User ${
-      index + 1
-    }. They are a great part of the community.`,
-  }));
-
   const [randomBgClasses, setRandomBgClasses] = useState<string[]>([]);
 
   useEffect(() => {
-    const generated = reviews.map(() => {
+    const generated = userReviews.map(() => {
       const randomIndex = Math.floor(Math.random() * bgOptions.length);
       return bgOptions[randomIndex];
     });
@@ -34,9 +26,6 @@ export default function SwiperReviews() {
     <Swiper
       slidesPerView={1}
       spaceBetween={60}
-      pagination={{
-        clickable: true,
-      }}
       autoplay={{
         delay: 2500,
         disableOnInteraction: false,
@@ -52,18 +41,19 @@ export default function SwiperReviews() {
         },
       }}
     >
-      {reviews.map((review, index) => {
-        const bgClass = randomBgClasses[index] || "bg-neutral"; // color por defecto
+      {userReviews.map((review, index) => {
+        const bgClass = randomBgClasses[index] || "bg-neutral";
         return (
           <SwiperSlide key={review.id}>
             <div
               className={`p-6 h-56 my-8 rounded-lg ${bgClass} text-black font-semibold card-style`}
             >
-              <div className="flex items-center flex-grow">
+              <div className="flex items-start flex-grow">
+
                 <Avatar seed={review.name} />
                 <div className="ml-4">
-                  <p className="font-semibold">{review.name}</p>
-                  <p className="text-sm">{review.comment}</p>
+                  <p className="font-semibold text-xl">{review.name}</p>
+                  <p className="">{review.comment}</p>
                 </div>
               </div>
             </div>

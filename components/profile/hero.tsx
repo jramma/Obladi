@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { notionistsNeutral } from "@dicebear/collection";
+import { loreleiNeutral } from "@dicebear/collection";
 import { createAvatar } from "@dicebear/core";
 import { useState } from "react";
 
@@ -11,7 +11,7 @@ export default function Hero({ user }: any) {
   const [picture, setPicture] = useState(user.picture || "");
   const [isEditing, setIsEditing] = useState(false);
 
-  const avatarSvg = createAvatar(notionistsNeutral, {
+  const avatarSvg = createAvatar(loreleiNeutral, {
     seed: user.name || "avatar",
   }).toDataUri();
   const imageSrc = picture || avatarSvg;

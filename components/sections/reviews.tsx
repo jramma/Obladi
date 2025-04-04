@@ -23,16 +23,18 @@ export default function Reviews() {
         </div>
         <div className="w-full grid md:grid-cols-4 grid-cols-1">
           <div className="flex flex-col text-center items-center p-6 col-span-1 gap-10">
-            <p className="text-4xl">Contact us,<br/>Let's get in touch</p>
+            <p className="text-4xl">Contacta al mail de, <br/> Ob-La-Di</p>
 
-            <a href="#" className="card-style text-2xl font-bold px-6 py-3 bg-tertiary text-black">
-              Contact
+            <a
+              href="mailto:jrammas@uoc.edu"
+              className="card-style no-underline-effect text-2xl font-bold px-6 py-3 bg-tertiary text-black"
+            >
+              Contactar
             </a>
           </div>
           <div className="flex col-span-1 md:col-span-3 flex-grow">
-            
             <SwiperReviews />
-          </div>  
+          </div>
         </div>
       </div>
     </section>
