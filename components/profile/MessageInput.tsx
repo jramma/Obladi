@@ -20,21 +20,33 @@ export default function MessageInput({ chatId }: { chatId: string }) {
     else alert("Error al enviar mensaje");
   };
 
+  const discardMessage = () => {
+    setText(""); // Limpia el contenido del textarea
+  };
+
   return (
-    <div className="mt-6 flex items-center gap-4 self-start">
-      <input
-        type="text"
+    <div className="mt-6 flex flex-col gap-2 w-full max-w-2xl">
+      <textarea
         placeholder="Escribe un mensaje..."
         value={text}
         onChange={(e) => setText(e.target.value)}
-        className="flex-grow p-2 min-h-10 border md:min-w-72 rounded-md bg-white text-black dark:bg-black dark:text-white"
+        rows={3}
+        className="w-full p-2 border rounded-md resize-none bg-white text-black dark:bg-black dark:text-white"
       />
-      <button
-        onClick={sendMessage}
-        className="bg-primary text-black font-bold card-style px-4 py-2 rounded-md"
-      >
-        Enviar
-      </button>
+      <div className="flex justify-end gap-4">
+        <button
+          onClick={discardMessage}
+          className="bg-violet text-white font-semibold card-style px-4 py-2 rounded-md"
+        >
+          Descartar
+        </button>
+        <button
+          onClick={sendMessage}
+          className="bg-primary text-black font-bold card-style px-4 py-2 rounded-md"
+        >
+          Enviar
+        </button>
+      </div>
     </div>
   );
 }

@@ -3,10 +3,9 @@ import { authOptions } from "@/lib/auth";
 import clientPromise from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
 import { notFound } from "next/navigation";
-import { Menu } from "@/components/profile/menu";
 import MessageInput from "@/components/profile/MessageInput";
 import MessageList from "@/components/profile/MessageList";
-
+import { BsFillInfoSquareFill } from "react-icons/bs";
 export default async function ChatViewPage({
   params,
 }: {
@@ -32,13 +31,18 @@ export default async function ChatViewPage({
     .toArray();
 
   return (
-    <main className="container flex-grow flex flex-row justify-end py-20">
-      <Menu />
-      <section className="max-w-3/4 px-8 flex flex-col gap-6 flex-grow">
-        <p className="max-w-96">Esta conversación esta guardada en una base de datos no relacional y la seguridad es toda la que pueda garantizar un cluster gratuito</p>        
+    <div className=" flex-grow flex flex-row justify-end py-20">
+      <section className="px-8 flex flex-col gap-6 flex-grow">
+        <div className="flex flex-wrap gap-2">
+          <BsFillInfoSquareFill className="w-6 h-6 text-primary border-2 border-black dark:border-white rounded-md" />
+          <p className="max-w-96">
+            Esta conversación esta guardada en una base de datos no relacional y
+            la seguridad es toda la que pueda garantizar un cluster gratuito.
+          </p>
+        </div>
         <MessageList chatId={params.chatId} currentUserId={session.user.id} />
         <MessageInput chatId={params.chatId} />
       </section>
-    </main>
+    </div>
   );
 }
