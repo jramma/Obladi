@@ -1,4 +1,4 @@
-export const runtime = "nodejs";
+ 
 
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
