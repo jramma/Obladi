@@ -1,3 +1,5 @@
+export const runtime = "nodejs";
+
 import { NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
 import { uploadImageToS3 } from "@/lib/s3";

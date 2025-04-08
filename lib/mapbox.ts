@@ -1,4 +1,3 @@
-export const runtime = "nodejs";
 // /lib/mapbox.ts
 import mapboxgl from "mapbox-gl";
 
