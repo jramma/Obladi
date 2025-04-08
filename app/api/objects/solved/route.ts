@@ -1,4 +1,4 @@
-export const runtime = "nodejs";
+
 
 // app/api/objects/mark-as-found/route.ts
 import { NextRequest, NextResponse } from "next/server";
