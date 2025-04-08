@@ -1,3 +1,5 @@
+export const runtime = "nodejs";
+
 import { Icons } from "@/components/Icons";
 import { HomeIcon, UserRound } from "lucide-react";
 

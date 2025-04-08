@@ -1,3 +1,5 @@
+export const runtime = "nodejs";
+
 import { resend } from "@/lib/resend";
 import { NextResponse } from "next/server";
 
