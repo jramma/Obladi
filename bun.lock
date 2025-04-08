@@ -10,6 +10,7 @@
         "@dicebear/core": "^9.2.2",
         "@hcaptcha/react-hcaptcha": "^1.12.0",
         "@netlify/next": "^1.4.9",
+        "@netlify/plugin-nextjs": "^5.10.4",
         "@next-auth/mongodb-adapter": "1.1.3",
         "@radix-ui/themes": "^3.2.1",
         "@react-google-maps/api": "^2.20.6",
@@ -464,6 +465,8 @@
     "@mongodb-js/saslprep": ["@mongodb-js/saslprep@1.2.2", "", { "dependencies": { "sparse-bitfield": "^3.0.3" } }, "sha512-EB0O3SCSNRUFk66iRCpI+cXzIjdswfCs7F6nOC3RAGJ7xr5YhaicvsRwJ9eyzYvYRlCSDUO/c7g4yNulxKC1WA=="],
 
     "@netlify/next": ["@netlify/next@1.4.9", "", { "peerDependencies": { "next": ">=12.2.0" } }, "sha512-lrbY+CEhS9x0jV7oXVYi/rqxZ6ht5KeLGNZsgIPI34kpDaBuD/EfsyKa28BWeSrFalxRZmkMxQYRSTa82v3roQ=="],
+
+    "@netlify/plugin-nextjs": ["@netlify/plugin-nextjs@5.10.4", "", {}, "sha512-E6r2BG9xfRptY6GviEtghG03tr6+M9S0fnPs7MxNqOjLjrqNCmXgeY5ZoDoTcf1J4H8rf2PW4VL6TjxzxBgOWQ=="],
 
     "@next-auth/mongodb-adapter": ["@next-auth/mongodb-adapter@1.1.3", "", { "peerDependencies": { "mongodb": "^5 || ^4", "next-auth": "^4" } }, "sha512-nH/may8hntYBlcuxepSsR2b95w6SRnP+c/FFt3KKjdTScNjhrN0zZdlT90nisjG/3gK+MvzMbz/F4Rwpgr9RMA=="],
 
