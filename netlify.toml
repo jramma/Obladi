@@ -3,7 +3,7 @@
   publish = ".next"
 
 [build.environment]
-  BUN_VERSION = "1.2.2"
+  BUN_VERSION = "1.2.8"
   BUN_INSTALL = "true"
 
 [[plugins]]
