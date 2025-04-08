@@ -10,7 +10,6 @@ type Props = {
 export default function ImageList({ imgs, title }: Props) {
   const [signedUrls, setSignedUrls] = useState<string[]>([]);
 
-  // 🔑 Cliente: obtiene la URL firmada desde la API
   const getSignedImageUrl = async (key: string): Promise<string> => {
     const res = await fetch(`/api/image-url?key=${encodeURIComponent(key)}`);
     const data = await res.json();

@@ -3,10 +3,7 @@ import Btns from "../Btns";
 import Map from "../Map";
 import { useUser } from "@/context/UserContext";
 import { useEffect, useState } from "react";
-interface WelcomeProps {
-  title: string;
-  subtitle: string;
-}
+
 const allCities = [
   "Barcelona",
   "Madrid",
@@ -19,7 +16,7 @@ const allCities = [
   "Bilbao",
   "Alicante",
 ];
-const Welcome: React.FC<WelcomeProps> = ({ title, subtitle }) => {
+const Welcome: React.FC = () => {
   const user = useUser();
   const [objectsOnLocation, setobjectsOnLocation] = useState<number>(0);
   const [location, setLocation] = useState<string>("Barcelona");

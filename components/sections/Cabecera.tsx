@@ -55,6 +55,7 @@ export default function Cabecera() {
           }}
         >
           <Image
+            priority={false}
             src={"/noObjects.svg"}
             alt="No hay objetos perdidos"
             width={200}

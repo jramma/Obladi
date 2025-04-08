@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext } from "react";
 
 export type PlainUser = {
   email: string;
@@ -18,7 +18,7 @@ export type PlainUser = {
   location: string | null;
   rewardPins: number;
   gender: string;
-  objects: string[]; // ← Nuevos campos
+  objects: string[]; 
 };
 
 const UserContext = createContext<PlainUser | null>(null);
