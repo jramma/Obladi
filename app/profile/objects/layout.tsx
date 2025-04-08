@@ -8,20 +8,25 @@ import ObjectList from "@/components/search/Objectlist";
 import { FaChevronUp } from "react-icons/fa6";
 import type { ReactNode } from "react";
 
-type Obj = { _id: string; title: string; description?: string };
-
+type Obj = {
+  _id: string;
+  title: string;
+  description?: string;
+  type: "lost" | "reclaim" | "solved";
+  solved?: boolean;
+};
 export default function ObjectLayout({ children }: { children: ReactNode }) {
   const user = useUser();
   const [loading, setLoading] = useState(true);
   const [objects, setObjects] = useState<{
     lost: Obj[];
-    found: Obj[];
+    solved: Obj[];
     reclaimed: Obj[];
-  }>({ lost: [], found: [], reclaimed: [] });
+  }>({ lost: [], solved: [], reclaimed: [] });
 
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
     lost: true,
-    found: true,
+    solved: true,
     reclaimed: true,
   });
 
@@ -39,13 +44,16 @@ export default function ObjectLayout({ children }: { children: ReactNode }) {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             objects: user.objects || [],
-            foundObjects: user.foundObjects || [],
-            reclaimedObjects: user.reclaimedObjects || [],
           }),
         });
 
         const data = await res.json();
-        setObjects(data);
+
+        setObjects({
+          lost: data.lost || [],
+          reclaimed: data.reclaimed || [],
+          solved: data.solved || [],
+        });
       } catch (error) {
         console.error("Error fetching objects:", error);
       } finally {
@@ -56,11 +64,9 @@ export default function ObjectLayout({ children }: { children: ReactNode }) {
     fetchObjects();
   }, [user]);
 
-  if (!user) redirect("/auth/signin");
-
   const sections = [
     { key: "lost", label: "Objetos encontrados" },
-    { key: "found", label: "Objetos resueltos" },
+    { key: "solved", label: "Objetos resueltos" },
     { key: "reclaimed", label: "Objetos reclamados" },
   ];
 
@@ -68,7 +74,7 @@ export default function ObjectLayout({ children }: { children: ReactNode }) {
     <main className="w-full pl-72 flex flex-row flex-grow py-20">
       <Menu />
       <section className="md:w-72 w-full pl-6 text-left">
-        <h1 className="text-2xl font-bold mb-6">Los objetos de {user.name}</h1>
+        <h1 className="text-2xl font-bold mb-6">Los objetos de {user?.name}</h1>
 
         {loading ? (
           <div className="flex flex-col gap-4 items-center justify-center py-10">
@@ -120,7 +126,9 @@ export default function ObjectLayout({ children }: { children: ReactNode }) {
         )}
       </section>
 
-      <div className="flex-grow justify-center items-center flex px-4">{children}</div>
+      <div className="flex-grow justify-center items-center flex px-4">
+        {children}
+      </div>
     </main>
   );
 }

@@ -16,19 +16,17 @@ export async function GET(req: NextRequest) {
   let foundObject = null;
   let foundIn = "";
 
-    try {
-      const obj = await db
-        .collection(collection)
-        .findOne({ _id: new ObjectId(id) });
+  try {
+    const obj = await db
+      .collection(collection)
+      .findOne({ _id: new ObjectId(id) });
 
-      if (obj) {
-        foundObject = obj;
-        foundIn = collection;
-        break;
-      }
-    } catch (err) {
-      return NextResponse.json({ error: "ID inválido" }, { status: 400 });
+    if (obj) {
+      foundObject = obj;
+      foundIn = collection;
     }
+  } catch (err) {
+    return NextResponse.json({ error: "ID inválido" }, { status: 400 });
   }
 
   if (!foundObject) {

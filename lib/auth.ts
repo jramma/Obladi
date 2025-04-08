@@ -78,7 +78,6 @@ export const authOptions: NextAuthOptions = {
     },
 
     async signIn({ user, account }) {
-
       if (!user.email || !allowedEmails.includes(user.email)) {
         console.warn("❌ Email no permitido:", user.email);
         return false; // Cancela el login
@@ -91,7 +90,7 @@ export const authOptions: NextAuthOptions = {
 
       if (!existingUser) {
         try {
-          await users.insertOne({
+          const newUser = await users.insertOne({
             email: user.email,
             name: user.name || "",
             surname: "",
@@ -109,7 +108,9 @@ export const authOptions: NextAuthOptions = {
             location: null,
             rewardPins: new Double(0.0),
             objects: [new ObjectId("000000000000000000000000")],
+            verified: true,
           });
+          user.id = newUser.insertedId.toString(); // 👈 muy importante
         } catch (err) {
           if (err instanceof MongoServerError) {
             console.error(
@@ -121,6 +122,8 @@ export const authOptions: NextAuthOptions = {
           }
           return false; // cancela el login
         }
+      } else {
+        user.id = existingUser._id.toString(); // 👈 también importante
       }
 
       return true;

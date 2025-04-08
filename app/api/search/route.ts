@@ -24,7 +24,6 @@ export async function POST(req: Request) {
     if (location && location.length > 1) {
       andFilters.push({ location: { $regex: location, $options: "i" } });
     }
-    console.log("📤 Enviando filtro de búsqueda:", filter);
 
     // Combina los filtros correctamente
     const filter = andFilters.length > 0 ? { $and: andFilters } : {};

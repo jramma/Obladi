@@ -18,6 +18,10 @@ export default async function ChatLayout({
 
   const client = await clientPromise;
   const db = client.db();
+  if (!session?.user?.id || !ObjectId.isValid(session.user.id)) {
+    console.warn("❌ ID de usuario inválido:", session.user.id);
+    return <p>No estás autenticado</p>;
+  }
   const userId = new ObjectId(session.user.id);
 
   // Reclamaciones del usuario

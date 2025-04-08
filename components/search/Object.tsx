@@ -25,6 +25,22 @@ export default function Object({ obj, objectKey }: any) {
       alert("❌ No se pudo crear el chat.");
     }
   };
+  const handleMarkAsFound = async () => {
+    const res = await fetch("/api/objects/solved", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ objectId: obj._id }),
+    });
+
+    if (res.ok) {
+      alert("✅ Objeto marcado como entregado");
+      router.refresh(); // o router.push('/profile/objects') si prefieres
+    } else {
+      alert("❌ No se pudo actualizar el objeto");
+    }
+  };
 
   return (
     <div key={objectKey} className="card-style w-full flex flex-col gap-4 p-6">
@@ -52,13 +68,22 @@ export default function Object({ obj, objectKey }: any) {
         <div className="flex flex-col gap-2">
           <p className="font-bold">Contacto:</p>
           <h3 className="text-xl font-bold mb-2">{obj.email}</h3>
-          {user?.email !== obj.email && (
+          {user?.email !== obj.email ? (
             <button
               onClick={handleReclaim}
               className="bg-tertiary font-bold text-xl self-end px-8 py-3 card-style hover:shadow-tertiary"
             >
               Reclamar
             </button>
+          ) : obj.type !== "solved" ? (
+            <button
+              onClick={handleMarkAsFound}
+              className="bg-primary text-white font-semibold text-xl self-end px-8 py-3 card-style hover:shadow-primary"
+            >
+              Objeto entregado
+            </button>
+          ) : (
+            <span className="italic text-gray-500 self-end">Este objeto ya fue entregado</span>
           )}
         </div>
       </div>

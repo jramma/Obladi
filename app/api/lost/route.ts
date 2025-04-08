@@ -65,18 +65,20 @@ export async function POST(req: Request) {
 
   const lostUserId = user.value?._id?.toString();
 
-  // 🔍 Buscar coincidencias en reclaimObject
+  // 🔍 Buscar coincidencias tipo reclaim en Objects
   const possibleMatches = await db
-    .collection("reclaimObject")
+    .collection("objects")
     .find({
+      type: "reclaim",
       category,
       tags: { $in: tags },
     })
     .toArray();
 
-  // ✅ Crear chats si no existen
   for (const match of possibleMatches) {
-    const otherUserId = match.claimedBy?.toString();
+    const otherUser = await usersCollection.findOne({ email: match.email });
+    const otherUserId = otherUser?._id?.toString();
+
     if (!otherUserId || otherUserId === lostUserId) continue;
 
     const existingChat = await db.collection("chats").findOne({
