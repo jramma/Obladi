@@ -1,12 +1,12 @@
 "use client";
 
-import CircularText from "@/components/ui/circularText";
-import Btns from "@/components/btns";
+import CircularText from "@/components/ui/CircularText";
+import Btns from "@/components/Btns";
 import { LuBaggageClaim } from "react-icons/lu";
 import { FaSearchLocation } from "react-icons/fa";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Boxes } from "@/components/ui/background-boxes";
+import { Boxes } from "@/components/ui/Background-boxes";
 export default function Cabecera() {
   return (
     <section className="relative overflow-hidden md:py-80 py-40 w-full justify-center self-center md:flex-row flex flex-col md:gap-10 gap-20  items-center">

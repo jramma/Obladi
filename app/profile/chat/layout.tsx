@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import clientPromise from "@/lib/mongodb";
-import { Menu } from "@/components/profile/menu";
+import { Menu } from "@/components/profile/Menu";
 import { ObjectId } from "mongodb";
 import Link from "next/link";
 import { IoChatboxSharp } from "react-icons/io5";

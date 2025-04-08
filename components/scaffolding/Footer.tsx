@@ -1,7 +1,7 @@
-import { Icons } from "../icons";
+import { Icons } from "../Icons";
 import Image from "next/image";
 import Link from "next/link";
-import SubscribeForm from "./subscribeform";
+import SubscribeForm from "./Subscribeform";
 
 const Footer: React.FC = () => {
   const links = [

@@ -6,7 +6,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { mapboxgl, MAPBOX_TOKEN } from "@/lib/mapbox";
 import { useUser } from "@/context/UserContext";
 import { useRouter } from "next/navigation";
-import TagsInput from "../tagsinput";
+import TagsInput from "../Tagsinput";
 const categories = ["Electrónica", "Ropa", "Documentos", "Accesorios", "Otros"];
 const DEFAULT_LOCATION = { lat: 41.3874, lng: 2.1686 }; // Barcelona
 

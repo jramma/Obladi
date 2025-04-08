@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Icons } from "../icons";
+import { Icons } from "../Icons";
 import { useState, useEffect } from "react";
 
 const menuItems = [

@@ -1,14 +1,14 @@
-import { Dock, DockIcon } from "../animation/dock";
-import { ModeToggle } from "../profile/mode-toggle";
-import { buttonVariants } from "../ui/button";
-import { Separator } from "../ui/separator";
-import { Logout } from "@/components/scaffolding/logout";
+import { Dock, DockIcon } from "../animation/Dock";
+import { ModeToggle } from "../profile/Mode-toggle";
+import { buttonVariants } from "../ui/Button";
+import { Separator } from "../ui/Separator";
+import { Logout } from "@/components/scaffolding/Logout";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
   TooltipProvider,
-} from "../ui/tooltip";
+} from "../ui/Tooltip";
 import { DATA } from "../../lib/text";
 import { cn } from "../../lib/utils";
 import Link from "next/link";

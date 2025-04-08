@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "@/styles/globals.css";
-import Navbar from "@/components/scaffolding/navbar";
+import Navbar from "@/components/scaffolding/Navbar";
 import { ThemeProvider } from "next-themes";
-import Footer from "@/components/scaffolding/footer";
+import Footer from "@/components/scaffolding/Footer";
 import { UserProvider } from "@/context/UserContext";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";

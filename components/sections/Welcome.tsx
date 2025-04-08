@@ -1,6 +1,6 @@
 "use client";
-import Btns from "../btns";
-import Map from "../map";
+import Btns from "../Btns";
+import Map from "../Map";
 import { useUser } from "@/context/UserContext";
 import { useEffect, useState } from "react";
 interface WelcomeProps {

@@ -1,5 +1,5 @@
 import { useUser } from "@/context/UserContext";
-import ImageList from "@/components/search/imageList";
+import ImageList from "@/components/search/ImageList";
 import { useRouter } from "next/navigation";
 
 export default function Object({ obj, objectKey }: any) {

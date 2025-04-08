@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { Icons } from "./icons";
+import { Icons } from "./Icons";
 
 const cardsData = [
   {

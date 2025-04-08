@@ -1,18 +1,18 @@
 "use client";
 
 import Image from "next/image";
-import Welcome from "@/components/sections/welcome";
-import Recently from "@/components/marquee";
-import Report from "@/components/sections/report";
-import Reviews from "@/components/sections/reviews";
-import How from "@/components/how";
-import Reclaim from "@/components/sections/reclaim";
-import Finder from "@/components/sections/finder";
+import Welcome from "@/components/sections/Welcome";
+import Recently from "@/components/Marquee";
+import Report from "@/components/sections/Report";
+import Reviews from "@/components/sections/Reviews";
+import How from "@/components/How";
+import Reclaim from "@/components/sections/Reclaim";
+import Finder from "@/components/sections/Finder";
 import { SessionProvider } from "next-auth/react";
 import { useUser } from "@/context/UserContext";
-import Cabecera from "@/components/sections/cabecera";
-import Videos from "@/components/sections/videos";
-import { Hr } from "@/components/ui/hr";
+import Cabecera from "@/components/sections/Cabecera";
+import Videos from "@/components/sections/Videos";
+import { Hr } from "@/components/ui/Hr";
 export default function AboutPage() {
   const user = useUser();
 

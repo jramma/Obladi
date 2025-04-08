@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { IconCloudDemo } from "@/components/animation/cloud";
+import { IconCloudDemo } from "@/components/animation/Cloud";
 import Image from "next/image";
-import LightBulb from "@/components/animation/light";
-import { Hr } from "@/components/ui/hr";
+import LightBulb from "@/components/animation/Light";
+import { Hr } from "@/components/ui/Hr";
 export default function AboutPage() {
   const imageRef = useRef<HTMLImageElement>(null);
   const [hasScrolled, setHasScrolled] = useState(false);

@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { LostObject } from "@/types/types";
-import Object from "@/components/search/object";
+import Object from "@/components/search/Object";
 import Image from "next/image";
-import Waves from "@/components/animation/waves";
+import Waves from "@/components/animation/Waves";
 
 
 export default function SearchPage() {

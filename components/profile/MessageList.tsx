@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import { formatDistanceToNow } from "date-fns";
-import Avatar from "@/components/ui/avatar";
+import Avatar from "@/components/ui/Avatar";
 
 export default function MessageList({
   chatId,

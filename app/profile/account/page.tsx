@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useUser } from "@/context/UserContext";
-import { Menu } from "@/components/profile/menu";
+import { Menu } from "@/components/profile/Menu";
 
 export default function AccountPage() {
   const user = useUser();

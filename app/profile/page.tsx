@@ -2,10 +2,10 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import clientPromise from "@/lib/mongodb";
-import { Menu } from "@/components/profile/menu";
-import Hero from "@/components/profile/hero";
-import Pines from "@/components/profile/pines";
-import Shop from "@/components/profile/shop";
+import { Menu } from "@/components/profile/Menu";
+import Hero from "@/components/profile/Hero";
+import Pines from "@/components/profile/Pines";
+import Shop from "@/components/profile/Shop";
 import { PlainUser } from "@/context/UserContext";
 
 export default async function ProfilePage() {

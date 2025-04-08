@@ -7,7 +7,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 
 import { Navigation, Autoplay } from "swiper/modules";
-import Avatar from "./ui/client-avatar";
+import Avatar from "./ui/Client-avatar";
 import { userReviews } from "@/lib/home"; 
 
 export default function SwiperReviews() {

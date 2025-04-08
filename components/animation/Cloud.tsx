@@ -1,4 +1,4 @@
-import { IconCloud } from "./icon-cloud";
+import { IconCloud } from "./Icon-cloud";
 
 const icons = [
   "unjs:unimport",

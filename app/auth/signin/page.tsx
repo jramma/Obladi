@@ -4,7 +4,7 @@ import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Boxes } from "@/components/ui/background-boxes";
+import { Boxes } from "@/components/ui/Background-boxes";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 const HCAPTCHA_SITEKEY = process.env.NEXT_PUBLIC_HCAPTCHA_SITEKEY!;
 

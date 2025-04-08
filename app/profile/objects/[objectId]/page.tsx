@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Object from "@/components/search/object";
+import Object from "@/components/search/Object";
 
 export default function ObjectPage({
   params,

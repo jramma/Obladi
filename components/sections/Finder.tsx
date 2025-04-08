@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Icons } from "../icons";
-import TagsQuery from "@/components/tagsquery";
+import { Icons } from "../Icons";
+import TagsQuery from "@/components/Tagsquery";
 
 export default function Finder() {
   const [tags, setTags] = useState<string[]>([]);

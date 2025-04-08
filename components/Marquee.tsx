@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Card } from "./card";
+import { Card } from "./Card";
 import Marquee from "react-fast-marquee";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";

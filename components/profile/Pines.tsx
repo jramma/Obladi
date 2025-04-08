@@ -1,6 +1,6 @@
 
-import { Icons } from "@/components/icons";
-import Avatar from "@/components/ui/avatar";
+import { Icons } from "@/components/Icons";
+import Avatar from "@/components/ui/Avatar";
 
 export default function Pines({ user }: any) {
     const avatars = Array.from({ length: 4 }, (_, index) => ({
