@@ -59,7 +59,6 @@ export function formatDate(date: string) {
 // allowed mails 
 export const allowedEmails = [
   "jrmasip97@gmail.com",
-  "otro.email@uoc.edu",
-  "admin@tuproyecto.com",
+  "jrammas@uoc.edu"
 ];
 
