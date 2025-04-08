@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Boxes } from "@/components/ui/Background-boxes";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
+
 const HCAPTCHA_SITEKEY = process.env.NEXT_PUBLIC_HCAPTCHA_SITEKEY!;
 
 export default function SignIn() {
@@ -81,7 +82,7 @@ export default function SignIn() {
         {/* 👉 Botón para iniciar sesión con Google */}
         <button
           type="button"
-          onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+          onClick={() => signIn("google", { callbackUrl: "/" })}
           className="w-full mt-2 flex items-center justify-center gap-2 py-2 border card-style2  bg-[#ffffff] text-gray-700"
         >
           <img src="/google.svg" alt="Google" className="w-5 h-5" />

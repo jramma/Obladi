@@ -60,11 +60,11 @@ export async function POST(req: Request) {
     picture: "",
     description: "",
     time: new Date(),
-    pines: [],
+    pines: [new ObjectId("000000000000000000000000")],
     contributor: new Double(0),
     lost: false,
     location: "",
-    objects: [],
+    objects: [new ObjectId("000000000000000000000000")],
   };
 
   try {

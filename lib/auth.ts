@@ -3,9 +3,9 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { MongoClient } from "mongodb";
 import bcrypt from "bcryptjs";
-import clientPromise from "@/lib/mongodb"; 
-
-
+import clientPromise from "@/lib/mongodb";
+import { ObjectId, Double } from "mongodb";
+import { MongoServerError } from "mongodb";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -76,6 +76,7 @@ export const authOptions: NextAuthOptions = {
       }
       return session;
     },
+
     async signIn({ user, account }) {
       const client = await clientPromise;
       const db = client.db();
@@ -84,24 +85,37 @@ export const authOptions: NextAuthOptions = {
       const existingUser = await users.findOne({ email: user.email });
 
       if (!existingUser) {
-        await users.insertOne({
-          email: user.email,
-          name: user.name || "",
-          surname: "",
-          authProvider: "google",
-          role: "user",
-          phone: "",
-          mail: user.email,
-          picture: user.image || "",
-          description: "",
-          time: new Date(),
-          pines: [],
-          contributor: 0.0,
-          lost: false,
-          location: null,
-          rewardPins: 0.0,
-          foundObjects: {},
-        });
+        try {
+          await users.insertOne({
+            email: user.email,
+            name: user.name || "",
+            surname: "",
+            authProvider: account?.provider || "google",
+            authId: account?.providerAccountId || "",
+            role: "user",
+            phone: "",
+            password: "",
+            picture: user.image || "",
+            description: "",
+            time: new Date(),
+            pines: [new ObjectId("000000000000000000000000")],
+            contributor: new Double(0.0),
+            lost: false,
+            location: null,
+            rewardPins: new Double(0.0),
+            objects: [new ObjectId("000000000000000000000000")],
+          });
+        } catch (err) {
+          if (err instanceof MongoServerError) {
+            console.error(
+              "❌ Error al insertar el usuario:",
+              JSON.stringify(err.errInfo, null, 2)
+            );
+          } else {
+            console.error("❌ Error desconocido al insertar el usuario:", err);
+          }
+          return false; // cancela el login
+        }
       }
 
       return true;
