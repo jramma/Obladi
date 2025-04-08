@@ -127,3 +127,18 @@ a.no-underline-effect::after {
 .dark .text-shadow {
   -webkit-text-stroke: 2px #000000;
 }
+.swiper-pagination-bullet {
+  width: 0.5rem; /* 2 */
+  height: 0.5rem; /* 2 */
+  background-color: #6b7280; /* gray-500 */
+  border-radius: 9999px; /* full */
+  margin-left: 0.25rem; /* mx-1 */
+  margin-right: 0.25rem;
+  transition: all 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #f0523c !important; /* primary (ej: blue-500, ajusta si usas otro) */
+  transform: scale(1.5);
+  transition: all 0.3s ease;
+}

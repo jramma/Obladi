@@ -21,7 +21,7 @@ export interface MongoUser {
   rewardPins: number;
   foundObjects: Record<string, unknown>;
   gender: string;
-  lostObjects: ObjectId[]; // ← ahora es un array de ObjectId reales
+  objects: ObjectId[]; // ← ahora es un array de ObjectId reales
   reclaimedObjects: ObjectId[]; // ← igual
 }
 

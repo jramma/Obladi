@@ -22,7 +22,7 @@ export default async function ChatLayout({
 
   // Reclamaciones del usuario
   const reclaimObjects = await db
-    .collection("reclaimObject")
+    .collection("objects")
     .find({ claimedBy: userId })
     .toArray();
 
@@ -30,7 +30,7 @@ export default async function ChatLayout({
   const chatCandidates = await Promise.all(
     reclaimObjects.map(async (reclaim) => {
       const lost = await db
-        .collection("lostObjects")
+        .collection("objects")
         .findOne({ _id: reclaim.objectId });
 
       if (!lost) return null;
@@ -70,11 +70,11 @@ export default async function ChatLayout({
     })
     .toArray();
 
-  // Cargar títulos de los objetos, vengan de lostObjects o reclaimObject
+  // Cargar títulos de los objetos, vengan de objects o reclaimObject
   const chatListWithTitles = await Promise.all(
     userChats.map(async (chat) => {
       const lost = await db
-        .collection("lostObjects")
+        .collection("objects")
         .findOne({ _id: chat.objectId });
       const reclaim = await db
         .collection("reclaimObject")

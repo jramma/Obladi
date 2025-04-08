@@ -5,11 +5,30 @@ import { ObjectId, Double } from "mongodb";
 
 export async function POST(req: Request) {
   const body = await req.json();
-  const { email, password, name, surname } = body;
+  const { email, password, name, surname, token } = body;
 
-  if (!email || !password || !name || !surname) {
+  if (!email || !password || !name || !surname || !token) {
     return NextResponse.json(
-      { error: "Faltan campos obligatorios" },
+      { error: "Faltan campos obligatorios o el CAPTCHA no se completó" },
+      { status: 400 }
+    );
+  }
+
+  // ✅ Verificación de hCaptcha
+  const captchaRes = await fetch("https://hcaptcha.com/siteverify", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({
+      secret: process.env.HCAPTCHA_SECRET!,
+      response: token,
+    }),
+  });
+
+  const captchaData = await captchaRes.json();
+
+  if (!captchaData.success) {
+    return NextResponse.json(
+      { error: "Verificación hCaptcha fallida." },
       { status: 400 }
     );
   }
@@ -35,7 +54,6 @@ export async function POST(req: Request) {
     surname,
     authProvider: "credentials",
     authId: "",
-    foundObjects: {},
     rewardPins: new Double(0),
     role: "user",
     phone: "",
@@ -45,9 +63,8 @@ export async function POST(req: Request) {
     pines: [],
     contributor: new Double(0),
     lost: false,
-    location: "", // o null si tu schema lo permite
-    lostObjects: [], // ✅ Añadir esto
-    reclaimedObjects: [], // ✅ Y esto también
+    location: "",
+    objects: [],
   };
 
   try {

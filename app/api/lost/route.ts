@@ -46,7 +46,7 @@ export async function POST(req: Request) {
   const client = await clientPromise;
   const db = client.db();
 
-  const result = await db.collection("lostObjects").insertOne(newLost);
+  const result = await db.collection("objects").insertOne(newLost);
   const newLostId = result.insertedId;
 
   // 🔄 Actualizar el usuario con el nuevo objeto perdido
@@ -56,7 +56,7 @@ export async function POST(req: Request) {
     { email },
     {
       $push: {
-        lostObjects: new ObjectId(newLostId),
+        objects: new ObjectId(newLostId),
       },
     },
     { returnDocument: "after" }

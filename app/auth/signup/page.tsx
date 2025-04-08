@@ -1,9 +1,14 @@
 "use client";
+
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { Boxes } from "@/components/ui/background-boxes";
+import HCaptcha from "@hcaptcha/react-hcaptcha";
+
+
+const HCAPTCHA_SITEKEY = process.env.NEXT_PUBLIC_HCAPTCHA_SITEKEY!;
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
@@ -12,6 +17,8 @@ export default function SignUp() {
     email: "",
     password: "",
   });
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+
   const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,12 +28,15 @@ export default function SignUp() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (!captchaToken) {
+      alert("Por favor verifica el CAPTCHA");
+      return;
+    }
+
     const res = await fetch("/api/register", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...formData, token: captchaToken }),
     });
 
     if (res.ok) {
@@ -72,6 +82,12 @@ export default function SignUp() {
             </div>
           ))}
         </div>
+
+        <HCaptcha
+          sitekey={HCAPTCHA_SITEKEY}
+          onVerify={(token) => setCaptchaToken(token)}
+        />
+
         <div className="flex flex-row gap-6 items-center">
           <button
             type="submit"
@@ -89,6 +105,7 @@ export default function SignUp() {
             <span className="font-medium text-gray-700"> Google</span>
           </button>
         </div>
+
         <div className="flex justify-center mt-16 text-xl">
           <Link href={"/auth/signin"} className="font-bold text-primary">
             ¿Ya tienes una cuenta? Inicia sesión

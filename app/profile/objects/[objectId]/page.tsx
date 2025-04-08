@@ -34,3 +34,4 @@ export default function ObjectPage({
     </div>
   );
 }
+// TODO: si el objeto es reclamado y el usuario lo ha recuperado, clicar botón de recuperdo

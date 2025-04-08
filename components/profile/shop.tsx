@@ -2,12 +2,17 @@
 
 import Image from "next/image";
 import { GiBottleCap } from "react-icons/gi";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+
 const products = [
   {
     id: 1,
     title: "Taza ObLaDi",
     price: 5,
-    description: "Si te ven con esta taza sabrán que ayudas.",
+    description: "La taza que te hará sentir como un rey con cada sorbo.",
     bg: "bg-secondary",
     image: "/taza.png",
   },
@@ -23,7 +28,8 @@ const products = [
     id: 3,
     title: "Camiseta ObLaDi",
     price: 30,
-    description: "Lleva tu barrio cerca de tu corazón, mejor que cualquier bandera.",
+    description:
+      "Lleva tu barrio cerca de tu corazón, mejor que cualquier bandera.",
     bg: "bg-primary",
     image: "/camiseta.png",
   },
@@ -31,18 +37,34 @@ const products = [
 
 export default function Shop({ user }: any) {
   return (
-    <div className="p-6 flex flex-col gap-6 w-full overflow-visible">
+    <div className="p-6 flex flex-col gap-6 w-full ">
       <h2 className="text-4xl font-light mt-12">Tienda de Pines</h2>
 
-      {/* Contenedor deslizable en móviles */}
-      <div className="overflow-visible -mx-10">
-        <div className="w-full flex gap-6 overflow-scroll py-4 p-8 lg:px-20">
-          {products.map((product) => (
+      <Swiper
+        modules={[Pagination]}
+        spaceBetween={20}
+        slidesPerView={1.2}
+        pagination={{ clickable: true }}
+        loop={true}
+        breakpoints={{
+          640: {
+            slidesPerView: 1.5,
+          },
+          768: {
+            slidesPerView: 2,
+          },
+          1024: {
+            slidesPerView: 3,
+          },
+        }}
+        className="w-full !overflow-visible flex items-stretch "
+      >
+        {products.map((product) => (
+          <SwiperSlide key={product.title} className="flex flex-grow py-8">
             <div
-              key={product.id}
-              className={`card-style flex-shrink-0 flex flex-col ${product.bg} overflow-hidden relative w-72 mx-auto rounded-xl`}
+              className={`card-style m-6 flex flex-grow  flex-col ${product.bg} overflow-hidden relative w-full max-w-xs mx-auto rounded-xl`}
             >
-              <div className="w-full pt-6 px-6 pb-2 overflow-hidden">
+              <div className="w-full pt-6 px-6 pb-2 overflow-hidden ">
                 <div className="border-3 border-black overflow-hidden relative rounded-2xl aspect-square">
                   <Image
                     src={product.image}
@@ -66,9 +88,9 @@ export default function Shop({ user }: any) {
                 </button>
               </div>
             </div>
-          ))}
-        </div>
-      </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </div>
   );
 }

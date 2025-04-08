@@ -9,7 +9,7 @@ export async function PUT(req: Request) {
     const body = await req.json();
     console.log("Cuerpo de la solicitud recibido:", body);
 
-    const { email, reclaimedObjects, lostObjects, ...otherUpdates } = body;
+    const { email, reclaimedObjects, objects, ...otherUpdates } = body;
 
     if (!email) {
       console.log("Error: Falta el email en la solicitud.");
@@ -32,10 +32,10 @@ export async function PUT(req: Request) {
       };
     }
 
-    if (lostObjects) {
+    if (objects) {
       updateOps.$push = updateOps.$push || {};
-      updateOps.$push.lostObjects = {
-        $each: lostObjects.map((id: string) => new ObjectId(id)),
+      updateOps.$push.objects = {
+        $each: objects.map((id: string) => new ObjectId(id)),
       };
     }
 

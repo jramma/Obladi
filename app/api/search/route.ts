@@ -22,7 +22,7 @@ export async function POST(req: Request) {
       filter.location = { $regex: location, $options: "i" };
     }
 
-    const results = await db.collection("lostObjects").find(filter).toArray();
+    const results = await db.collection("objects").find(filter).toArray();
 
     return NextResponse.json({ results });
   } catch (err) {

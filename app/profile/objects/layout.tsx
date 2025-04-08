@@ -38,7 +38,7 @@ export default function ObjectLayout({ children }: { children: ReactNode }) {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            lostObjects: user.lostObjects || [],
+            objects: user.objects || [],
             foundObjects: user.foundObjects || [],
             reclaimedObjects: user.reclaimedObjects || [],
           }),
@@ -59,15 +59,15 @@ export default function ObjectLayout({ children }: { children: ReactNode }) {
   if (!user) redirect("/auth/signin");
 
   const sections = [
-    { key: "lost", label: "Objetos perdidos" },
-    { key: "found", label: "Objetos encontrados" },
+    { key: "lost", label: "Objetos encontrados" },
+    { key: "found", label: "Objetos resueltos" },
     { key: "reclaimed", label: "Objetos reclamados" },
   ];
 
   return (
     <main className="w-full pl-72 flex flex-row flex-grow py-20">
       <Menu />
-      <section className="md:w-72 w-full px-6 text-left">
+      <section className="md:w-72 w-full pl-6 text-left">
         <h1 className="text-2xl font-bold mb-6">Los objetos de {user.name}</h1>
 
         {loading ? (
@@ -89,7 +89,7 @@ export default function ObjectLayout({ children }: { children: ReactNode }) {
                 <div key={key}>
                   <button
                     onClick={() => toggleSection(key)}
-                    className="w-full flex items-center text-left pb-3 px-2 justify-between text-xl font-semibold"
+                    className="w-full flex items-center text-left pb-3 px-3 justify-between text-xl font-semibold"
                   >
                     {label}
                     <FaChevronUp

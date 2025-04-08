@@ -59,7 +59,7 @@ export async function POST(req: Request) {
   const claimedById = user.value?._id?.toString();
 
   // 🔍 Buscar coincidencias en objetos perdidos
-  const possibleMatches = await db.collection("lostObjects").find({
+  const possibleMatches = await db.collection("objects").find({
     category,
     tags: { $in: tags },
   }).toArray();

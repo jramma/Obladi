@@ -12,11 +12,10 @@ export async function GET(req: NextRequest) {
   const client = await clientPromise;
   const db = client.db();
 
-  const collections = ["lostObjects", "reclaimObject", "solvedObjects"];
+  const collection = "objects";
   let foundObject = null;
   let foundIn = "";
 
-  for (const collection of collections) {
     try {
       const obj = await db
         .collection(collection)

@@ -18,10 +18,8 @@ export type PlainUser = {
   lost: boolean;
   location: string | null;
   rewardPins: number;
-  foundObjects: Record<string, unknown>;
   gender: string;
-  lostObjects: string[]; // ← Nuevos campos
-  reclaimedObjects: string[]; // ← Nuevos campos
+  objects: string[]; // ← Nuevos campos
 };
 
 const UserContext = createContext<PlainUser | null>(null);

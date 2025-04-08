@@ -24,52 +24,7 @@ db.createCollection("locations", {
     },
   },
 });
-db.createCollection("lostObjects", {
-  validator: {
-    $jsonSchema: {
-      bsonType: "object",
-      title: "lostObjects",
-      required: [
-        "findBy",
-        "where",
-        "imgs",
-        "date",
-        "post_date",
-        "description",
-        "tags",
-      ],
-      properties: {
-        findBy: {
-          bsonType: "objectId",
-        },
-        where: {
-          bsonType: "objectId",
-        },
-        imgs: {
-          bsonType: "array",
-          items: {
-            bsonType: "string",
-          },
-        },
-        date: {
-          bsonType: "date",
-        },
-        post_date: {
-          bsonType: "date",
-        },
-        description: {
-          bsonType: "string",
-        },
-        tags: {
-          bsonType: "array",
-          items: {
-            bsonType: "string",
-          },
-        },
-      },
-    },
-  },
-});
+
 db.createCollection("pins", {
   validator: {
     $jsonSchema: {

@@ -47,17 +47,13 @@ export default async function RootLayout({ children }: LayoutProps) {
     lost: user?.lost ?? false,
     location: user?.location ? user?.location.toString() : null,
     rewardPins: typeof user?.rewardPins === "number" ? user?.rewardPins : 0.0,
-    foundObjects: user?.foundObjects || {},
-    lostObjects: (user?.lostObjects || []).map((id: any) => id.toString()),
-    reclaimedObjects: (user?.reclaimedObjects || []).map((id: any) =>
-      id.toString()
-    ),
+    objects: (user?.objects || []).map((id: any) => id.toString()),
     gender: user?.gender || "",
   };
 
   return (
     <html lang="es" suppressHydrationWarning>
-      <body className="min-h-screen flex flex-col items-center w-full bg-white dark:bg-black md:pt-18">
+      <body className="min-h-screen flex flex-col items-center w-full bg-white dark:bg-black md:pt-18 overflow-x-hidden">
         <UserProvider user={safeUser}>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <Navbar />

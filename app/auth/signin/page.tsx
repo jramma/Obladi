@@ -5,6 +5,9 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Boxes } from "@/components/ui/background-boxes";
+import HCaptcha from "@hcaptcha/react-hcaptcha";
+const HCAPTCHA_SITEKEY = process.env.NEXT_PUBLIC_HCAPTCHA_SITEKEY!;
+
 export default function SignIn() {
   const [credentials, setCredentials] = useState({
     email: "",
@@ -71,6 +74,10 @@ export default function SignIn() {
           />
         </div>
 
+        <HCaptcha
+          sitekey={HCAPTCHA_SITEKEY}
+          onVerify={(token) => setCaptchaToken(token)}
+        />
         {/* 👉 Botón para iniciar sesión con Google */}
         <button
           type="button"

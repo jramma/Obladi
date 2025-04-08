@@ -21,7 +21,7 @@ const allCities = [
 ];
 const Welcome: React.FC<WelcomeProps> = ({ title, subtitle }) => {
   const user = useUser();
-  const [lostObjectsOnLocation, setLostObjectsOnLocation] = useState<number>(0);
+  const [objectsOnLocation, setobjectsOnLocation] = useState<number>(0);
   const [location, setLocation] = useState<string>("Barcelona");
   const [nearbyCities, setNearbyCities] = useState<string[]>(allCities);
   const currentDate = new Date().toLocaleDateString();
@@ -55,9 +55,8 @@ const Welcome: React.FC<WelcomeProps> = ({ title, subtitle }) => {
         `/api/search?location=${encodeURIComponent(userLocation)}`
       );
       const data = await res.json();
-      const count =
-        (data?.lostObjects?.length || 0) + (data?.reclaimObjects?.length || 0);
-      setLostObjectsOnLocation(count);
+      const count = data?.objects?.length || 0;
+      setobjectsOnLocation(count);
 
       // Obtener ciudades más cercanas (mock)
 
@@ -80,7 +79,7 @@ const Welcome: React.FC<WelcomeProps> = ({ title, subtitle }) => {
             Lugar definitivo
             <br /> de objetos perdidos
           </h1>
-          <p className="text-3xl  font-bold">{lostObjectsOnLocation}</p>
+          <p className="text-3xl  font-bold">{objectsOnLocation}</p>
         </div>
         <p className="text-7xl pt-20">{location}</p>
         <Btns />

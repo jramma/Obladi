@@ -15,7 +15,9 @@ export default async function ProfilePage() {
 
   const client = await clientPromise;
   const db = client.db();
-  const user = await db.collection("users").findOne({ email: session.user?.email });
+  const user = await db
+    .collection("users")
+    .findOne({ email: session.user?.email });
 
   if (!user) redirect("/auth/signin");
 
@@ -29,26 +31,28 @@ export default async function ProfilePage() {
     mail: user?.mail || user?.email,
     picture: user?.picture || "",
     description: user?.description || "",
-    time: user?.time instanceof Date ? user?.time.toISOString() : new Date().toISOString(),
+    time:
+      user?.time instanceof Date
+        ? user?.time.toISOString()
+        : new Date().toISOString(),
     pines: (user?.pines || []).map((id: any) => id.toString()),
-    contributor: typeof user?.contributor === "number" ? user?.contributor : 0.0,
+    contributor:
+      typeof user?.contributor === "number" ? user?.contributor : 0.0,
     lost: user?.lost ?? false,
     location: user?.location ? user?.location.toString() : null,
     rewardPins: typeof user?.rewardPins === "number" ? user?.rewardPins : 0.0,
-    foundObjects: user?.foundObjects || {},
     gender: user?.gender || "",
-    lostObjects: user?.lostObjects || {},
-    reclaimedObjects: user?.reclaimedObjects || {},
+    objects: JSON.parse(JSON.stringify(user?.objects || {})),
   };
 
   return (
     <main className="container self-center flex flex-row justify-end py-10 md:py-20">
       <Menu />
-        <section className="w-full md:w-3/4 flex flex-col items-start">
-          <Hero user={safeUser} />
-          <Pines user={safeUser} />
-          <Shop user={safeUser} />
-        </section>
+      <section className="w-full md:w-3/4 flex flex-col items-start ">
+        <Hero user={safeUser} />
+        <Pines user={safeUser} />
+        <Shop user={safeUser} />
+      </section>
     </main>
   );
 }
