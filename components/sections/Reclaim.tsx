@@ -30,6 +30,14 @@ export default function Reclaim() {
     }
   };
 
+  const removeImage = (index: number) => {
+    const updated = previewImages.filter((_, i) => i !== index);
+    setPreviewImages(updated);
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ""; // limpia el input real
+    }
+  };
   useEffect(() => {
     if (!mapboxToken || !mapContainerRef.current) return;
     mapboxgl.accessToken = mapboxToken;

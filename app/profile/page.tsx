@@ -38,7 +38,6 @@ export default async function ProfilePage() {
     pines: (user?.pines || []).map((id: any) => id.toString()),
     contributor:
       typeof user?.contributor === "number" ? user?.contributor : 0.0,
-    lost: user?.lost ?? false,
     location: user?.location ? user?.location.toString() : null,
     rewardPins: typeof user?.rewardPins === "number" ? user?.rewardPins : 0.0,
     gender: user?.gender || "",

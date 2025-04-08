@@ -15,7 +15,6 @@ export type PlainUser = {
   time: string;
   pines: string[];
   contributor: number;
-  lost: boolean;
   location: string | null;
   rewardPins: number;
   gender: string;
