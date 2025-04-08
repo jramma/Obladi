@@ -6,7 +6,7 @@ import { Menu } from "@/components/profile/Menu";
 import Hero from "@/components/profile/Hero";
 import Pines from "@/components/profile/Pines";
 import Shop from "@/components/profile/Shop";
-import { PlainUser } from "@/context/UserContext";
+import { PlainUser } from "@/hooks/UserContext";
 
 export default async function ProfilePage() {
   const session = await getServerSession(authOptions);

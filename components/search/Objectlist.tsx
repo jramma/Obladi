@@ -1,4 +1,4 @@
-import { useUser } from "@/context/UserContext";
+import { useUser } from "@/hooks/UserContext";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 

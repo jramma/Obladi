@@ -1,7 +1,7 @@
 "use client";
 import Btns from "../Btns";
 import Map from "../Map";
-import { useUser } from "@/context/UserContext";
+import { useUser } from "@/hooks/UserContext";
 import { useEffect, useState } from "react";
 
 const allCities = [

@@ -2,7 +2,7 @@
 
 import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
-import { UserProvider, PlainUser } from "@/context/UserContext";
+import { UserProvider, PlainUser } from "@/hooks/UserContext";
 
 export function UserWrapper({ children }: { children: React.ReactNode }) {
   const { data: session, status } = useSession();

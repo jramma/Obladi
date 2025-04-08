@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { redirect } from "next/navigation";
 import { Menu } from "@/components/profile/Menu";
-import { useUser } from "@/context/UserContext";
+import { useUser } from "@/hooks/UserContext";
 import ObjectList from "@/components/search/Objectlist";
 import { FaChevronUp } from "react-icons/fa6";
 import type { ReactNode } from "react";

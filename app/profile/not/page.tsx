@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { redirect } from "next/navigation";
 import { Menu } from "@/components/profile/Menu";
-import { useUser } from "@/context/UserContext";
+import { useUser } from "@/hooks/UserContext";
 import Toggle from "@/components/form/Toggle";
 
 export default function NotPages() {
