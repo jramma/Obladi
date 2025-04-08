@@ -56,3 +56,10 @@ export function formatDate(date: string) {
     return `${fullDate} (${yearsAgo}y ago)`;
   }
 }
+// allowed mails 
+export const allowedEmails = [
+  "jrmasip97@gmail.com",
+  "otro.email@uoc.edu",
+  "admin@tuproyecto.com",
+];
+
