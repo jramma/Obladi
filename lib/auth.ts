@@ -1,11 +1,11 @@
 import { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { MongoClient } from "mongodb";
 import bcrypt from "bcryptjs";
 import clientPromise from "@/lib/mongodb";
 import { ObjectId, Double } from "mongodb";
 import { MongoServerError } from "mongodb";
+import { allowedEmails } from "@/lib/utils";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -78,6 +78,11 @@ export const authOptions: NextAuthOptions = {
     },
 
     async signIn({ user, account }) {
+
+      if (!user.email || !allowedEmails.includes(user.email)) {
+        console.warn("❌ Email no permitido:", user.email);
+        return false; // Cancela el login
+      }
       const client = await clientPromise;
       const db = client.db();
       const users = db.collection("users");

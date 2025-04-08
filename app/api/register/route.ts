@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { hash } from "bcryptjs";
 import clientPromise from "@/lib/mongodb";
 import { ObjectId, Double } from "mongodb";
+import crypto from "crypto";
+import { sendVerificationEmail } from "@/lib/resend";
 
 export async function POST(req: Request) {
   const body = await req.json();
@@ -62,12 +64,20 @@ export async function POST(req: Request) {
     time: new Date(),
     pines: [new ObjectId("000000000000000000000000")],
     contributor: new Double(0),
-    lost: false,
     location: "",
     objects: [new ObjectId("000000000000000000000000")],
+    verified: false,
   };
 
   try {
+    const verificationToken = crypto.randomBytes(32).toString("hex");
+    await db.collection("emailVerifications").insertOne({
+      email,
+      token: verificationToken,
+      expires: new Date(Date.now() + 1000 * 60 * 30), // 30 mins
+    });
+    await sendVerificationEmail(email, verificationToken);
+
     await db.collection("users").insertOne(newUser);
     return NextResponse.json({ message: "Usuario creado correctamente" });
   } catch (error: any) {

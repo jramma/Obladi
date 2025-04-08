@@ -9,8 +9,12 @@ import { useRouter } from "next/navigation";
 import TagsInput from "../Tagsinput";
 const categories = ["Electrónica", "Ropa", "Documentos", "Accesorios", "Otros"];
 const DEFAULT_LOCATION = { lat: 41.3874, lng: 2.1686 }; // Barcelona
+const MAX_IMAGE_SIZE = 1 * 1024 * 1024; // 1MB
+const validTypes = ["image/jpeg", "image/png", "image/webp"];
 
 export default function Reclaim() {
+  const [previewImages, setPreviewImages] = useState<File[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const { register, handleSubmit, setValue } = useForm();
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
@@ -79,7 +83,6 @@ export default function Reclaim() {
   const onSubmit = async (data: any) => {
     const formData = new FormData();
 
-    // Añade campos normales al formulario para subir el objeto
     formData.append("title", data.title);
     formData.append("description", data.description);
     formData.append("tags", data.tags);
@@ -87,54 +90,41 @@ export default function Reclaim() {
     formData.append("latitude", data.latitude);
     formData.append("longitude", data.longitude);
     formData.append("email", data.email);
-    formData.append("foundAt", data.foundAt);
-    formData.append("claimedAt", new Date().toISOString());
+    formData.append("lostAt", data.lostAt);
+    formData.append("post_date", new Date().toISOString());
 
-    // Añade imágenes
-    const files = data.images;
+    const files = previewImages;
+
     if (files?.length > 3) {
-      alert("❌ Solo puedes subir hasta 3 imágenes");
+      alert("❌ Máximo 3 imágenes");
       return;
     }
 
     for (let i = 0; i < files.length; i++) {
-      formData.append("images", files[i]);
+      const file = files[i];
+
+      if (!validTypes.includes(file.type)) {
+        alert(`❌ El tipo de archivo "${file.name}" no está permitido.`);
+        return;
+      }
+
+      if (file.size > MAX_IMAGE_SIZE) {
+        alert(`❌ La imagen "${file.name}" excede el límite de 1MB.`);
+        return;
+      }
+
+      formData.append("images", file);
     }
 
-    try {
-      const res = await fetch("/api/reclaim", {
-        method: "POST",
-        body: formData,
-      });
+    const res = await fetch("/api/reclaim", {
+      method: "POST",
+      body: formData,
+    });
 
-      if (res.ok) {
-        const { _id } = await res.json(); // Asegúrate que viene bien
-
-        if (!_id) {
-          alert("⚠️ Reclamo subido, pero no se recibió _id");
-          return;
-        }
-
-        const userUpdate = await fetch("/api/user/update", {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email: data.email,
-            reclaimedObjects: [_id],
-          }),
-        });
-
-        if (userUpdate.ok) {
-          alert("✅ Reclamo enviado y usuario actualizado correctamente");
-        } else {
-          alert("⚠️ Reclamo enviado pero no se pudo actualizar el usuario");
-        }
-      } else {
-        alert("❌ Error al enviar el reclamo");
-      }
-    } catch (err) {
-      console.error("Error en onSubmit:", err);
-      alert("❌ Error inesperado en la petición");
+    if (res.ok) {
+      alert("✅ Reporte enviado");
+    } else {
+      alert("❌ Error al enviar el reporte");
     }
   };
 
@@ -214,9 +204,41 @@ export default function Reclaim() {
                 type="file"
                 multiple
                 accept="image/*"
-                {...register("images")}
+                ref={fileInputRef}
                 className="bg-white border p-2 rounded card-style2"
+                onChange={(e) => {
+                  const files = Array.from(e.target.files || []);
+                  const allFiles = [...previewImages, ...files];
+
+                  if (allFiles.length > 3) {
+                    alert("❌ Solo puedes subir hasta 3 imágenes");
+                    return;
+                  }
+
+                  setPreviewImages(allFiles);
+                }}
               />
+
+              {previewImages.length > 0 && (
+                <div className="flex gap-4 mt-4 flex-wrap">
+                  {previewImages.map((file, index) => (
+                    <div key={index} className="relative w-24 h-24">
+                      <img
+                        src={URL.createObjectURL(file)}
+                        alt={`preview-${index}`}
+                        className="w-full h-full object-cover rounded-lg border"
+                      />
+                      <p className="text-xs mt-1 truncate">{file.name}</p>
+                      <button
+                        onClick={() => removeImage(index)}
+                        className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full px-2"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Puedes incluir lat/lng ocultos en el form */}

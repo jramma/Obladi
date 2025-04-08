@@ -10,8 +10,12 @@ import TagsInput from "@/components/Tagsinput";
 
 const categories = ["Electrónica", "Ropa", "Documentos", "Accesorios", "Otros"];
 const DEFAULT_LOCATION = { lat: 41.3874, lng: 2.1686 };
+const validTypes = ["image/jpeg", "image/png", "image/webp"];
+const MAX_IMAGE_SIZE = 1 * 1024 * 1024; // 1MB
 
 export default function ReportLost() {
+  const [previewImages, setPreviewImages] = useState<File[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const { register, handleSubmit, setValue } = useForm();
   const user = useUser();
   const [location, setLocation] = useState(DEFAULT_LOCATION);
@@ -71,9 +75,18 @@ export default function ReportLost() {
     });
   };
 
+  const removeImage = (index: number) => {
+    const updated = previewImages.filter((_, i) => i !== index);
+    setPreviewImages(updated);
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ""; // limpia el input real
+    }
+  };
+
   const onSubmit = async (data: any) => {
     const formData = new FormData();
-
+  
     formData.append("title", data.title);
     formData.append("description", data.description);
     formData.append("tags", data.tags);
@@ -83,28 +96,42 @@ export default function ReportLost() {
     formData.append("email", data.email);
     formData.append("lostAt", data.lostAt);
     formData.append("post_date", new Date().toISOString());
-
-    const files = data.images;
+  
+    const files = previewImages;
+  
     if (files?.length > 3) {
       alert("❌ Máximo 3 imágenes");
       return;
     }
-
+  
     for (let i = 0; i < files.length; i++) {
-      formData.append("images", files[i]);
+      const file = files[i];
+  
+      if (!validTypes.includes(file.type)) {
+        alert(`❌ El tipo de archivo "${file.name}" no está permitido.`);
+        return;
+      }
+  
+      if (file.size > MAX_IMAGE_SIZE) {
+        alert(`❌ La imagen "${file.name}" excede el límite de 1MB.`);
+        return;
+      }
+  
+      formData.append("images", file);
     }
-
+  
     const res = await fetch("/api/lost", {
       method: "POST",
       body: formData,
     });
-
+  
     if (res.ok) {
       alert("✅ Reporte enviado");
     } else {
       alert("❌ Error al enviar el reporte");
     }
   };
+  
 
   if (!mapboxToken) {
     return <p className="text-red-600">❌ Falta el token de MAPBOX</p>;
@@ -112,7 +139,7 @@ export default function ReportLost() {
 
   return (
     <section
-    id="report"
+      id="report"
       onClick={handleSectionClick}
       className="py-20 flex flex-col w-full items-center"
     >
@@ -177,9 +204,41 @@ export default function ReportLost() {
               type="file"
               multiple
               accept="image/*"
-              {...register("images")}
-              className="bg-white card-style2 p-2 border rounded-md"
+              ref={fileInputRef}
+              className="bg-white border p-2 rounded card-style2"
+              onChange={(e) => {
+                const files = Array.from(e.target.files || []);
+                const allFiles = [...previewImages, ...files];
+
+                if (allFiles.length > 3) {
+                  alert("❌ Solo puedes subir hasta 3 imágenes");
+                  return;
+                }
+
+                setPreviewImages(allFiles);
+              }}
             />
+
+            {previewImages.length > 0 && (
+              <div className="flex gap-4 mt-4 flex-wrap">
+                {previewImages.map((file, index) => (
+                  <div key={index} className="relative w-24 h-24">
+                    <img
+                      src={URL.createObjectURL(file)}
+                      alt={`preview-${index}`}
+                      className="w-full h-full object-cover rounded-lg border"
+                    />
+                    <p className="text-xs mt-1 truncate">{file.name}</p>
+                    <button
+                      onClick={() => removeImage(index)}
+                      className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full px-2"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
 
             {/* Coordenadas ocultas */}
             <input

@@ -10,6 +10,8 @@ import HCaptcha from "@hcaptcha/react-hcaptcha";
 const HCAPTCHA_SITEKEY = process.env.NEXT_PUBLIC_HCAPTCHA_SITEKEY!;
 
 export default function SignIn() {
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
@@ -18,6 +20,10 @@ export default function SignIn() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!captchaToken) {
+      alert("Por favor verifica el CAPTCHA");
+      return;
+    }
     const res = await signIn("credentials", {
       redirect: false,
       email: credentials.email,

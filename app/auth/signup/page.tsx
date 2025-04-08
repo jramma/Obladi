@@ -7,10 +7,11 @@ import { signIn } from "next-auth/react";
 import { Boxes } from "@/components/ui/Background-boxes";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 
-
 const HCAPTCHA_SITEKEY = process.env.NEXT_PUBLIC_HCAPTCHA_SITEKEY!;
 
 export default function SignUp() {
+  const [emailSent, setEmailSent] = useState(false);
+
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
@@ -38,9 +39,8 @@ export default function SignUp() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ...formData, token: captchaToken }),
     });
-
     if (res.ok) {
-      router.push("/auth/signin");
+      setEmailSent(true);
     } else {
       const error = await res.json();
       alert(error.error || "Ocurrió un error");
@@ -112,6 +112,21 @@ export default function SignUp() {
           </Link>
         </div>
       </form>
+      {/* modal */}
+      {emailSent && (
+        <div className="fixed inset-0 flex items-center justify-center z-50  backdrop-blur-lg bg-opacity-50">
+          <div className="bg-white dark:bg-black card-style p-8  text-center space-y-4">
+            <h3 className="text-2xl font-bold">¡Revisa tu correo!</h3>
+            <p>Te hemos enviado un enlace para verificar tu cuenta.</p>
+            <button
+              className="mt-4 px-6 py-2 bg-primary text-black rounded font-semibold"
+              onClick={() => router.push("/auth/signin")}
+            >
+              Ir a iniciar sesión
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

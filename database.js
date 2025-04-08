@@ -66,7 +66,6 @@ db.createCollection("users", {
         "time",
         "pines",
         "contributor",
-        "lost",
         "location",
       ],
       properties: {
@@ -125,26 +124,6 @@ db.createCollection("users", {
           bsonType: "bool",
         },
         location: {
-          bsonType: "objectId",
-        },
-      },
-    },
-  },
-});
-db.createCollection("solvedObjects", {
-  validator: {
-    $jsonSchema: {
-      bsonType: "object",
-      title: "solvedObjects",
-      required: ["lostObject", "when", "owner"],
-      properties: {
-        lostObject: {
-          bsonType: "objectId",
-        },
-        when: {
-          bsonType: "date",
-        },
-        owner: {
           bsonType: "objectId",
         },
       },

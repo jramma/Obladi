@@ -11,7 +11,7 @@ import Waves from "@/components/animation/Waves";
 export default function SearchPage() {
   const searchParams = useSearchParams();
   const query = searchParams.get("query")?.toLowerCase() || "";
-  const tags = searchParams.getAll("tags").flatMap((t) => t.split(","));
+  const tags = searchParams.getAll("tags").flatMap((t) => t.split(",")).filter(Boolean);
   const location = searchParams.get("location")?.toLowerCase() || "";
 
   const [results, setResults] = useState<LostObject[]>([]);

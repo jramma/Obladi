@@ -44,7 +44,6 @@ export default async function RootLayout({ children }: LayoutProps) {
     pines: (user?.pines || []).map((id: any) => id.toString()),
     contributor:
       typeof user?.contributor === "number" ? user?.contributor : 0.0,
-    lost: user?.lost ?? false,
     location: user?.location ? user?.location.toString() : null,
     rewardPins: typeof user?.rewardPins === "number" ? user?.rewardPins : 0.0,
     objects: (user?.objects || []).map((id: any) => id.toString()),

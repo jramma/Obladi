@@ -40,6 +40,7 @@ export async function POST(req: Request) {
     claimedAt,
     images: uploadedKeys,
     location: locationName,
+    type: "reclaim",
   };
 
   const client = await clientPromise;

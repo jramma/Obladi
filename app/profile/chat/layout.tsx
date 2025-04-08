@@ -89,7 +89,6 @@ export default async function ChatLayout({
       };
     })
   );
-  
 
   return (
     <main className="flex-grow pl-72 flex flex-row w-full overflow-hidden -mb-12">
@@ -101,27 +100,30 @@ export default async function ChatLayout({
             <p className="text-gray-500">No hay chats disponibles</p>
             <p className="max-w-96">
               Se crearán salas de chat si hay coincidencias entre objetos que
-              hayas pe <div className="flex-1 overflow-auto">{children}</div>
-              rdido y objetos que se hayan encontrado y viceversa.
+              hayas perdido y objetos que se hayan encontrado y viceversa.
             </p>
           </>
         ) : (
           <ul className="flex flex-col gap-4 items-start max-w-full">
             {chatListWithTitles.map((chat) => (
-              <li key={chat._id.toString()}   className="group">
+              <li key={chat._id.toString()} className="group">
                 <Link
                   href={`/profile/chat/${chat._id}`}
                   className=" no-underline-effect text-xl font-bold  p-2 flex gap-1 items-center"
                 >
                   Conversación "{chat.title}" {chat.type.toLowerCase()}
-                  <IoChatboxSharp className={`w-12 bg-gray-300 shrink-0 p-2 aspect-square rounded-md h-12 group-hover:animate-bounce   group ${chat.type === "Perdido" ? " text-crimson" : " text-yellow"}`}  />
+                  <IoChatboxSharp
+                    className={`w-12 bg-gray-300 shrink-0 p-2 aspect-square rounded-md h-12 group-hover:animate-bounce   group ${chat.type === "Perdido" ? " text-crimson" : " text-yellow"}`}
+                  />
                 </Link>
               </li>
             ))}
           </ul>
         )}
       </nav>
-      <div className="max-w-3/4 flex flex-grow items-center justify-center">{children}</div>
+      <div className="max-w-3/4 flex flex-grow items-center justify-center">
+        {children}
+      </div>
     </main>
   );
 }

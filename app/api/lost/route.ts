@@ -41,6 +41,7 @@ export async function POST(req: Request) {
     date: lostAt,
     post_date,
     imgs: uploadedKeys,
+    type: "lost",
   };
 
   const client = await clientPromise;
