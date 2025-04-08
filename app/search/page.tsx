@@ -6,14 +6,20 @@ import { LostObject } from "@/types/types";
 import Object from "@/components/search/Object";
 import Image from "next/image";
 import Waves from "@/components/animation/Waves";
-
+import { useMemo } from "react";
 
 export default function SearchPage() {
   const searchParams = useSearchParams();
-  const query = searchParams.get("query")?.toLowerCase() || "";
-  const tags = searchParams.getAll("tags").flatMap((t) => t.split(",")).filter(Boolean);
-  const location = searchParams.get("location")?.toLowerCase() || "";
 
+  const { query, tags, location } = useMemo(() => {
+    if (!searchParams) return { query: "", tags: [], location: "" };
+
+    return {
+      query: searchParams.get("query")?.toLowerCase() || "",
+      tags: searchParams.getAll("tags").flatMap((t) => t.split(",")),
+      location: searchParams.get("location")?.toLowerCase() || "",
+    };
+  }, [searchParams]);
   const [results, setResults] = useState<LostObject[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -43,7 +49,9 @@ export default function SearchPage() {
 
   return (
     <section className="container py-20 flex flex-col gap-10">
-      <h2 className="text-4xl font-light z-20 bg-white rounded-full card-style dark:bg-black p-3">Resultados de búsqueda</h2>
+      <h2 className="text-4xl font-light z-20 bg-white rounded-full card-style dark:bg-black p-3">
+        Resultados de búsqueda
+      </h2>
       {loading ? (
         <p>Cargando resultados...</p>
       ) : results.length === 0 ? (
