@@ -22,7 +22,7 @@ export default async function ProfilePage() {
     </main>
   );
 }
-export async function getProfile() {
+ async function getProfile() {
   const session = await getServerSession(authOptions);
 
   if (!session) redirect("/auth/signin");
