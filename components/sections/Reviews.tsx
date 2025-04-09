@@ -9,7 +9,7 @@ export default function Reviews() {
   }));
 
   return (
-    <section className="py-20 flex flex-col items-center">
+    <section id="reclaim" className="py-20 flex flex-col items-center">
       <div className="container text-start flex items-start">
         <h3 className="text-5xl font-light">
           Forma parte de <br /> la comunidad

@@ -21,7 +21,7 @@ const Recently = () => {
   const gradientColor = currentTheme === "dark" ? "#121212" : "#efefef";
 
   return (
-    <section className=" container flex flex-col gap-6 py-10 md:py-20 px-4 md:px-0">
+    <section id="find"  className=" container flex flex-col gap-6 py-10 md:py-20 px-4 md:px-0">
       <h3 className=" text-5xl font-light">Casos de éxito</h3>
 
       <Marquee

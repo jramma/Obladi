@@ -31,7 +31,7 @@ const cardsData = [
 
 export default function How() {
   return (
-    <section className="py-10 md:py-20 flex flex-col container px-4 md:px-0 gap-6 md:gap-10 ">
+    <section id="report"  className="py-10 md:py-20 flex flex-col container px-4 md:px-0 gap-6 md:gap-10 ">
       <h3 className="text-5xl font-light">Como funcionamos</h3>
       <div className="grid md:grid-cols-3 max-w-[1000px] grid-cols-1 gap-10 w-full h-auto px-6 md:px-0 text-[#000000] ">
         {cardsData.map((card, index) => (
