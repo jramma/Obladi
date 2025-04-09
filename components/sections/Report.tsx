@@ -24,12 +24,7 @@ export default function ReportLost() {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 
-  const router = useRouter();
-  const handleSectionClick = () => {
-    if (!user?.email) {
-      router.push("/auth/signup");
-    }
-  };
+  
 
   useEffect(() => {
     if (!mapboxToken || !mapContainerRef.current) return;
@@ -140,7 +135,6 @@ export default function ReportLost() {
   return (
     <section
       id="report"
-      onClick={handleSectionClick}
       className="py-20 flex flex-col w-full items-center"
     >
       <div className="container flex flex-col gap-10">

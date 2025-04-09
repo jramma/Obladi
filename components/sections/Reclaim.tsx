@@ -24,11 +24,7 @@ export default function Reclaim() {
   const user = useUser();
   const router = useRouter();
 
-  const handleSectionClick = () => {
-    if (!user?.email) {
-      router.push("/auth/signup");
-    }
-  };
+ 
 
   const removeImage = (index: number) => {
     const updated = previewImages.filter((_, i) => i !== index);
@@ -140,7 +136,6 @@ export default function Reclaim() {
     <section
       id="reclaim"
       className="py-20 flex flex-col w-full items-center"
-      onClick={handleSectionClick}
     >
       <div className="container flex flex-col gap-10">
         <h3 className="text-5xl font-light">Reclamar objeto perdido</h3>
