@@ -13,7 +13,7 @@ export default async function Navbar() {
 
   return (
     <>
-      <nav className=" flex border-b-4 fixed inset-x-0 top-0 z-50 mx-auto py-2 md:px-6  bg-[#ffffff] dark:bg-[#000000] ">
+      <nav className="max-w-full flex border-b-4 fixed inset-x-0 top-0 z-50 mx-auto py-2 md:px-6  bg-[#ffffff] dark:bg-[#000000] ">
         <div className="container">
           <div className=" w-full flex items-center justify-between">
             <div className=" flex w-full justify-between md:justify-normal md:gap-8 items-center">
