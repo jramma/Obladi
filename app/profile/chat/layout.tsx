@@ -95,10 +95,10 @@ export default async function ChatLayout({
   );
 
   return (
-    <main className="flex-grow pl-72 flex flex-row w-full overflow-hidden -mb-12">
+    <div className="flex-col-reverse items-center md:items-start md:flex-grow md:pl-72 flex md:flex-row  w-full overflow-hidden  py-10 md:pt-20 md:-mb-20 pb-20 md:h-full">
       <Menu />
-      <nav className="max-w-1/4 px-5 py-20 flex flex-grow flex-col gap-6 border-r-4 overflow-scroll">
-        <h2 className="text-4xl font-light mb-6">Tus chats</h2>
+      <nav className="md:max-w-72 px-5 md:py-20 flex flex-grow flex-col gap-6 md:border-r-4 border-t-4 md:border-t-0 overflow-scroll  md:h-full">
+        <h2 className="text-4xl font-light mb-6 py-4">Tus chats</h2>
         {userChats.length === 0 ? (
           <>
             <p className="text-gray-500">No hay chats disponibles</p>
@@ -110,7 +110,7 @@ export default async function ChatLayout({
         ) : (
           <ul className="flex flex-col gap-4 items-start max-w-full">
             {chatListWithTitles.map((chat) => (
-              <li key={chat._id.toString()} className="group">
+              <li key={chat._id.toString()} className="group border-t-2">
                 <Link
                   href={`/profile/chat/${chat._id}`}
                   className=" no-underline-effect text-xl font-bold  p-2 flex gap-1 items-center"
@@ -128,6 +128,6 @@ export default async function ChatLayout({
       <div className="max-w-3/4 flex flex-grow items-center justify-center">
         {children}
       </div>
-    </main>
+    </div>
   );
 }

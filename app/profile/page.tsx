@@ -6,9 +6,23 @@ import { Menu } from "@/components/profile/Menu";
 import Hero from "@/components/profile/Hero";
 import Pines from "@/components/profile/Pines";
 import Shop from "@/components/profile/Shop";
-import { PlainUser } from "@/hooks/UserContext";
+import { PlainUser } from "@/lib/utils";
 
 export default async function ProfilePage() {
+  const safeUser = await getProfile();
+
+  return (
+    <main className="container self-center flex flex-row justify-end py-10 md:py-20">
+      <Menu />
+      <section className="w-full md:w-3/4 flex flex-col items-start ">
+        <Hero user={safeUser} />
+        <Pines user={safeUser} />
+        <Shop user={safeUser} />
+      </section>
+    </main>
+  );
+}
+export async function getProfile() {
   const session = await getServerSession(authOptions);
 
   if (!session) redirect("/auth/signin");
@@ -42,16 +56,13 @@ export default async function ProfilePage() {
     rewardPins: typeof user?.rewardPins === "number" ? user?.rewardPins : 0.0,
     gender: user?.gender || "",
     objects: JSON.parse(JSON.stringify(user?.objects || {})),
+    notifications: {
+      mailing: user?.notifications?.mailing ?? true,
+      chat: user?.notifications?.chat ?? true,
+      reclaimed: user?.notifications?.reclaimed ?? true,
+      found: user?.notifications?.found ?? true,
+      lostNearby: user?.notifications?.lostNearby ?? true,
+    },
   };
-
-  return (
-    <main className="container self-center flex flex-row justify-end py-10 md:py-20">
-      <Menu />
-      <section className="w-full md:w-3/4 flex flex-col items-start ">
-        <Hero user={safeUser} />
-        <Pines user={safeUser} />
-        <Shop user={safeUser} />
-      </section>
-    </main>
-  );
+  return safeUser;
 }

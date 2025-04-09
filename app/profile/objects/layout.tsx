@@ -1,12 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { redirect } from "next/navigation";
 import { Menu } from "@/components/profile/Menu";
-import { useUser } from "@/hooks/UserContext";
 import ObjectList from "@/components/search/Objectlist";
 import { FaChevronUp } from "react-icons/fa6";
 import type { ReactNode } from "react";
+import { useMongoUser } from "@/hooks/UseMongoUser";
 
 type Obj = {
   _id: string;
@@ -16,7 +15,8 @@ type Obj = {
   solved?: boolean;
 };
 export default function ObjectLayout({ children }: { children: ReactNode }) {
-  const user = useUser();
+  const user = useMongoUser();
+  console.log(user);
   const [loading, setLoading] = useState(true);
   const [objects, setObjects] = useState<{
     lost: Obj[];
@@ -71,9 +71,9 @@ export default function ObjectLayout({ children }: { children: ReactNode }) {
   ];
 
   return (
-    <main className="w-full pl-72 flex flex-row flex-grow py-20">
+    <main className="max-w-full w-full md:pl-72 flex flex-col-reverse md:flex-row flex-grow py-20">
       <Menu />
-      <section className="md:w-72 w-full pl-6 text-left">
+      <section className="md:w-72 w-full pl-6 text-left px-6 md:pr-0">
         <h1 className="text-2xl font-bold mb-6">Los objetos de {user?.name}</h1>
 
         {loading ? (
@@ -89,7 +89,7 @@ export default function ObjectLayout({ children }: { children: ReactNode }) {
             <p>¡Puedes empezar a buscar objetos perdidos o encontrados!</p>
           </div>
         ) : (
-          <div className="flex flex-col gap-4 border-2 rounded-3xl pt-5   overflow-y-scroll transition-all duration-500 ease-in-out">
+          <div className="flex flex-col gap-4 border-2 rounded-3xl pt-5 overflow-y-scroll transition-all duration-500 ease-in-out">
             {sections &&
               sections.map(({ key, label }) => (
                 <div key={key}>

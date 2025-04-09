@@ -55,13 +55,13 @@ export default function SignUp() {
   };
 
   return (
-    <div className="flex justify-center items-center flex-grow ">
-      <div className="absolute w-full h-full max-h-screen">
+    <div className="flex justify-center items-center flex-grow overflow-hidden relative w-full">
+      <div className="hidden md:block absolute w-full h-full max-h-screen">
         <Boxes />
       </div>
       <form
         onSubmit={handleSubmit}
-        className="flex my-6 z-10 flex-col space-y-6 p-10 rounded-lg shadow-lg w-auto h-auto bg-white dark:bg-black card-style"
+        className="flex mt-16 md:my-20 z-10 flex-col space-y-6 p-10 rounded-lg shadow-lg w-auto h-auto bg-[#ffffff] dark:bg-black card-style"
       >
         <h2 className="text-4xl font-bold">Registro</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -76,7 +76,7 @@ export default function SignUp() {
                 name={field}
                 value={formData[field as keyof typeof formData]}
                 onChange={handleChange}
-                className="w-full p-2 card-style2 border min-w-72 border-gray-300 bg-[#ffffff] rounded"
+                className="w-full p-2 card-style border min-w-72 border-gray-300 bg-[#ffffff] rounded"
                 required
               />
             </div>
@@ -91,7 +91,7 @@ export default function SignUp() {
         <div className="flex flex-row gap-6 items-center">
           <button
             type="submit"
-            className="px-8 py-2 bg-primary text-black font-bold card-style2 rounded self-start"
+            className="px-8 py-2 bg-primary text-black font-bold card-style rounded self-start"
           >
             Crear cuenta
           </button>
@@ -99,7 +99,7 @@ export default function SignUp() {
           <button
             type="button"
             onClick={() => signIn("google", { callbackUrl: "/" })}
-            className="flex items-center gap-2 px-8 py-[1.3rem] md:py-2 card-style2 border rounded no-underline-effect bg-[#ffffff]"
+            className="flex  items-center gap-2 px-8 py-[1.3rem] md:py-2 card-style border rounded no-underline-effect bg-[#ffffff]"
           >
             <img src="/google.svg" alt="Google" className="w-5 h-5" />
             <span className="font-medium text-gray-700"> Google</span>

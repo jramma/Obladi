@@ -1,13 +1,12 @@
 "use client";
 
-import { useState } from "react";
-import { redirect } from "next/navigation";
+import { useState,useEffect } from "react";
 import { Menu } from "@/components/profile/Menu";
-import { useUser } from "@/hooks/UserContext";
 import Toggle from "@/components/form/Toggle";
+import { useMongoUser } from "@/hooks/UseMongoUser";
 
 export default function NotPages() {
-  const user = useUser();
+  const user = useMongoUser();
 
   const [notifications, setNotifications] = useState({
     mailing: true,
@@ -17,14 +16,30 @@ export default function NotPages() {
     lostNearby: true,
   });
 
-  if (!user) {
-    redirect("/auth/signin");
-  }
+  useEffect(() => {
+    if (user?.notifications) {
+      setNotifications(user.notifications);
+    }
+  }, [user]);
+  
 
   const handleToggle = (key: keyof typeof notifications, value: boolean) => {
     setNotifications((prev) => ({ ...prev, [key]: value }));
-    // 👉 Aquí podés hacer un fetch a la API para guardar preferencia
   };
+  const saveNotifications = async () => {
+    const res = await fetch("/api/user/update", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ notifications }),
+    });
+  
+    if (res.ok) {
+      alert("✅ Preferencias actualizadas");
+    } else {
+      alert("❌ Hubo un error");
+    }
+  };
+  
 
   return (
     <main className="container self-center flex flex-row flex-grow justify-end py-20">

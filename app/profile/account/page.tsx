@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { useUser } from "@/hooks/UserContext";
 import { Menu } from "@/components/profile/Menu";
+import { useMongoUser } from "@/hooks/UseMongoUser";
 
 export default function AccountPage() {
-  const user = useUser();
+  const user = useMongoUser();
+
   const [loadingLocation, setLoadingLocation] = useState(false);
   const [form, setForm] = useState({
     email: user?.email || "",
@@ -17,7 +18,7 @@ export default function AccountPage() {
     gender: user?.gender || "",
   });
 
-  const handleChange = (e:any) => {
+  const handleChange = (e: any) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
@@ -80,8 +81,6 @@ export default function AccountPage() {
     );
   };
 
-  if (!user) return <p>Cargando perfil...</p>;
-
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [typingTimeout, setTypingTimeout] = useState<NodeJS.Timeout | null>(
     null
@@ -121,13 +120,12 @@ export default function AccountPage() {
     setForm((prev) => ({ ...prev, location: suggestion }));
     setSuggestions([]);
   };
-
   return (
-    <main className="container self-center flex flex-row justify-end py-10 md:py-20">
+    <main className="max-w-full w-full p-5 self-center flex flex-row justify-end py-10 md:py-20">
       <Menu />
-      <section className="w-full md:w-3/4 flex flex-col items-start py-10 md:py-20">
+      <section className=" w-full md:w-3/4 flex flex-col items-start py-10 md:py-20">
         <h1 className="text-4xl font-light mb-12">Editar perfil</h1>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-6 w-96">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-6 md:w-96">
           <p>Email: {form.email}</p>
           <input
             name="name"

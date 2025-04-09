@@ -62,3 +62,30 @@ export const allowedEmails = [
   "jrammas@uoc.edu"
 ];
 
+export type PlainUser = {
+  email: string;
+  name: string;
+  surname: string;
+  authProvider: string;
+  role: string;
+  phone: string;
+  mail: string;
+  picture: string;
+  description: string;
+  time: string;
+  pines: string[];
+  contributor: number;
+  location: string | null;
+  rewardPins: number;
+  gender: string;
+  objects: string[]; 
+  notifications?: NotificationPreferences;
+};
+
+export type NotificationPreferences = {
+  mailing: boolean;
+  chat: boolean;
+  reclaimed: boolean;
+  found: boolean;
+  lostNearby: boolean;
+};

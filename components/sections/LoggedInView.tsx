@@ -18,11 +18,7 @@ export default function LoggedInView() {
           className="object-cover parallax-image"
         />
       </div>
-
-      <div className="container">
-        <hr className="h-2 w-full " />
-      </div>
-
+      <Hr />
       <Report />
       <Hr />
       <Finder />

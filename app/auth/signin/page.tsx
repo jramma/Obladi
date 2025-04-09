@@ -39,13 +39,13 @@ export default function SignIn() {
   };
 
   return (
-    <div className="flex justify-center items-center flex-grow">
-      <div className="absolute w-full h-full max-h-screen">
+    <div className="flex justify-center items-center flex-grow relative overflow-hidden w-full">
+      <div className="absolute md:block hidden w-full h-full max-h-screen">
         <Boxes />
       </div>
       <form
         onSubmit={handleSubmit}
-        className="space-y-6 flex flex-col font-bold z-10 p-10 rounded-lg shadow-lg aspect-square w-auto h-auto bg-[#ffffff] dark:bg-[#000000] card-style my-6"
+        className="space-y-6 mt-16 md:my-20 flex flex-col font-bold z-10 p-10 rounded-lg shadow-lg aspect-square w-auto h-auto bg-[#ffffff] dark:bg-[#000000] card-style"
       >
         <h2 className="text-4xl font-bold">Iniciar sesión</h2>
         <div>
@@ -60,7 +60,7 @@ export default function SignIn() {
             onChange={(e) =>
               setCredentials({ ...credentials, email: e.target.value })
             }
-            className="w-full p-2  card-style2"
+            className="w-full p-2  card-style"
             required
           />
         </div>
@@ -76,7 +76,7 @@ export default function SignIn() {
             onChange={(e) =>
               setCredentials({ ...credentials, password: e.target.value })
             }
-            className="w-full p-2  card-style2"
+            className="w-full p-2  card-style"
             required
           />
         </div>
@@ -96,13 +96,13 @@ export default function SignIn() {
         </button>
         <button
           type="submit"
-          className="bg-primary font-bold text-black card-style2 self-start px-8 py-2"
+          className="bg-primary font-bold text-black card-style self-start px-8 py-2"
         >
           Iniciar sesión
         </button>
         {/* Enlace al registro */}
         <div className="flex justify-center mt-16">
-          <Link href={"/auth/signup"} className="font-bold text-primary">
+          <Link href={"/auth/signup"} className="font-bold text-primary text-xl">
             ¿No tienes una cuenta? Regístrate
           </Link>
         </div>

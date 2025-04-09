@@ -39,7 +39,7 @@ body {
 
 @layer utilities {
   .card-style {
-    @apply rounded-2xl border-2 border-black dark:border-white 
+    @apply rounded-2xl border-3 border-black dark:border-gray-500 
            shadow-[8px_8px_0px_0px_rgb(0,0,0)] dark:shadow-[8px_8px_0px_0px_rgb(255,255,255)] 
            hover:shadow-[16px_16px_0px_0px_rgb(0,0,0)] dark:hover:shadow-[16px_16px_0px_0px_rgb(255,255,255)] 
            transition;

@@ -17,13 +17,12 @@ type LayoutProps = {
 export default function RootLayout({ children }: LayoutProps) {
   return (
     <html lang="es" suppressHydrationWarning>
-      <body className="min-h-screen max-w-screen flex flex-col  items-center w-full bg-white dark:bg-black md:pt-18 overflow-x-hidden relative">
-            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-              <Navbar />
-              
-              {children}
-              <Footer />
-            </ThemeProvider>
+      <body className="min-h-screen max-w-screen flex flex-col  items-center w-full bg-white dark:bg-black pt-18 overflow-x-hidden relative">
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <Navbar />
+          {children}
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );

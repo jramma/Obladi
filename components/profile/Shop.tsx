@@ -37,7 +37,7 @@ const products = [
 
 export default function Shop({ user }: any) {
   return (
-    <div className="p-6 flex flex-col gap-6 w-full ">
+    <div className="p-6 flex flex-col gap-6 w-full overflow-hidden">
       <h2 className="text-4xl font-light mt-12">Tienda de Pines</h2>
 
       <Swiper
