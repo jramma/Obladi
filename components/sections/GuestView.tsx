@@ -9,14 +9,10 @@ export default function GuestView() {
   return (
     <>
       <Cabecera />
-
-
-      {/* <Hr />
-      <Videos /> */}
-      <Hr />
-      <Recently />
       <Hr />
       <How />
+      <Hr />
+      <Recently />
       <Hr />
       <Reviews />
     </>
