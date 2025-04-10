@@ -33,7 +33,7 @@ export default async function Navbar() {
               {isloggedin ? (
                 <Link
                   href="/profile"
-                  className="flex text-xl cursor-pointer group font-bold transition items-center "
+                  className="flex  cursor-pointer group font-bold transition items-center "
                 >
                   <p>Perfil</p>
                 </Link>

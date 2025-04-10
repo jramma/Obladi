@@ -14,7 +14,7 @@ export default function MessageList({
   const [messages, setMessages] = useState<any[]>([]);
 
   const fetchMessages = async () => {
-    const res = await fetch(`/api/chat/messages?chatId=${chatId}`);
+    const res = await fetch(`/api/chats/messages?chatId=${chatId}`);
     const data = await res.json();
     setMessages(data.messages);
   };

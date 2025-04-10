@@ -8,7 +8,7 @@ export default function MessageInput({ chatId }: { chatId: string }) {
   const sendMessage = async () => {
     if (!text.trim()) return;
 
-    const res = await fetch("/api/chat/messages", {
+    const res = await fetch("/api/chats/messages", {
       method: "POST",
       body: JSON.stringify({ chatId, text }),
       headers: {

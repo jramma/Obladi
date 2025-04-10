@@ -63,19 +63,19 @@ const Menu = () => {
       </button>
 
       <nav
-        className={`fixed top-20 md:top-28 left-0 z-40 h-screen w-72 bg-white dark:bg-black border-r-4 shadow-lg transform transition-transform duration-300
+        className={`fixed top-20 md:top-20 left-0 z-40 h-screen w-72 bg-white dark:bg-black border-r-4 shadow-lg transform transition-transform duration-300
           ${isOpen ? "translate-x-0" : "-translate-x-full"} 
           md:translate-x-0 md:block`}
       >
         {/* Botón para cerrar el menú solo en móvil */}
         <button
           onClick={toggleMenu}
-          className="md:hidden absolute top-6 right-6 group card-style p-2"
+          className="md:hidden absolute top-6 z-50 right-6 group card-style p-2"
         >
           <Icons.arrow className="w-6 h-6 group-hover:rotate-180 rotate-180 transition" />
         </button>
 
-        <div className="flex flex-col gap-6 py-20 pl-6 pr-3">
+        <div className="flex flex-col gap-6 py-20 pl-6 pr-6">
           {menuItems.map((item) => (
             <Link
               key={item.href}
