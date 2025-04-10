@@ -20,7 +20,7 @@ export default function SubscribeForm() {
   const handleSubscribe = async () => {
     setStatus("loading");
 
-    const res = await fetch("/api/subscribe", {
+    const res = await fetch("/api/user/subscribe", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

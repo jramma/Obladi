@@ -20,7 +20,7 @@ export default function Hero({ user }: any) {
     const newUrl = prompt("Introduce la URL de la nueva imagen:");
     if (newUrl) {
       setPicture(newUrl);
-      await fetch("/api/profile", {
+      await fetch("/api/user/profile", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -33,7 +33,7 @@ export default function Hero({ user }: any) {
 
   const handleRemovePicture = async () => {
     setPicture("");
-    await fetch("/api/profile", {
+    await fetch("/api/user/profile", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -54,7 +54,7 @@ export default function Hero({ user }: any) {
   };
 
   const handleSave = async () => {
-    await fetch("/api/profile", {
+    await fetch("/api/user/profile", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

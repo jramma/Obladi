@@ -2,13 +2,12 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useUser } from "@/hooks/UserContext";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import { useRouter } from "next/navigation";
+import { categories } from "@/lib/utils";
 import TagsInput from "@/components/Tagsinput";
+import { useMongoUser } from "@/hooks/UseMongoUser";
 
-const categories = ["Electrónica", "Ropa", "Documentos", "Accesorios", "Otros"];
 const DEFAULT_LOCATION = { lat: 41.3874, lng: 2.1686 };
 const validTypes = ["image/jpeg", "image/png", "image/webp"];
 const MAX_IMAGE_SIZE = 1 * 1024 * 1024; // 1MB
@@ -17,14 +16,12 @@ export default function ReportLost() {
   const [previewImages, setPreviewImages] = useState<File[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { register, handleSubmit, setValue } = useForm();
-  const user = useUser();
+  const user = useMongoUser();
   const [location, setLocation] = useState(DEFAULT_LOCATION);
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const markerRef = useRef<mapboxgl.Marker | null>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
-
-  
 
   useEffect(() => {
     if (!mapboxToken || !mapContainerRef.current) return;
@@ -81,7 +78,7 @@ export default function ReportLost() {
 
   const onSubmit = async (data: any) => {
     const formData = new FormData();
-  
+
     formData.append("title", data.title);
     formData.append("description", data.description);
     formData.append("tags", data.tags);
@@ -91,52 +88,48 @@ export default function ReportLost() {
     formData.append("email", data.email);
     formData.append("lostAt", data.lostAt);
     formData.append("post_date", new Date().toISOString());
-  
+
     const files = previewImages;
-  
+
     if (files?.length > 3) {
       alert("❌ Máximo 3 imágenes");
       return;
     }
-  
+
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-  
+
       if (!validTypes.includes(file.type)) {
         alert(`❌ El tipo de archivo "${file.name}" no está permitido.`);
         return;
       }
-  
+
       if (file.size > MAX_IMAGE_SIZE) {
         alert(`❌ La imagen "${file.name}" excede el límite de 1MB.`);
         return;
       }
-  
+
       formData.append("images", file);
     }
-  
-    const res = await fetch("/api/lost", {
+
+    const res = await fetch("/api/objects/lost", {
       method: "POST",
       body: formData,
     });
-  
+
     if (res.ok) {
       alert("✅ Reporte enviado");
     } else {
       alert("❌ Error al enviar el reporte");
     }
   };
-  
 
   if (!mapboxToken) {
     return <p className="text-red-600">❌ Falta el token de MAPBOX</p>;
   }
 
   return (
-    <section
-      id="report"
-      className="py-20 flex flex-col w-full items-center"
-    >
+    <section id="report" className="py-20 flex flex-col w-full items-center">
       <div className="container flex flex-col gap-10">
         <h3 className="text-5xl font-light">Reportar objeto perdido</h3>
 

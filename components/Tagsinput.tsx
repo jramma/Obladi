@@ -1,6 +1,13 @@
 "use client";
 import { useState } from "react";
-const suggestedTags = ["teléfono", "negro", "Samsung", "mochila", "llaves", "cartera"];
+const suggestedTags = [
+  "teléfono",
+  "negro",
+  "Samsung",
+  "mochila",
+  "llaves",
+  "cartera",
+];
 
 export default function TagsInput({ register, setValue }: any) {
   const [inputValue, setInputValue] = useState("");
@@ -53,14 +60,25 @@ export default function TagsInput({ register, setValue }: any) {
       </div>
 
       {/* Input para escribir */}
-      <input
-        type="text"
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-        onKeyDown={handleKeyDown}
-        placeholder="Escribe y pulsa Enter o ,"
-        className="card-style2 mt-1 block bg-white w-full p-2 border border-gray-300 rounded-md shadow-sm"
-      />
+      <div className="flex gap-6 items-center">
+        <input
+          type="text"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          onKeyDown={handleKeyDown}
+          placeholder="Escribe una tag..."
+          className="card-style2 mt-1 block bg-white w-full p-2 border border-gray-300 rounded-md shadow-sm"
+        />
+
+        <button
+          type="button"
+          onClick={() => handleAddTag(inputValue)}
+          disabled={!inputValue.trim()}
+          className="bg-tertiary card-style2 text-black font-bold px-4 py-2 rounded-md shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Añadir
+        </button>
+      </div>
 
       {/* Tags sugeridos */}
       <div className="flex flex-wrap gap-2 mt-2">
@@ -75,7 +93,6 @@ export default function TagsInput({ register, setValue }: any) {
           </button>
         ))}
       </div>
-    
 
       {/* Input oculto real que se registra en el form */}
       <input type="hidden" value={tags.join(",")} {...register("tags")} />

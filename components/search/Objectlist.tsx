@@ -1,9 +1,9 @@
-import { useUser } from "@/hooks/UserContext";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useMongoUser } from "@/hooks/UseMongoUser";
 
 export default function ObjectList({ obj, objectKey }: any) {
-  const user = useUser();
+  const user = useMongoUser();
   const router = useRouter();
 
   const handleReclaim = async () => {

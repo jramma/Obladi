@@ -1,9 +1,8 @@
 "use client";
 import Btns from "../Btns";
-import Map from "../Map";
-import { useUser } from "@/hooks/UserContext";
 import { useEffect, useState } from "react";
-
+import { useMongoUser } from "@/hooks/UseMongoUser";
+import Image from "next/image";
 const allCities = [
   "Barcelona",
   "Madrid",
@@ -17,7 +16,8 @@ const allCities = [
   "Alicante",
 ];
 const Welcome: React.FC = () => {
-  const user = useUser();
+  const user = useMongoUser();
+
   const [objectsOnLocation, setobjectsOnLocation] = useState<number>(0);
   const [location, setLocation] = useState<string>("Barcelona");
   const [nearbyCities, setNearbyCities] = useState<string[]>(allCities);
@@ -40,25 +40,26 @@ const Welcome: React.FC = () => {
           `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
         );
         const dataLoc = await resLoc.json();
+
         userLocation =
-          dataLoc.address.city || dataLoc.address.town || dataLoc.display_name;
+          dataLoc.address.city ||
+          dataLoc.address.town ||
+          dataLoc.address.village ||
+          dataLoc.address.hamlet ||
+          "Ubicación desconocida";
       }
 
       if (!userLocation) return;
       setLocation(userLocation);
 
-      // Obtener cantidad de objetos en la ubicación
       const res = await fetch(
-        `/api/search?location=${encodeURIComponent(userLocation)}`
+        `/api/objects/search?location=${encodeURIComponent(userLocation)}`
       );
+
       const data = await res.json();
       const count = data?.objects?.length || 0;
       setobjectsOnLocation(count);
-
-      // Obtener ciudades más cercanas (mock)
-
-      // Simular cálculo de cercanía (a futuro puedes usar coordenadas reales)
-      const sorted = allCities.sort((a, b) => a.localeCompare(b)); // Fake sort
+      const sorted = allCities.sort((a, b) => a.localeCompare(b));
       setNearbyCities(sorted.slice(0, 10));
     };
 
@@ -69,32 +70,44 @@ const Welcome: React.FC = () => {
   const secondHalf = nearbyCities.slice(5);
 
   return (
-    <section className="w-full  md:flex-row flex flex-col gap-10 h-auto items-stretch md:pt-6">
-      <div className="flex flex-col md:w-1/2 w-full gap-10 md:gap-20 md:p-8 p-4 md:ml-[6vw]">
-        <div className="flex flex-row justify-between items-start">
-          <h1 className="text-3xl">Objetos en tu zona:</h1>
-          <p className="text-3xl font-bold">{objectsOnLocation}</p>
-        </div>
-        <p className="text-7xl md:pt-20">{location}</p>
-        <Btns />
-        <div className="grid grid-cols-3">
-          <div className="font-semibold pt-10 text-xl border-t-2 border-solid dark:border-white border-black">
-            <p>{currentDate}</p>
+    <section className="w-full py-72  flex justify-center">
+      <div className="container flex items-center flex-row gap-20">
+        <div className="flex flex-col gap-6">
+          <div className="flex flex-row gap-6 items-start">
+            <h1 className="text-3xl">Objetos en tu zona:</h1>
+            <p className="text-3xl font-bold text-primary">
+              {objectsOnLocation}
+            </p>
           </div>
-          <ul className="pt-10">
-            {firstHalf.map((city, index) => (
-              <li key={index}>{city}</li>
-            ))}
-          </ul>
-          <ul className="pt-10">
-            {secondHalf.map((city, index) => (
-              <li key={index}>{city}</li>
-            ))}
-          </ul>
+
+          <p className="text-7xl md:pt-20">{location}</p>
+          <Btns />
         </div>
-      </div>
-      <div className="md:flex hidden md:w-1/2 shrink-0 flex-grow w-full relative h-[500px] md:h-auto ">
-        <Map />
+        <div className="flex flex-col gap-6">
+          <div className="relative  w-full aspect-square h-auto object-contain">
+            <Image
+              src="/comunity.png"
+              alt="Comunity"
+              fill
+              className="object-contain dark:bg-white dark:rounded-full"
+            />
+          </div>
+          <div className="grid grid-cols-3 gap-6">
+            <div className="font-semibold pt-10 text-xl border-t-2 border-solid dark:border-white border-black">
+              <p>{currentDate}</p>
+            </div>
+            <ul className="pt-10">
+              {firstHalf.map((city, index) => (
+                <li key={index}>{city}</li>
+              ))}
+            </ul>
+            <ul className="pt-10">
+              {secondHalf.map((city, index) => (
+                <li key={index}>{city}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
     </section>
   );

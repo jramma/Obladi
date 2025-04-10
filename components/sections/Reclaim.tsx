@@ -4,13 +4,12 @@ import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { mapboxgl, MAPBOX_TOKEN } from "@/lib/mapbox";
-import { useUser } from "@/hooks/UserContext";
-import { useRouter } from "next/navigation";
 import TagsInput from "../Tagsinput";
-const categories = ["Electrónica", "Ropa", "Documentos", "Accesorios", "Otros"];
+import { categories } from "@/lib/utils";
 const DEFAULT_LOCATION = { lat: 41.3874, lng: 2.1686 }; // Barcelona
 const MAX_IMAGE_SIZE = 1 * 1024 * 1024; // 1MB
 const validTypes = ["image/jpeg", "image/png", "image/webp"];
+import { useMongoUser } from "@/hooks/UseMongoUser";
 
 export default function Reclaim() {
   const [previewImages, setPreviewImages] = useState<File[]>([]);
@@ -21,10 +20,7 @@ export default function Reclaim() {
   const markerRef = useRef<mapboxgl.Marker | null>(null);
   const [location, setLocation] = useState(DEFAULT_LOCATION);
   const mapboxToken = MAPBOX_TOKEN;
-  const user = useUser();
-  const router = useRouter();
-
- 
+  const user = useMongoUser();
 
   const removeImage = (index: number) => {
     const updated = previewImages.filter((_, i) => i !== index);
@@ -47,11 +43,24 @@ export default function Reclaim() {
 
     mapRef.current = map;
 
-    const marker = new mapboxgl.Marker({ color: "#1D4ED8" }) // azul (tailwind primary)
+    const marker = new mapboxgl.Marker({ color: "#1D4ED8" })
       .setLngLat([location.lng, location.lat])
       .addTo(map);
 
     markerRef.current = marker;
+
+    // ✅ Intentar geolocalizar automáticamente al cargar
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(({ coords }) => {
+        const newLoc = { lat: coords.latitude, lng: coords.longitude };
+        setLocation(newLoc);
+        setValue("latitude", newLoc.lat);
+        setValue("longitude", newLoc.lng);
+
+        map.flyTo({ center: [newLoc.lng, newLoc.lat], zoom: 15 });
+        marker.setLngLat([newLoc.lng, newLoc.lat]);
+      });
+    }
 
     map.on("click", (e) => {
       const newLocation = { lat: e.lngLat.lat, lng: e.lngLat.lng };
@@ -65,8 +74,13 @@ export default function Reclaim() {
   }, []);
 
   const handleLocationClick = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(({ coords }) => {
+    if (!navigator.geolocation) {
+      alert("❌ Geolocalización no soportada por tu navegador.");
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }) => {
         const newLoc = { lat: coords.latitude, lng: coords.longitude };
         setLocation(newLoc);
         setValue("latitude", newLoc.lat);
@@ -76,8 +90,12 @@ export default function Reclaim() {
           mapRef.current.flyTo({ center: [newLoc.lng, newLoc.lat], zoom: 15 });
           markerRef.current.setLngLat([newLoc.lng, newLoc.lat]);
         }
-      });
-    }
+      },
+      (error) => {
+        alert("❌ No se pudo obtener tu ubicación.");
+        console.error("Geolocation error:", error);
+      }
+    );
   };
 
   if (!mapboxToken) {
@@ -120,7 +138,7 @@ export default function Reclaim() {
       formData.append("images", file);
     }
 
-    const res = await fetch("/api/reclaim", {
+    const res = await fetch("/api/objects/reclaim", {
       method: "POST",
       body: formData,
     });
@@ -133,10 +151,7 @@ export default function Reclaim() {
   };
 
   return (
-    <section
-      id="reclaim"
-      className="py-20 flex flex-col w-full items-center"
-    >
+    <section id="reclaim" className="py-20 flex flex-col w-full items-center">
       <div className="container flex flex-col gap-10">
         <h3 className="text-5xl font-light">Reclamar objeto perdido</h3>
 

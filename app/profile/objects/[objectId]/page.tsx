@@ -15,7 +15,7 @@ export default function ObjectPage({
     if (!params.objectId) return;
 
     const fetchData = async () => {
-      const res = await fetch(`/api/object?id=${params.objectId}`);
+      const res = await fetch(`/api/objects/details?id=${params.objectId}`);
       const json = await res.json();
       setData(json);
       setLoading(false);

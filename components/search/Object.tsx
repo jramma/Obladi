@@ -1,10 +1,10 @@
 "use client";
-import { useUser } from "@/hooks/UserContext";
 import ImageList from "@/components/search/ImageList";
 import { useRouter } from "next/navigation";
+import { useMongoUser } from "@/hooks/UseMongoUser";
 
 export default function Object({ obj, objectKey }: any) {
-  const user = useUser();
+  const user = useMongoUser();
   const router = useRouter();
 
   const handleReclaim = async () => {
