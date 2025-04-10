@@ -70,8 +70,8 @@ const Welcome: React.FC = () => {
   const secondHalf = nearbyCities.slice(5);
 
   return (
-    <section className="w-full py-72  flex justify-center">
-      <div className="container flex items-center flex-row gap-20">
+    <section className="w-full py-20 md:py-72  flex justify-center">
+      <div className="container flex md:flex-row flex-col items-center gap-20">
         <div className="flex flex-col gap-6">
           <div className="flex flex-row gap-6 items-start">
             <h1 className="text-3xl">Objetos en tu zona:</h1>
