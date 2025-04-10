@@ -45,7 +45,7 @@ export default function SignIn() {
       </div>
       <form
         onSubmit={handleSubmit}
-        className="space-y-6 md:my-20 flex flex-col font-bold z-10 p-10 rounded-lg shadow-lg aspect-square w-auto h-auto bg-[#ffffff] dark:bg-[#000000] card-style"
+        className="space-y-6 my-6 md:my-20 flex flex-col font-bold z-10 p-10 rounded-lg shadow-lg aspect-square w-auto h-auto bg-[#ffffff] dark:bg-[#000000] card-style"
       >
         <h2 className="text-4xl font-bold">Iniciar sesión</h2>
         <div>
