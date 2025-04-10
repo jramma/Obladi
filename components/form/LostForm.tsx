@@ -7,6 +7,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { categories } from "@/lib/utils";
 import TagsInput from "@/components/Tagsinput";
 import { useMongoUser } from "@/hooks/UseMongoUser";
+import imageCompression from "browser-image-compression";
 
 const DEFAULT_LOCATION = { lat: 41.3874, lng: 2.1686 };
 const validTypes = ["image/jpeg", "image/png", "image/webp"];
@@ -126,12 +127,23 @@ export default function LostForm({
         return;
       }
 
-      if (file.size > MAX_IMAGE_SIZE) {
-        alert(`❌ La imagen "${file.name}" excede el límite de 1MB.`);
+      const compressed = await imageCompression(file, {
+        maxSizeMB: 5,
+        maxWidthOrHeight: 1200,
+        useWebWorker: true,
+        initialQuality: 0.7,
+        alwaysKeepResolution: true,
+      });
+
+      // Check tamaño tras compresión
+      if (compressed.size > MAX_IMAGE_SIZE) {
+        alert(
+          `❌ La imagen "${file.name}" aún excede 1MB después de comprimir.`
+        );
         return;
       }
 
-      formData.append("images", file);
+      formData.append("images", compressed);
     }
 
     const res = await fetch(submitEndpoint, {
@@ -162,15 +174,24 @@ export default function LostForm({
         >
           <div className="flex-col flex md:w-1/2 gap-6">
             <label className="font-bold">Título</label>
-            <input {...register("title", { required: true })} className="bg-white card-style2 p-2 border rounded-md" />
+            <input
+              {...register("title", { required: true })}
+              className="bg-white card-style2 p-2 border rounded-md"
+            />
 
             <label className="font-bold">Descripción</label>
-            <textarea {...register("description", { required: true })} className="bg-white card-style2 p-2 border rounded-md" />
+            <textarea
+              {...register("description", { required: true })}
+              className="bg-white card-style2 p-2 border rounded-md"
+            />
 
             <TagsInput register={register} setValue={setValue} />
 
             <label className="font-bold">Categoría</label>
-            <select {...register("category", { required: true })} className="bg-white card-style2 p-2 border rounded-md">
+            <select
+              {...register("category", { required: true })}
+              className="bg-white card-style2 p-2 border rounded-md"
+            >
               {categories.map((c, i) => (
                 <option key={i} value={c}>
                   {c}
@@ -179,12 +200,23 @@ export default function LostForm({
             </select>
 
             <label className="font-bold">{dateLabel}</label>
-            <input type="date" {...register(dateFieldName, { required: true })} className="bg-white card-style2 p-2 border rounded-md" />
+            <input
+              type="date"
+              {...register(dateFieldName, { required: true })}
+              className="bg-white card-style2 p-2 border rounded-md"
+            />
 
             {user?.email && (
               <>
                 <label className="font-bold">Correo electrónico</label>
-                <input type="email" {...register("email")} value={user.email} readOnly disabled className="card-style2 p-2 border rounded-md bg-gray-200 text-gray-600 cursor-not-allowed" />
+                <input
+                  type="email"
+                  {...register("email")}
+                  value={user.email}
+                  readOnly
+                  disabled
+                  className="card-style2 p-2 border rounded-md bg-gray-200 text-gray-600 cursor-not-allowed"
+                />
               </>
             )}
 
@@ -212,9 +244,16 @@ export default function LostForm({
               <div className="flex gap-4 mt-4 flex-wrap">
                 {previewImages.map((file, index) => (
                   <div key={index} className="relative w-24 h-24">
-                    <img src={URL.createObjectURL(file)} alt={`preview-${index}`} className="w-full h-full object-cover rounded-lg border" />
+                    <img
+                      src={URL.createObjectURL(file)}
+                      alt={`preview-${index}`}
+                      className="w-full h-full object-cover rounded-lg border"
+                    />
                     <p className="text-xs mt-1 truncate">{file.name}</p>
-                    <button onClick={() => removeImage(index)} className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full px-2">
+                    <button
+                      onClick={() => removeImage(index)}
+                      className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full px-2"
+                    >
                       ✕
                     </button>
                   </div>
@@ -222,10 +261,21 @@ export default function LostForm({
               </div>
             )}
 
-            <input type="hidden" {...register("latitude")} value={location.lat} />
-            <input type="hidden" {...register("longitude")} value={location.lng} />
+            <input
+              type="hidden"
+              {...register("latitude")}
+              value={location.lat}
+            />
+            <input
+              type="hidden"
+              {...register("longitude")}
+              value={location.lng}
+            />
 
-            <button type="submit" className={`card-style2 py-2 self-start px-6 font-bold text-xl ${buttonClass}`}>
+            <button
+              type="submit"
+              className={`card-style2 py-2 self-start px-6 font-bold text-xl ${buttonClass}`}
+            >
               {submitButtonText}
             </button>
           </div>
@@ -234,7 +284,11 @@ export default function LostForm({
             <label className="font-bold">Localización</label>
             <div className="relative aspect-square rounded-xl overflow-hidden card-style2">
               <div ref={mapContainerRef} className="w-full h-full" />
-              <button type="button" onClick={handleLocationClick} className="absolute top-2 right-2 bg-primary text-black p-2 rounded-md shadow">
+              <button
+                type="button"
+                onClick={handleLocationClick}
+                className="absolute top-2 right-2 bg-primary text-black p-2 rounded-md shadow"
+              >
                 Usar ubicación actual
               </button>
             </div>
