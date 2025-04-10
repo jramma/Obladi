@@ -1,10 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
 
+export const dynamic = "force-dynamic";
+
+
 export async function GET(req: NextRequest) {
   try {
-    const { searchParams } = new URL(req.url);
-    const location = searchParams.get("location");
+    const location = req.nextUrl.searchParams.get("location");
 
     if (!location) {
       return NextResponse.json(
@@ -16,13 +18,9 @@ export async function GET(req: NextRequest) {
     const client = await clientPromise;
     const db = client.db();
 
-    // Busca objetos perdidos en esa ubicación
     const objects = await db
       .collection("objects")
-      .find({
-        location: location,
-        type: "lost",
-      })
+      .find({ location, type: "lost" })
       .sort({ post_date: -1 })
       .toArray();
 
