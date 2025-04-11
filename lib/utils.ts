@@ -62,7 +62,8 @@ export const allowedEmails = [
   "jrammas@uoc.edu",
   "sazizaj@gmail.com",
   "miquelmunyoz017@gmail.com",
-  "laiarg00@gmail.com"
+  "laiarg00@gmail.com",
+  "julenromero05@gmail.com"
 ];
 
 export type PlainUser = {
