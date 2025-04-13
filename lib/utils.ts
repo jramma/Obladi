@@ -56,14 +56,15 @@ export function formatDate(date: string) {
     return `${fullDate} (${yearsAgo}y ago)`;
   }
 }
-// allowed mails 
+// allowed mails
 export const allowedEmails = [
   "jrmasip97@gmail.com",
   "jrammas@uoc.edu",
   "sazizaj@gmail.com",
   "miquelmunyoz017@gmail.com",
   "laiarg00@gmail.com",
-  "julenromero05@gmail.com"
+  "julenromero05@gmail.com",
+  "laferry@uoc.edu",
 ];
 
 export type PlainUser = {
@@ -82,7 +83,7 @@ export type PlainUser = {
   location: string | null;
   rewardPins: number;
   gender: string;
-  objects: string[]; 
+  objects: string[];
   notifications?: NotificationPreferences;
 };
 
@@ -135,5 +136,5 @@ export const categories = [
   "Llaveros",
   "Gorros / Bufandas / Guantes",
   "Cosméticos / Neceser",
-  "Comida / Bolsas de la compra"
+  "Comida / Bolsas de la compra",
 ];
