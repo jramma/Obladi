@@ -60,11 +60,11 @@ export function formatDate(date: string) {
 export const allowedEmails = [
   "jrmasip97@gmail.com",
   "jrammas@uoc.edu",
-//   "sazizaj@gmail.com",
-//   "miquelmunyoz017@gmail.com",
-//   "laiarg00@gmail.com",
-//   "julenromero05@gmail.com",
-//   "laferry@uoc.edu",
+  //   "sazizaj@gmail.com",
+  //   "miquelmunyoz017@gmail.com",
+  //   "laiarg00@gmail.com",
+  //   "julenromero05@gmail.com",
+  //   "laferry@uoc.edu",
 ];
 
 export type PlainUser = {
@@ -85,6 +85,8 @@ export type PlainUser = {
   gender: string;
   objects: string[];
   notifications?: NotificationPreferences;
+  nickname: string;
+  zones: string[];
 };
 
 export type NotificationPreferences = {
