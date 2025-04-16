@@ -87,8 +87,14 @@ export type PlainUser = {
   notifications?: NotificationPreferences;
   nickname: string;
   zones: string[];
+  chats: string[];
 };
-
+export type Pin = {
+  _id: string;
+  userId: string;
+  reason: string;
+  date: Date;
+}
 export type NotificationPreferences = {
   mailing: boolean;
   chat: boolean;
