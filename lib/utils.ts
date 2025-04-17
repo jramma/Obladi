@@ -56,15 +56,16 @@ export function formatDate(date: string) {
     return `${fullDate} (${yearsAgo}y ago)`;
   }
 }
+
 // allowed mails
 export const allowedEmails = [
   "jrmasip97@gmail.com",
   "jrammas@uoc.edu",
-  //   "sazizaj@gmail.com",
-  //   "miquelmunyoz017@gmail.com",
-  //   "laiarg00@gmail.com",
-  //   "julenromero05@gmail.com",
-  //   "laferry@uoc.edu",
+  "sazizaj@gmail.com",
+  "miquelmunyoz017@gmail.com",
+  "laiarg00@gmail.com",
+  "julenromero05@gmail.com",
+  "laferry@uoc.edu",
 ];
 
 export type PlainUser = {
@@ -94,7 +95,7 @@ export type Pin = {
   userId: string;
   reason: string;
   date: Date;
-}
+};
 export type NotificationPreferences = {
   mailing: boolean;
   chat: boolean;
