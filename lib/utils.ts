@@ -57,17 +57,6 @@ export function formatDate(date: string) {
   }
 }
 
-// allowed mails
-export const allowedEmails = [
-  "jrmasip97@gmail.com",
-  "jrammas@uoc.edu",
-  "sazizaj@gmail.com",
-  "miquelmunyoz017@gmail.com",
-  "laiarg00@gmail.com",
-  "julenromero05@gmail.com",
-  "laferry@uoc.edu",
-];
-
 export type PlainUser = {
   email: string;
   name: string;

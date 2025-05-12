@@ -1,0 +1,156 @@
+@import "tailwindcss";
+@import "./font.css";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --font-display: "Funnel Display", sans-serif;
+  --breakpoint-3xl: 120rem;
+  --color-accent: #ffd803;
+  --color-primary: #afff03;
+  --color-secondary: #ff9c03;
+  --color-tertiary: #ffe658;
+  --color-white: #fffffe;
+  --color-black: #272343;
+  --color-paragraph: #2d334a;
+}
+
+@layer components {
+  .container {
+    @apply flex flex-col items-center justify-center mx-auto px-4 md:px-6 lg:px-8 max-w-full;
+  }
+}
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Funnel Display", sans-serif;
+}
+
+@layer utilities {
+  .card-style {
+    @apply rounded-3xl overflow-hidden border-2 border-black dark:border-white transition bg-white dark:bg-black hover:shadow-[8px_8px_0px_rgb(0,0,0)] dark:hover:shadow-[8px_8px_0px_rgb(255,255,255)];
+
+    @apply shadow-[2px_2px_0px_rgb(0,0,0)] dark:shadow-[2px_2px_0px_rgb(255,255,255)] hover:shadow-[8px_8px_0px_rgb(0,0,0)] dark:hover:shadow-[8px_8px_0px_rgb(255,255,255)];
+
+    @screen md {
+      @apply shadow-[4px_4px_0px_rgb(0,0,0)] dark:shadow-[4px_4px_0px_rgb(255,255,255)];
+      @apply hover:shadow-[8px_8px_0px_rgb(0,0,0)] dark:hover:shadow-[8px_8px_0px_rgb(255,255,255)];
+    }
+  }
+
+  .card-style1 {
+    @apply rounded-3xl overflow-hidden border-2 border-black dark:border-white transition bg-white dark:bg-black;
+
+    @apply shadow-[2px_2px_0px_rgb(0,0,0)] dark:shadow-[2px_2px_0px_rgb(255,255,255)];
+
+    @screen md {
+      @apply shadow-[4px_4px_0px_rgb(0,0,0)] dark:shadow-[4px_4px_0px_rgb(255,255,255)];
+    }
+  }
+
+  .card-style2 {
+    @apply rounded-3xl overflow-hidden border-2 border-black bg-white transition;
+
+    @apply shadow-[2px_2px_0px_rgb(0,0,0)] 
+            hover:shadow-[4px_4px_0px_rgb(0,0,0)];
+
+    @screen md {
+      @apply shadow-[4px_4px_0px_rgb(0,0,0)] 
+              hover:shadow-[8px_8px_0px_rgb(0,0,0)];
+    }
+  }
+}
+
+.mySwiper {
+  position: relative;
+  padding-left: 30px; /* Espacio en los lados para que las flechas no se solapen */
+  padding-right: 30px; /* Espacio en los lados para que las flechas no se solapen */
+}
+
+/* Asegúrate de que las flechas tengan color negro */
+.swiper-button-next,
+.swiper-button-prev {
+  color: currentColor !important; /* Flechas negras */
+}
+
+/* Asegúrate de que las flechas no se solapen con las tarjetas */
+.mySwiper {
+  padding-left: 30px; /* Espacio a la izquierda para las flechas */
+  padding-right: 30px; /* Espacio a la derecha para las flechas */
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  z-index: 10; /* Asegúrate de que las flechas estén sobre las tarjetas */
+}
+button {
+  @apply cursor-pointer;
+}
+
+a {
+  text-decoration: none;
+  position: relative;
+  cursor: pointer;
+}
+a:after {
+  background: none repeat scroll 0 0 transparent;
+  bottom: 0;
+  content: "";
+  display: block;
+  height: 2px;
+
+  left: 50%;
+  position: absolute;
+  background: currentColor;
+  transition:
+    width 0.3s ease 0s,
+    left 0.3s ease 0s;
+  width: 0;
+}
+a:hover:after {
+  width: 100%;
+  left: 0;
+}
+
+a.no-underline-effect {
+  text-decoration: none;
+  position: relative; /* o relative si la necesitas */
+}
+
+a.no-underline-effect::after {
+  display: none !important;
+  content: none;
+}
+
+.text-shadow {
+  text-shadow:
+    5px 5px 0 currentColor,
+    2px 2px 2px currentColor;
+  -webkit-text-stroke: 2px #ffffff;
+}
+
+.dark .text-shadow {
+  -webkit-text-stroke: 2px #000000;
+}
+.swiper-pagination-bullet {
+  width: 0.5rem; /* 2 */
+  height: 0.5rem; /* 2 */
+  background-color: #6b7280; /* gray-500 */
+  border-radius: 9999px; /* full */
+  margin-left: 0.25rem; /* mx-1 */
+  margin-right: 0.25rem;
+  transition: all 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #f0523c !important; /* primary (ej: blue-500, ajusta si usas otro) */
+  transform: scale(1.5);
+  transition: all 0.3s ease;
+}
+
+.product {
+  @apply rounded-3xl rounded-t-none rounded-r-4xl p-6 text-4xl font-bold h-[400px];
+}
