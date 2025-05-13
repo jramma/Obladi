@@ -170,7 +170,7 @@ export default function LostForm({
   }
 
   return (
-    <section className="py-20 flex flex-col w-full items-center">
+    <section className="py-20 mx-5 flex flex-col w-full items-center">
       <div className="max-w-full md:container flex flex-col gap-10">
         <h3 className="mx-5 text-5xl font-semibold">{title}</h3>
 
