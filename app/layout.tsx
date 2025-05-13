@@ -6,6 +6,7 @@ import { ThemeProvider } from "next-themes";
 import type { ReactNode } from "react";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { GlobalModal } from "@/components/GlobalModal";
 
 export const metadata: Metadata = {
   title: "Obladi",
@@ -36,6 +37,7 @@ export default async function RootLayout({ children }: LayoutProps) {
     <html lang="es" suppressHydrationWarning>
       <body className="min-h-screen max-w-screen flex flex-col items-center w-full  bg-white dark:bg-black pt-18 overflow-x-hidden relative">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <GlobalModal />
           <Navbar session={session} />
           {children}
           <Footer />

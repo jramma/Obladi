@@ -2,10 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { useMongoUser } from "@/hooks/UseMongoUser";
-
+import { showGlobalModal } from "@/components/GlobalModal";
 export default function AccountPage() {
   const user = useMongoUser();
-
   const [loadingLocation, setLoadingLocation] = useState(false);
   const [form, setForm] = useState({
     email: user?.email || "",
@@ -32,19 +31,19 @@ export default function AccountPage() {
     });
 
     if (res.ok) {
-      alert("✅ Perfil actualizado con éxito");
+      showGlobalModal("✅ Perfil actualizado con éxito");
     } else {
       if (res.status === 409) {
-        alert("❌ Ese nickname ya está en uso.");
+        showGlobalModal("❌ Ese nickname ya está en uso.");
       } else {
-        alert("❌ Hubo un error al actualizar");
+        showGlobalModal("❌ Hubo un error al actualizar");
       }
     }
   };
 
   const handleGeolocate = () => {
     if (!navigator.geolocation) {
-      alert("La geolocalización no está soportada en este navegador.");
+      showGlobalModal("La geolocalización no está soportada en este navegador.");
       return;
     }
 
@@ -72,14 +71,14 @@ export default function AccountPage() {
           }));
         } catch (err) {
           console.error("Error al obtener la localidad:", err);
-          alert("No se pudo obtener la ubicación.");
+          showGlobalModal("No se pudo obtener la ubicación.");
         } finally {
           setLoadingLocation(false);
         }
       },
       (error) => {
         console.error("Geolocation error:", error);
-        alert("Error al obtener tu ubicación.");
+        showGlobalModal("Error al obtener tu ubicación.");
         setLoadingLocation(false);
       }
     );

@@ -3,10 +3,9 @@
 import { useState,useEffect } from "react";
 import Toggle from "@/components/form/Toggle";
 import { useMongoUser } from "@/hooks/UseMongoUser";
-
+import { showGlobalModal } from "@/components/GlobalModal";
 export default function NotPages() {
   const user = useMongoUser();
-
   const [notifications, setNotifications] = useState({
     mailing: true,
     chat: true,
@@ -33,9 +32,9 @@ export default function NotPages() {
     });
   
     if (res.ok) {
-      alert("✅ Preferencias actualizadas");
+       showGlobalModal("✅ Preferencias actualizadas");
     } else {
-      alert("❌ Hubo un error");
+       showGlobalModal("❌ Hubo un error");
     }
   };
   

@@ -5,12 +5,11 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
-
+import { showGlobalModal } from "@/components/GlobalModal";
 const HCAPTCHA_SITEKEY = process.env.NEXT_PUBLIC_HCAPTCHA_SITEKEY!;
 
 export default function SignIn() {
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
-
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
@@ -20,7 +19,7 @@ export default function SignIn() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!captchaToken) {
-      alert("Por favor verifica el CAPTCHA");
+      showGlobalModal("Por favor verifica el CAPTCHA");
       return;
     }
     const res = await signIn("credentials", {
@@ -30,7 +29,7 @@ export default function SignIn() {
     });
 
     if (res?.error) {
-      alert("Credenciales inválidas");
+      showGlobalModal("Credenciales inválidas");
     } else {
       router.push("/profile");
       router.refresh();

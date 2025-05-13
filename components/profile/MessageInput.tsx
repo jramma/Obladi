@@ -1,10 +1,8 @@
 "use client";
 
 import { useState } from "react";
-
-export default function MessageInput({ chatId }: { chatId: string }) {
+import { showGlobalModal } from "@/components/GlobalModal";export default function MessageInput({ chatId }: { chatId: string }) {
   const [text, setText] = useState("");
-
   const sendMessage = async () => {
     if (!text.trim()) return;
 
@@ -17,7 +15,7 @@ export default function MessageInput({ chatId }: { chatId: string }) {
     });
 
     if (res.ok) setText("");
-    else alert("Error al enviar mensaje");
+    else  showGlobalModal("Error al enviar mensaje");
   };
 
   const discardMessage = () => {

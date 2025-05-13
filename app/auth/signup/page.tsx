@@ -5,12 +5,10 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
-
+import { showGlobalModal } from "@/components/GlobalModal";
 const HCAPTCHA_SITEKEY = process.env.NEXT_PUBLIC_HCAPTCHA_SITEKEY!;
 
 export default function SignUp() {
-  const [emailSent, setEmailSent] = useState(false);
-
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
@@ -18,7 +16,6 @@ export default function SignUp() {
     password: "",
   });
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
-
   const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,7 +26,7 @@ export default function SignUp() {
     e.preventDefault();
 
     if (!captchaToken) {
-      alert("Por favor verifica el CAPTCHA");
+      showGlobalModal("Por favor verifica el CAPTCHA");
       return;
     }
 
@@ -38,11 +35,24 @@ export default function SignUp() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ...formData, token: captchaToken }),
     });
+
     if (res.ok) {
-      setEmailSent(true);
+      // 🚀 Inicia sesión automáticamente con las credenciales recién creadas
+      const result = await signIn("credentials", {
+        redirect: false,
+        email: formData.email,
+        password: formData.password,
+      });
+
+      if (result?.ok) {
+        router.push("/");
+        router.refresh();
+      } else {
+        showGlobalModal("Error al iniciar sesión después del registro.");
+      }
     } else {
       const error = await res.json();
-      alert(error.error || "Ocurrió un error");
+      showGlobalModal(error.error || "Ocurrió un error");
     }
   };
 
@@ -55,10 +65,9 @@ export default function SignUp() {
 
   return (
     <div className="flex bg-[url(/topography.svg)] flex-col dark:bg-[url(/topodark.svg)] justify-center items-center flex-grow overflow-hidden relative w-full">
-     
       <form
         onSubmit={handleSubmit}
-        className="flex  my-6  md:my-20 z-10 flex-col space-y-6 p-10 rounded-lg shadow-lg w-auto h-auto bg-[#ffffff] dark:bg-black card-style"
+        className="flex my-6 md:my-20 z-10 flex-col space-y-6 p-10 rounded-lg shadow-lg w-auto h-auto bg-[#ffffff] dark:bg-black card-style"
       >
         <h2 className="text-4xl font-bold">Registro</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -89,7 +98,7 @@ export default function SignUp() {
           <button
             arial-label="Crear cuenta"
             type="submit"
-            className="px-8 py-2 bg-primary  font-bold card-style rounded self-start"
+            className="px-8 py-2 bg-primary font-bold card-style rounded self-start"
           >
             Crear cuenta
           </button>
@@ -98,7 +107,7 @@ export default function SignUp() {
             arial-label="Iniciar sesión con Google"
             type="button"
             onClick={() => signIn("google", { callbackUrl: "/" })}
-            className="flex  items-center gap-2 px-8 py-[1.3rem] md:py-2 card-style2 border rounded no-underline-effect !bg-white"
+            className="flex items-center gap-2 px-8 py-[1.3rem] md:py-2 card-style2 border rounded no-underline-effect !bg-white"
           >
             <img src="/google.svg" alt="Google" className="w-5 h-5" />
             <span className="font-medium text-gray-700"> Google</span>
@@ -111,22 +120,6 @@ export default function SignUp() {
           </Link>
         </div>
       </form>
-      {/* modal */}
-      {emailSent && (
-        <div className="fixed inset-0 flex items-center justify-center z-50  backdrop-blur-lg bg-opacity-50">
-          <div className="bg-white dark:bg-black card-style p-8  text-center space-y-4">
-            <h3 className="text-2xl font-bold">¡Revisa tu correo!</h3>
-            <p>Te hemos enviado un enlace para verificar tu cuenta.</p>
-            <button
-              arial-label="Ir a iniciar sesión"
-              className="mt-4 px-6 py-2 bg-primary  rounded font-semibold"
-              onClick={() => router.push("/auth/signin")}
-            >
-              Ir a iniciar sesión
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

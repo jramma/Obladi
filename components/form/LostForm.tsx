@@ -8,11 +8,10 @@ import { categories } from "@/lib/utils";
 import TagsInput from "@/components/Tagsinput";
 import { useMongoUser } from "@/hooks/UseMongoUser";
 import imageCompression from "browser-image-compression";
-
+import { showGlobalModal } from "@/components/GlobalModal";
 const DEFAULT_LOCATION = { lat: 41.3874, lng: 2.1686 };
 const validTypes = ["image/jpeg", "image/png", "image/webp"];
 const MAX_IMAGE_SIZE = 1 * 1024 * 1024; // 1MB
-
 type LostFormProps = {
   title: string;
   submitEndpoint: string;
@@ -22,7 +21,6 @@ type LostFormProps = {
   dateFieldName: "lostAt" | "foundAt";
   dateLabel: string;
 };
-
 export default function LostForm({
   title,
   submitEndpoint,
@@ -32,6 +30,7 @@ export default function LostForm({
   dateFieldName,
   dateLabel,
 }: LostFormProps) {
+  
   const [previewImages, setPreviewImages] = useState<File[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [tagsResetCounter, setTagsResetCounter] = useState(0);
@@ -98,7 +97,7 @@ export default function LostForm({
         markerRef.current?.setLngLat([newLoc.lng, newLoc.lat]);
       },
       (error) => {
-        alert("❌ No se pudo obtener tu ubicación.");
+        showGlobalModal("❌ No se pudo obtener tu ubicación.");
         console.error("Geolocation error:", error);
       }
     );
@@ -127,7 +126,7 @@ export default function LostForm({
 
     for (const file of previewImages) {
       if (!validTypes.includes(file.type)) {
-        alert(`❌ El tipo de archivo "${file.name}" no está permitido.`);
+        showGlobalModal(`❌ El tipo de archivo "${file.name}" no está permitido.`);
         return;
       }
 
@@ -141,8 +140,8 @@ export default function LostForm({
 
       // Check tamaño tras compresión
       if (compressed.size > MAX_IMAGE_SIZE) {
-        alert(
-          `❌ La imagen "${file.name}" aún excede 1MB después de comprimir.`
+        showGlobalModal(
+          `❌ La imagen "${file.name}" es demasiado grande, comprimela porfavor.`
         );
         return;
       }
@@ -159,10 +158,10 @@ export default function LostForm({
       reset();
       setPreviewImages([]);
       setTagsResetCounter((prev) => prev + 1);
-      fileInputRef.current!.value = ""; 
-      alert("✅ Enviado correctamente");
+      fileInputRef.current!.value = "";
+      showGlobalModal("✅ Enviado correctamente");
     } else {
-      alert("❌ Error al enviar");
+      showGlobalModal("❌ Error al enviar");
     }
   };
 
@@ -244,7 +243,7 @@ export default function LostForm({
                 const allFiles = [...previewImages, ...files];
 
                 if (allFiles.length > 3) {
-                  alert("❌ Solo puedes subir hasta 3 imágenes");
+                  showGlobalModal("❌ Solo puedes subir hasta 3 imágenes");
                   return;
                 }
 
@@ -285,7 +284,7 @@ export default function LostForm({
               value={location.lng}
             />
 
-            <button 
+            <button
               aria-label="Enviar formulario"
               type="submit"
               disabled={isSubmitting}
@@ -302,8 +301,8 @@ export default function LostForm({
             <div className="relative aspect-square rounded-xl overflow-hidden card-style2">
               <div ref={mapContainerRef} className="w-full h-full" />
               <button
-  aria-label="Obtener ubicación"
-type="button"
+                aria-label="Obtener ubicación"
+                type="button"
                 onClick={handleLocationClick}
                 className="absolute top-2 right-2 bg-primary text-black p-2 rounded-md shadow"
               >

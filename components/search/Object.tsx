@@ -5,7 +5,7 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useMongoUser } from "@/hooks/UseMongoUser";
-
+import { showGlobalModal } from "@/components/GlobalModal";
 export default function Object({ obj, objectKey }: any) {
   const user = useMongoUser();
   const router = useRouter();
@@ -36,10 +36,10 @@ export default function Object({ obj, objectKey }: any) {
     });
 
     if (res.ok) {
-      alert("✅ Chat creado o ya existente. Redirigiendo...");
+      showGlobalModal("✅ Chat creado o ya existente. Redirigiendo...");
       router.push("/profile/chat");
     } else {
-      alert("❌ No se pudo crear el chat.");
+      showGlobalModal("❌ No se pudo crear el chat.");
     }
   };
 
@@ -51,10 +51,10 @@ export default function Object({ obj, objectKey }: any) {
     });
 
     if (res.ok) {
-      alert("✅ Objeto marcado como entregado");
+      showGlobalModal("✅ Objeto marcado como entregado");
       router.refresh();
     } else {
-      alert("❌ No se pudo actualizar el objeto");
+      showGlobalModal("❌ No se pudo actualizar el objeto");
     }
   };
 
@@ -67,7 +67,6 @@ export default function Object({ obj, objectKey }: any) {
       <div className="block md:hidden">
         <button
           aria-label="Desplegar objeto"
-
           onClick={() => setIsOpen(!isOpen)}
           className="w-full flex flex-col gap-4 justify-center md:flex-row items-center font-bold text-3xl    transition"
         >
@@ -112,16 +111,16 @@ export default function Object({ obj, objectKey }: any) {
 
             {user?.email !== obj.email ? (
               <button
-              arial-label="Reclamar objeto" 
-              onClick={handleReclaim}
+                arial-label="Reclamar objeto"
+                onClick={handleReclaim}
                 className="bg-tertiary font-bold text-lg self-start px-6 py-2 card-style hover:shadow-tertiary"
               >
                 Reclamar
               </button>
             ) : obj.type !== "solved" ? (
               <button
-              arial-label="Objeto entregado"  
-              onClick={handleMarkAsFound}
+                arial-label="Objeto entregado"
+                onClick={handleMarkAsFound}
                 className="bg-primary font-semibold text-lg self-start px-6 py-2 card-style hover:shadow-primary"
               >
                 Objeto entregado
@@ -163,16 +162,16 @@ export default function Object({ obj, objectKey }: any) {
           <div className="flex flex-col gap-2">
             {user?.email !== obj.email ? (
               <button
-              aria-label="Reclamar objeto"  
-              onClick={handleReclaim}
+                aria-label="Reclamar objeto"
+                onClick={handleReclaim}
                 className="bg-tertiary font-bold text-xl self-end px-8 py-3 card-style hover:shadow-tertiary"
               >
                 Reclamar
               </button>
             ) : obj.type !== "solved" ? (
               <button
-              aria-label="Objeto entregado" 
-              onClick={handleMarkAsFound}
+                aria-label="Objeto entregado"
+                onClick={handleMarkAsFound}
                 className="bg-primary  font-semibold text-xl self-end px-8 py-3 card-style hover:shadow-primary"
               >
                 Objeto entregado
