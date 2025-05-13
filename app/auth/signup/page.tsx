@@ -55,11 +55,7 @@ export default function SignUp() {
 
   return (
     <div className="flex bg-[url(/topography.svg)] flex-col dark:bg-[url(/topodark.svg)] justify-center items-center flex-grow overflow-hidden relative w-full">
-      <p className="mt-20 bg-white dark:bg-black text-2xl max-w-96 card-style shadow-red-500 p-6 font-bold rounded-4xl">
-        {" "}
-        Como esta en <span className="text-red-500">fase beta</span> solo se
-        permite el registro a los usarios de los que dispongamos el mail
-      </p>
+     
       <form
         onSubmit={handleSubmit}
         className="flex  my-6  md:my-20 z-10 flex-col space-y-6 p-10 rounded-lg shadow-lg w-auto h-auto bg-[#ffffff] dark:bg-black card-style"

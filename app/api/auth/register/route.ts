@@ -2,14 +2,24 @@ import { NextResponse } from "next/server";
 import { hash } from "bcryptjs";
 import clientPromise from "@/lib/mongodb";
 import { ObjectId, Double } from "mongodb";
-import crypto from "crypto";
-import { sendVerificationEmail } from "@/lib/resend";
 
 function generateNickname(name: string, surname: string): string {
-  const randomSuffix = Math.floor(Math.random() * 10000);
-  return `${name.toLowerCase()}${surname
-    .toLowerCase()
-    .charAt(0)}${randomSuffix}`;
+  const normalize = (str: string) =>
+    str
+      .normalize("NFD") // elimina acentos
+      .replace(/[\u0300-\u036f]/g, "") // remueve diacríticos
+      .replace(/\s+/g, "") // elimina espacios
+      .toLowerCase();
+
+  const randomSuffix = String(Math.floor(Math.random() * 10000)).padStart(
+    4,
+    "0"
+  );
+
+  const normalizedName = normalize(name);
+  const normalizedSurname = normalize(surname);
+
+  return `${normalizedName}${normalizedSurname.charAt(0)}${randomSuffix}`;
 }
 
 export async function POST(req: Request) {
@@ -54,25 +64,6 @@ export async function POST(req: Request) {
     );
   }
 
-  function generateNickname(name: string, surname: string): string {
-    const normalize = (str: string) =>
-      str
-        .normalize("NFD") // elimina acentos
-        .replace(/[\u0300-\u036f]/g, "") // remueve diacríticos
-        .replace(/\s+/g, "") // elimina espacios
-        .toLowerCase();
-
-    const randomSuffix = String(Math.floor(Math.random() * 10000)).padStart(
-      4,
-      "0"
-    );
-
-    const normalizedName = normalize(name);
-    const normalizedSurname = normalize(surname);
-
-    return `${normalizedName}${normalizedSurname.charAt(0)}${randomSuffix}`;
-  }
-
   const hashedPassword = await hash(password, 10);
 
   const newUser = {
@@ -93,7 +84,6 @@ export async function POST(req: Request) {
     location: "",
     objects: [new ObjectId("000000000000000000000000")],
     verified: false,
-    // Nuevos campos
     nickname: generateNickname(name, surname),
     zones: [],
     notifications: [],
@@ -101,16 +91,6 @@ export async function POST(req: Request) {
   };
 
   try {
-    const verificationToken = crypto.randomBytes(32).toString("hex");
-
-    await db.collection("emailVerifications").insertOne({
-      email,
-      token: verificationToken,
-      expires: new Date(Date.now() + 1000 * 60 * 30), // 30 mins
-    });
-
-    await sendVerificationEmail(email, verificationToken);
-
     await db.collection("users").insertOne(newUser);
     return NextResponse.json({ message: "Usuario creado correctamente" });
   } catch (error: any) {
