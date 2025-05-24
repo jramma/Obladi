@@ -2,7 +2,6 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import clientPromise from "@/lib/mongodb";
-import { Menu } from "@/components/profile/Menu";
 import Hero from "@/components/profile/Hero";
 import Pines from "@/components/profile/Pines";
 import Shop from "@/components/profile/Shop";
@@ -24,7 +23,15 @@ async function getProfile() {
 
   if (!session) redirect("/auth/signin");
 
-  const client = await clientPromise;
+  let client;
+
+  try {
+    client = await clientPromise;
+  } catch (error) {
+    console.error("❌ Error al conectar con MongoDB:", error);
+
+    redirect("/");
+  }
   const db = client.db();
   const user = await db
     .collection("users")

@@ -16,12 +16,23 @@ export default async function AboutPage() {
     );
   }
 
-  const client = await clientPromise;
+  let client;
+
+  try {
+    client = await clientPromise;
+  } catch (error) {
+    console.error("❌ Error al conectar con MongoDB:", error);
+
+    redirect("/");
+  }
   const db = client.db();
 
   const user = await db
     .collection("users")
-    .findOne({ email: session.user.email }, { projection: { _id: 1, email: 1 } });
+    .findOne(
+      { email: session.user.email },
+      { projection: { _id: 1, email: 1 } }
+    );
 
   const isLoggedIn = !!user?.email;
 
