@@ -6,6 +6,8 @@ import { notFound } from "next/navigation";
 import MessageInput from "@/components/profile/MessageInput";
 import MessageList from "@/components/profile/MessageList";
 import { BsFillInfoSquareFill } from "react-icons/bs";
+import { redirect } from "next/navigation";
+
 export default async function ChatViewPage({
   params,
 }: {

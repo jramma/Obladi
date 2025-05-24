@@ -3,6 +3,7 @@ import { authOptions } from "@/lib/auth";
 import clientPromise from "@/lib/mongodb";
 import GuestView from "@/components/sections/GuestView";
 import LoggedInView from "@/components/sections/LoggedInView";
+import { redirect } from "next/navigation";
 
 export default async function AboutPage() {
   const session = await getServerSession(authOptions);
