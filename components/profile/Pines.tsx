@@ -41,8 +41,8 @@ export default function Pines({ user }: Props) {
   }, []);
 
   const hasChats = user.chats && user.chats.length > 0;
-  console.log("pins", user.pines);
-  console.log("pin details", pinDetails);
+  // console.log("pins", user.pines);
+  // console.log("pin details", pinDetails);
   return (
     <div className="w-full flex flex-col md:flex-row py-10 md:py-20">
       {/* Sección de Pines */}

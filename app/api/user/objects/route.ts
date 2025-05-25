@@ -7,7 +7,7 @@ import { ObjectId } from "mongodb";
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    console.log("💾 Cuerpo recibido:", body);
+    // console.log("💾 Cuerpo recibido:", body);
 
     const { objects } = body;
 

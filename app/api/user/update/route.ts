@@ -6,15 +6,15 @@ import { ObjectId } from "mongodb";
 
 export async function PUT(req: Request) {
   try {
-    console.log("Inicio del handler PUT /api/user/update");
+    // console.log("Inicio del handler PUT /api/user/update");
 
     const body = await req.json();
-    console.log("Cuerpo de la solicitud recibido:", body);
+    // console.log("Cuerpo de la solicitud recibido:", body);
 
     const { email, reclaimedObjects, objects, ...otherUpdates } = body;
 
     if (!email) {
-      console.log("Error: Falta el email en la solicitud.");
+      // console.log("Error: Falta el email en la solicitud.");
       return NextResponse.json({ error: "Falta el email." }, { status: 400 });
     }
 
@@ -59,7 +59,7 @@ export async function PUT(req: Request) {
 
     const result = await db.collection("users").updateOne({ email }, updateOps);
 
-    console.log("Resultado de la operación updateOne:", result);
+    // console.log("Resultado de la operación updateOne:", result);
 
     if (result.matchedCount === 0) {
       return NextResponse.json(
