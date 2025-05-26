@@ -19,7 +19,7 @@ const Footer: React.FC = () => {
     },
     {
       label: "Contribuir",
-      href: "mailto:jrammas@uoc.edu",
+      href: "https://github.com/jramma/Obladi",
       external: true,
     },
   ];
