@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Object from "@/components/search/Object";
+import ObjectCard from "@/components/search/ObjectCard";
 
 export default function ObjectPage({ params }: { params: { objectId: string } }) {
   const [object, setObject] = useState<any>(null);
@@ -37,7 +37,7 @@ export default function ObjectPage({ params }: { params: { objectId: string } })
 
   return (
     <div className="w-full p-6">
-      <Object obj={object} objectKey={params.objectId} />
+      <ObjectCard obj={object} objectKey={params.objectId} />
     </div>
   );
 }

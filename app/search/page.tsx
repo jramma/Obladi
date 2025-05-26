@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { LostObject } from "@/types/types";
-import Object from "@/components/search/Object";
+import type { LostObject } from "@/types/types";
+import ObjectCard from "@/components/search/ObjectCard";
 import Image from "next/image";
 import { useMemo } from "react";
 import { Icons } from "@/components/Icons";
@@ -90,7 +90,7 @@ export default function SearchPage() {
         ) : (
           <div className="flex flex-col md:min-w-[700px] gap-12 pb-40">
             {results.map((obj) => (
-              <Object obj={obj} objectKey={obj._id} />
+              <ObjectCard obj={obj} objectKey={obj._id} />
             ))}
           </div>
         )}

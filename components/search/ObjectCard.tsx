@@ -6,7 +6,8 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useMongoUser } from "@/hooks/UseMongoUser";
 import { showGlobalModal } from "@/components/GlobalModal";
-export default function Object({ obj, objectKey }: any) {
+
+export default function ObjectCard({ obj, objectKey }: any) {
   const user = useMongoUser();
   const router = useRouter();
   const [signedImage, setSignedImage] = useState("");
@@ -66,18 +67,19 @@ export default function Object({ obj, objectKey }: any) {
       {/* 📱 MOBILE: desplegable con título + imagen */}
       <div className="block md:hidden">
         <button
+          type="button"
           aria-label="Desplegar objeto"
           onClick={() => setIsOpen(!isOpen)}
-          className="w-full flex flex-col gap-4 justify-center md:flex-row items-center font-bold text-3xl    transition"
+          className="w-full flex flex-col gap-4 justify-center md:flex-row items-center font-bold text-3xl transition"
         >
-          <span className=" ">{obj.title}</span>{" "}
+          <span>{obj.title}</span>
           {signedImage && (
             <Image
               src={signedImage}
               alt={`Imagen principal de ${obj.title}`}
               width={100}
               height={100}
-              className="rounded-lg   max-w-full h-auto "
+              className="rounded-lg max-w-full h-auto"
             />
           )}
           <div className="w-full rounded-xl bg-gray-600 text-white flex justify-center">
@@ -111,7 +113,8 @@ export default function Object({ obj, objectKey }: any) {
 
             {user?.email !== obj.email ? (
               <button
-                arial-label="Reclamar objeto"
+                type="button"
+                aria-label="Reclamar objeto"
                 onClick={handleReclaim}
                 className="bg-tertiary font-bold text-lg self-start px-6 py-2 card-style hover:shadow-tertiary"
               >
@@ -119,7 +122,8 @@ export default function Object({ obj, objectKey }: any) {
               </button>
             ) : obj.type !== "solved" ? (
               <button
-                arial-label="Objeto entregado"
+                type="button"
+                aria-label="Objeto entregado"
                 onClick={handleMarkAsFound}
                 className="bg-primary font-semibold text-lg self-start px-6 py-2 card-style hover:shadow-primary"
               >
@@ -136,52 +140,66 @@ export default function Object({ obj, objectKey }: any) {
 
       {/* 🖥️ DESKTOP: diseño original sin cambios */}
       <div className="hidden md:flex flex-col gap-4">
-        <div className="flex flex-col md:flex-wrap gap-4 w-full justify-between">
-          <div className="flex flex-col gap-2">
-            <p className="font-bold">Objeto:</p>
-            <h3 className="text-xl font-bold mb-2">{obj.title}</h3>
-            <p className="font-bold">Descripción:</p>
-            <p className="border-2 rounded-md p-2 min-h-20">
-              {obj.description}
-            </p>
-            <p className="font-bold">Ubicación:</p>
-            <p>{obj.location}</p>
-            <div className="flex gap-2 mt-2 flex-wrap">
-              {obj.tags.length > 1 &&
-                obj.tags.map((tag: string, i: number) => (
-                  <span
-                    key={i}
-                    className="bg-tertiary text-sm px-2 py-1 rounded-full"
-                  >
-                    #{tag}
-                  </span>
-                ))}
+        <div className="flex items-center gap-10">
+          <div className="flex flex-col gap-4 w-full justify-between">
+            <div className="flex flex-col gap-2 flex-1">
+              <p className="font-bold">Objeto:</p>
+              <h3 className="text-xl font-bold mb-2">{obj.title}</h3>
+              <p className="font-bold">Descripción:</p>
+              <p className="border-2 rounded-md p-2 min-h-20">
+                {obj.description}
+              </p>
+              <p className="font-bold">Ubicación:</p>
+              <p>{obj.location}</p>
+              <div className="flex gap-2 mt-2 flex-wrap">
+                {obj.tags.length > 1 &&
+                  obj.tags.map((tag: string, i: number) => (
+                    <span
+                      key={i}
+                      className="bg-tertiary text-sm px-2 py-1 rounded-full"
+                    >
+                      #{tag}
+                    </span>
+                  ))}
+              </div>
             </div>
           </div>
 
-          <div className="flex flex-col gap-2">
-            {user?.email !== obj.email ? (
-              <button
-                aria-label="Reclamar objeto"
-                onClick={handleReclaim}
-                className="bg-tertiary font-bold text-xl self-end px-8 py-3 card-style hover:shadow-tertiary"
-              >
-                Reclamar
-              </button>
-            ) : obj.type !== "solved" ? (
-              <button
-                aria-label="Objeto entregado"
-                onClick={handleMarkAsFound}
-                className="bg-primary  font-semibold text-xl self-end px-8 py-3 card-style hover:shadow-primary"
-              >
-                Objeto entregado
-              </button>
-            ) : (
-              <span className="italic text-gray-500 self-end">
-                Este objeto ya fue entregado
-              </span>
-            )}
-          </div>
+          {signedImage && (
+            <Image
+              src={signedImage}
+              alt={`Imagen principal de ${obj.title}`}
+              width={100}
+              height={100}
+              className="rounded-lg max-w-full h-auto"
+            />
+          )}
+        </div>
+
+        <div className="flex flex-col gap-4 items-end">
+          {user?.email !== obj.email ? (
+            <button
+              type="button"
+              aria-label="Reclamar objeto"
+              onClick={handleReclaim}
+              className="bg-tertiary font-bold text-xl px-8 py-3 card-style hover:shadow-tertiary"
+            >
+              Reclamar
+            </button>
+          ) : obj.type !== "solved" ? (
+            <button
+              type="button"
+              aria-label="Objeto entregado"
+              onClick={handleMarkAsFound}
+              className="bg-primary font-semibold text-xl px-8 py-3 card-style hover:shadow-primary"
+            >
+              Objeto entregado
+            </button>
+          ) : (
+            <span className="italic text-gray-500">
+              Este objeto ya fue entregado
+            </span>
+          )}
         </div>
       </div>
     </div>
