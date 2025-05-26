@@ -30,7 +30,6 @@ export default function LostForm({
   dateFieldName,
   dateLabel,
 }: LostFormProps) {
-  
   const [previewImages, setPreviewImages] = useState<File[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [tagsResetCounter, setTagsResetCounter] = useState(0);
@@ -126,7 +125,9 @@ export default function LostForm({
 
     for (const file of previewImages) {
       if (!validTypes.includes(file.type)) {
-        showGlobalModal(`❌ El tipo de archivo "${file.name}" no está permitido.`);
+        showGlobalModal(
+          `❌ El tipo de archivo "${file.name}" no está permitido.`
+        );
         return;
       }
 
@@ -262,6 +263,7 @@ export default function LostForm({
                     />
                     <p className="text-xs mt-1 truncate">{file.name}</p>
                     <button
+                      type="submit"
                       aria-label="Eliminar imagen"
                       onClick={() => removeImage(index)}
                       className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full px-2"
