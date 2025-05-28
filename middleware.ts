@@ -8,7 +8,11 @@ const PUBLIC_ROUTES = [
   "/auth/signup",
   "/terms",
   "/privacy",
+  "/manifest.json",
+  "/service-worker.js",
+  "/favicon.ico",
 ];
+
 
 const ALLOWED_API_ROUTES = [
   "/api/auth/", // Permite todas las rutas de NextAuth
@@ -68,13 +72,7 @@ export function middleware(req: NextRequest) {
 
 export const config = {
   matcher: [
-    /*
-     * Matcher optimizado:
-     * - Aplica middleware a todas las rutas EXCEPTO:
-     *   - Archivos estáticos
-     *   - Pero SÍ incluye /api/ para proteger endpoints
-     */
-    "/((?!_next/static|_next/image|static|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|webp|gif|ico|css|js)$).*)",
-    "/api/:path*"
+    "/((?!api|_next/static|_next/image|static|favicon.ico|manifest.json|service-worker.js|favicon|favicon.png).*)",
+    "/api/:path*",
   ],
 };
