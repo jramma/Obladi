@@ -7,6 +7,7 @@ import type { ReactNode } from "react";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { GlobalModal } from "@/components/GlobalModal";
+import Pwa from "@/components/Pwa";
 
 export const metadata: Metadata = {
   title: "Obladi",
@@ -39,6 +40,7 @@ export default async function RootLayout({ children }: LayoutProps) {
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <GlobalModal />
           <Navbar session={session} />
+          <Pwa />
           {children}
           <Footer />
         </ThemeProvider>
