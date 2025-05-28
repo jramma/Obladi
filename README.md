@@ -63,3 +63,7 @@ Netlify - web
 AWS - imagenes
 Mongo - base de datos
 Resend - mailing
+
+## Web deployada:
+
+[https://obladi.netlify.app](https://obladi.netlify.app)
